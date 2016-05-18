@@ -1,7 +1,5 @@
 #include "litterales.h"
 
-// Classe dans laquelle on definit les litterales.
-
 Entier& Entier::operator=(Entier a)
 {
     // On verifie que ce n'est pas un cas a=a;
