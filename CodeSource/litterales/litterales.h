@@ -105,6 +105,6 @@ public:
 };
 
 
-LitteraleNumerique* operator/(Entier e1, Entier e2);
+template<typename Type> Type operator/(Entier e1, Entier e2);
 //Reel operator.(int e1, int e2);
 
