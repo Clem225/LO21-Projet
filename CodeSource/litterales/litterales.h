@@ -8,42 +8,75 @@
 
 #include <iostream>
 
-class Entier {
-private:
-	int nb;
+/*!
+ * \class Litterale
+*/
+class Litterale {
 public:
-    // Constructeur
-    Entier():nb(0){}
-	Entier(unsigned int n): nb(n) {}
-    // Transforme l'entier en son opposé.
-    // La fonction return *this afin de pouvoir ecrire entier1 = entier2.NEG()
-    Entier NEG() {if (nb>0) nb=-nb; return *this;}
-	int getNb() const {return nb;}
-    void afficher() const {std::cout<<nb;}
-    // Constructeur de recopie
-    Entier& operator=(Entier a);
+    virtual void afficher(std::ostream& f) const=0;
 };
 
-// La division de deux entiers renvoie un double
-double operator/(Entier a, Entier b);
+/*!
+ * \class ExpressionPart
+ */
+class ExpressionPart : public Litterale {
+
+};
+
+/*!
+ * \class Expression
+*/
+class Expression : public Litterale {
+private:
+    ExpressionPart** tab;
+};
+
+/*!
+ * \class LitteraleNumerique
+*/
+class LitteraleNumerique : public ExpressionPart {
+
+};
+
+/*!
+ * \class Entier
+ */
+class Entier : public LitteraleNumerique {
+private:
+    int nb;
+public:
+    Entier():nb(0){}
+    Entier(int n): nb(n) {}
+    Entier& operator=(Entier a);
+    Entier NEG() {if (nb>0) nb=-nb; return *this;}
+	int getNb() const {return nb;}
+    void setValue(int i) {nb=i;}
+    void afficher(std::ostream& f) const {f<<nb;}
+
+};
 
 
-class Rationnel {
+/*!
+ * \class Rationnel
+ */
+class Rationnel : public LitteraleNumerique {
 private:
 	Entier numerateur;
 	Entier denominateur;
 public:
     // Constructeur (Avec conversion implicite de int e1,e2 en Entier
-    Rationnel(int e1, int e2): numerateur(e1), denominateur(e2) {this->simplification();};
-	void simplification();
+    Rationnel(int e1, int e2): numerateur(e1), denominateur(e2) {};
 	int getNum() const {return numerateur.getNb();}
 	int getDenom() const {return denominateur.getNb();}
-    double getNb() const {return numerateur/denominateur;}
-    void afficher() const {std::cout<<getNum()<<"/"<<getDenom();}
+    double getNb() const {return numerateur.getNb()/denominateur.getNb();} //Utilitée à démontrer
+    void afficher(std::ostream& f) const {f<<getNum()<<"/"<<getDenom();}
 };
 
 
-class Reel {
+/*!
+ * \class Reel
+ */
+class Reel : public LitteraleNumerique {
 private:
     Entier entiere;
     Entier mantisse;
@@ -57,8 +90,21 @@ public:
 
 };
 
+/*!
+ * \class Complexe
+ */
+
+class Complexe : public ExpressionPart {
+private:
+    LitteraleNumerique* realPart; //On ne connait pas le type exact. C'est soit un reel, soit un rationnel, soit un entier.
+    LitteraleNumerique* imagPart;
+public:
 
 
-//Rationnel operator/(int e1, int e2);
+
+};
+
+
+LitteraleNumerique* operator/(Entier e1, Entier e2);
 //Reel operator.(int e1, int e2);
 
