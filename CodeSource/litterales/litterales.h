@@ -35,14 +35,17 @@ private:
  * \class LitteraleNumerique
 */
 class LitteraleNumerique : public ExpressionPart {
-
 };
 
 /*!
  * \class Atome
  */
 class Atome : public ExpressionPart {
-
+private:
+    char* tab;
+public:
+    Atome(char* text): tab(text) {}
+    char* getAtome() const {return tab;}
 };
 
 /*!
@@ -107,9 +110,10 @@ private:
     LitteraleNumerique* realPart; //On ne connait pas le type exact. C'est soit un reel, soit un rationnel, soit un entier.
     LitteraleNumerique* imagPart;
 public:
-
-
-
+    Complexe(LitteraleNumerique& real, LitteraleNumerique& imag): realPart(&real), imagPart(&imag) {}
+    LitteraleNumerique& getReal() const {return *realPart;}
+    LitteraleNumerique& getImag() const {return *imagPart;}
+    void afficher(std::ostream& f) const {getReal().afficher(f); f<<"$"; getImag().afficher(f);} // A vérif
 };
 
 
