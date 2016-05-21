@@ -11,9 +11,26 @@
 /*!
  * \class Litterale
 */
-class Litterale {
+
+
+class Operande {
+
+};
+
+class Operateur : public Operande {
+
+};
+
+class Litterale : public Operande {
 public:
     virtual void afficher(std::ostream& f) const=0;
+};
+
+class Programme : public Litterale {
+private:
+    Operande** tab;
+public:
+    Programme(Operande** op): tab(op) {} // A revoir ensuite biensûr
 };
 
 /*!
@@ -47,6 +64,10 @@ public:
     Atome(char* text): tab(text) {}
     char* getAtome() const {return tab;}
 };
+
+
+
+
 
 /*!
  * \class Entier
@@ -115,6 +136,10 @@ public:
     LitteraleNumerique& getImag() const {return *imagPart;}
     void afficher(std::ostream& f) const {getReal().afficher(f); f<<"$"; getImag().afficher(f);} // A vérif
 };
+
+
+
+
 
 
 template<typename Type> Type operator/(Entier e1, Entier e2); // A vérifier par la suite
