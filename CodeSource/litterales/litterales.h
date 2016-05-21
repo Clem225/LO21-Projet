@@ -39,6 +39,13 @@ class LitteraleNumerique : public ExpressionPart {
 };
 
 /*!
+ * \class Atome
+ */
+class Atome : public ExpressionPart {
+
+};
+
+/*!
  * \class Entier
  */
 class Entier : public LitteraleNumerique {
@@ -68,7 +75,7 @@ public:
     Rationnel(int e1, int e2): numerateur(e1), denominateur(e2) {};
 	int getNum() const {return numerateur.getNb();}
 	int getDenom() const {return denominateur.getNb();}
-    double getNb() const {return numerateur.getNb()/denominateur.getNb();} //Utilitée à démontrer
+    double getNb() const {return numerateur.getNb()/denominateur.getNb();} //Utilité à démontrer
     void afficher(std::ostream& f) const {f<<getNum()<<"/"<<getDenom();}
 };
 
@@ -83,10 +90,11 @@ private:
 public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
     Reel(int& e1, int& e2);
-    // Transforme le reel en son opposé.
-    // La fonction return *this afin de pouvoir ecrire reel1 = reel2.NEG()
     Reel NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
-	void afficher() const {/*.....*/;}
+    double getNb() const;
+    int getEntiere() const {return entiere.getNb();} //Utilité à démontrer
+    int getMantisse() const {return mantisse.getNb();} //Utilité à démontrer
+    void afficher(std::ostream& f) const {f<<getNb();}
 
 };
 
@@ -105,6 +113,4 @@ public:
 };
 
 
-template<typename Type> Type operator/(Entier e1, Entier e2);
-//Reel operator.(int e1, int e2);
-
+template<typename Type> Type operator/(Entier e1, Entier e2); // A vérifier par la suite

@@ -10,6 +10,23 @@ Entier& Entier::operator=(Entier a)
     return *this;
 }
 
+
+Reel::Reel(int& e1, int& e2) {
+    if (e2<0) throw "Erreur, mantisse<0";
+    entiere=e1;
+    mantisse=e2;
+}
+
+double Reel::getNb() const {
+    double temp=mantisse.getNb();
+    while (temp>1)
+        temp/=10;
+    if (entiere.getNb()>0)
+        return entiere.getNb()+temp;
+    else
+        return entiere.getNb()-temp;
+}
+
 template<typename Type> Type operator/(Entier a, Entier b)
 {
     // si le numerateur est 0, le denominateur prend la valeur 1
@@ -31,13 +48,7 @@ template<typename Type> Type operator/(Entier a, Entier b)
 }
 
 
-Reel::Reel(int& e1, int& e2)
-{
-    if (e2==0){}
-		//cast vers Entier
-	entiere=e1;
-	mantisse=e2;
-}
+
 
 
 
