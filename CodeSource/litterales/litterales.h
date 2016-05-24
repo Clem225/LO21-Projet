@@ -9,6 +9,8 @@
  */
 
 #include <iostream>
+#include <string>
+#include <QString>
 #include "../manager/manager.h"
 
 class Operande
@@ -103,8 +105,9 @@ public:
     /*----------Opérateurs-------------*/
 
     Litterale& operator+(Litterale& e);
-    Entier& operator-(Entier& e) {nb-=e.getNb(); return *this;}
-    Entier& operator*(Entier& e) {nb*=e.getNb(); return *this;}
+    Litterale& operator-(Litterale& e);
+    Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);
 
 };
 
@@ -121,7 +124,8 @@ public:
     Entier simplification();
     Rationnel(int e1, int e2);
 	int getNum() const {return numerateur.getNb();}
-	int getDenom() const {return denominateur.getNb();}
+    int getDenom() const {return denominateur.getNb();}
+    Rationnel& getInverse() const {Rationnel* r = new Rationnel(denominateur.getNb(),numerateur.getNb()); return *r;}
     void setNum(int e) {numerateur=e;}
     void setDenom(int e) {denominateur=e;}
     double getNb() const {return numerateur.getNb()/denominateur.getNb();} //Utilité à démontrer
@@ -140,12 +144,14 @@ public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
     Reel(Entier e1, Entier e2):entiere(e1),mantisse(e2){if(e2.getNb()<0) throw LitteraleException("Mantisse negative.");}
 
-    //Reel NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
-    double getNb() const;
+    Reel& NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
     int getEntiere() const {return entiere.getNb();}
     int getMantisse() const {return mantisse.getNb();}
+    double getNb() const;
+    void setNb(double d);
     void setEntiere(int e) {entiere=e;}
     void setMantisse(int e) {mantisse=e;}
+    void afficher(std::ostream& f) const {f<<getNb();}
 
 };
 

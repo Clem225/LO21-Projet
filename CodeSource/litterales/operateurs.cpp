@@ -36,12 +36,20 @@ template<typename Type> Type operator/(Entier a, Entier b)
     //else return Rationnel(a,b);
 }
 
-// Attention, je pense que tu peux caster un entier en reel... A voir...
+
+
+
+
+/*------Classe Entier------*/
+
 Litterale& Entier::operator+(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+
+    if ((!ent)&&(!rat)&&(!real)&&(!comp))
+        throw "Erreur : operation impossible : l'un des operateurs n'est pas une litterale";
 
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
@@ -68,20 +76,222 @@ Litterale& Entier::operator+(Litterale& e) {
 
         if (compEnt) //La partie reelle du complexe est un entier
         {
-            //comp->setReal(Entier(compEnt->getNb() + nb));
-            return *comp;
+            Entier* e= new Entier(compEnt->getNb() + nb);
+            comp->setReal(*e);
         }
-        if (compRat) //C'est un rationnel
+        if (compRat) //La partie réelle du complexe est un rationnel
         {
             compRat->setNum(compRat->getNum() + nb*compRat->getDenom());
             compRat->simplification();
             comp->setReal(*compRat);
-            return *comp;
+        }
+        if (compReal) //La partie réelle du complexe est un réel
+        {
+            compReal->setEntiere(compReal->getEntiere() + nb);
+            comp->setReal(*compReal);
         }
 
+        return *comp;
+    }
+}
 
 
+
+Litterale& Entier::operator-(Litterale& e)
+{
+    Entier* ent=dynamic_cast<Entier*>(&e);
+    Rationnel* rat=dynamic_cast<Rationnel*>(&e);
+    Reel* real=dynamic_cast<Reel*>(&e);
+    Complexe* comp=dynamic_cast<Complexe*>(&e);
+    if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
+    {
+        nb-=ent->getNb();
+        return *this;
+    }
+    if (rat) //c'est un rationnel
+    {
+        rat->setNum(nb*rat->getDenom() - rat->getNum());
+        rat->simplification();
+        return *rat;
+    }
+    if (real) //c'est un reel
+    {
+        real->setEntiere(nb - real->getEntiere());
+        return *real;
+    }
+    if (comp) //c'est un complexe
+    {
+        //On cherche le type de la partie réelle
+        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
+        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
+        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
+
+        if (compEnt) //La partie reelle du complexe est un entier
+        {
+            Entier* e= new Entier(nb - compEnt->getNb());
+            comp->setReal(*e);
+        }
+        if (compRat) //La partie réelle du complexe est un rationnel
+        {
+            compRat->setNum(nb*compRat->getDenom() - compRat->getNum());
+            compRat->simplification();
+            comp->setReal(*compRat);
+        }
+        if (compReal) //La partie réelle du complexe est un réel
+        {
+            compReal->setEntiere(nb - compReal->getEntiere());
+            comp->setReal(*compReal);
+        }
+
+        return *comp;
     }
 
-
 }
+
+
+
+Litterale& Entier::operator*(Litterale& e) {
+    Entier* ent=dynamic_cast<Entier*>(&e);
+    Rationnel* rat=dynamic_cast<Rationnel*>(&e);
+    Reel* real=dynamic_cast<Reel*>(&e);
+    Complexe* comp=dynamic_cast<Complexe*>(&e);
+    if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
+    {
+        nb*=ent->getNb();
+        return *this;
+    }
+    if (rat) //c'est un rationnel
+    {
+        rat->setNum(nb*rat->getNum());
+        rat->simplification();
+        return *rat;
+    }
+    if (real) //c'est un reel
+    {
+        real->setEntiere(nb * real->getEntiere());
+        double temp=real->getMantisse();
+        while (temp>1)
+            temp/=10;
+        temp*=nb;
+        while (temp>=1)
+        {
+            real->setEntiere(real->getEntiere() + 1);
+            temp-=1;
+        }
+        real->setMantisse(temp);
+        return *real;
+    }
+    if (comp) //c'est un complexe
+    {
+        //On cherche le type de la partie réelle
+        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
+        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
+        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
+
+        if (compEnt) //La partie reelle du complexe est un entier
+        {
+            Entier* e= new Entier(nb * compEnt->getNb());
+            comp->setReal(*e);
+        }
+        if (compRat) //La partie réelle du complexe est un rationnel
+        {
+            compRat->setNum(nb*compRat->getNum());
+            compRat->simplification();
+            comp->setReal(*compRat);
+        }
+        if (compReal) //La partie réelle du complexe est un réel
+        {
+            compReal->setEntiere(nb * compReal->getEntiere());
+            double temp=compReal->getMantisse();
+            while (temp>1)
+                temp/=10;
+            temp*=nb;
+            while (temp>=1)
+            {
+                compReal->setEntiere(compReal->getEntiere() + 1);
+                temp-=1;
+            }
+            compReal->setMantisse(temp);
+
+            comp->setReal(*compReal);
+        }
+
+        return *comp;
+    }
+}
+
+
+
+/*Litterale& Entier::operator/(Litterale& e) {
+    Entier* ent=dynamic_cast<Entier*>(&e);
+    Rationnel* rat=dynamic_cast<Rationnel*>(&e);
+    Reel* real=dynamic_cast<Reel*>(&e);
+    Complexe* comp=dynamic_cast<Complexe*>(&e);
+    if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
+    {
+        if (ent->getNb()==0)
+            throw "Erreur : division par zero";
+        if (nb % ent->getNb()==0) // Si le reste de la division est zéro
+        {
+            nb/=ent->getNb();
+            return *this;
+        }
+        else
+        {
+            Rationnel* r = new Rationnel(nb,ent->getNb());
+            return *r;
+        }
+    }
+    if (rat) //c'est un rationnel
+    {
+        return this->operator*(rat->getInverse()); // On multiplie par l'inverse plutot que diviser
+    }
+    if (real) //c'est un reel
+    {
+        double d = real->getNb();
+        double res = (double nb / d);
+        real->setNb(res);
+        return *real;
+    }
+    if (comp) //c'est un complexe
+    {
+        Entier* compImag=dynamic_cast<Entier*>(comp->getImag));
+        if (compImag)
+            if (compImag->getNb()==0)
+                nb/=
+        //On cherche le type de la partie réelle
+        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
+        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
+        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
+
+        if (compEnt) //La partie reelle du complexe est un entier
+        {
+            comp->setReal(Entier(nb * compEnt->getNb()));
+        }
+        if (compRat) //La partie réelle du complexe est un rationnel
+        {
+            compRat->setNum(nb*compRat->getNum());
+            compRat->simplification();
+            comp->setReal(*compRat);
+        }
+        if (compReal) //La partie réelle du complexe est un réel
+        {
+            Entier* e= new Entier(nb * compEnt->getNb());
+            comp->setReal(*e);
+            double temp=compReal->getMantisse();
+            while (temp>1)
+                temp/=10;
+            temp*=nb;
+            while (temp>=1)
+            {
+                compReal->setEntiere(compReal->getEntiere() + 1);
+                temp-=1;
+            }
+            compReal->setMantisse(temp);
+
+            comp->setReal(*compReal);
+        }
+
+        return *comp;
+    }
+}*/
