@@ -115,6 +115,7 @@ Litterale* FactoryLitterale::addLitterale(std::string litterale)
 // Initialisation de l'attribut statique
 FactoryLitterale::Handler FactoryLitterale::handler = FactoryLitterale::Handler();
 
+// Singleton
 FactoryLitterale& FactoryLitterale::getInstance()
 {
     if(handler.instance==nullptr) {

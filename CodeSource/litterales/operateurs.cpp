@@ -36,7 +36,7 @@ template<typename Type> Type operator/(Entier a, Entier b)
     //else return Rationnel(a,b);
 }
 
-
+// Attention, je pense que tu peux caster un entier en reel... A voir...
 Litterale& Entier::operator+(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
