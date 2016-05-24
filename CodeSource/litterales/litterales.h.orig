@@ -1,6 +1,5 @@
 #ifndef LITTERALES_H
 #define LITTERALES_H
-
 /*!
  * \file litterales.h
  * \brief Implementation des litterales
@@ -8,38 +7,68 @@
  * \version 0.1
  */
 
-#include <iostream>
-#include "../manager/manager.h"
+#ifndef LITTERALES_H
+#define LITTERALES_H
 
+#include <iostream>
+#include <string>
+
+
+<<<<<<< Updated upstream
+
+
+
+
+/*----------------------Classes mères-------------------------*/
+
+
+class Operande {
+=======
+/*!
+ * \class Opérande
+ * \brief Regroupe l'ensemble des littérales et des opérateurs
+*/
 class Operande
 {
+>>>>>>> Stashed changes
 
-};
+}; //Utilité à vérifier
 
+<<<<<<< Updated upstream
+=======
 /*!
  * \class Operateur
 */
-
 class Operateur : public Operande
 {
-
-};
+>>>>>>> Stashed changes
 
 /*!
  * \class Litterale
 */
 
+/*!
+ * \class Litterale
+*/
 class Litterale : public Operande
 {
 public:
     virtual void afficher(std::ostream& f=std::cout) const=0;
 };
 
+<<<<<<< Updated upstream
+
+class Programme : public Litterale {
+=======
 /*!
  * \class Programme
 */
 class Programme : public Litterale
 {
+>>>>>>> Stashed changes
+private:
+
+public:
 
 };
 
@@ -56,14 +85,19 @@ class ExpressionPart : public Litterale
 */
 class Expression : public Litterale
 {
+private:
 
 };
 
 /*!
  * \class LitteraleNumerique
 */
+<<<<<<< Updated upstream
+class LitteraleNumerique : public ExpressionPart {
+=======
 class LitteraleNumerique : public ExpressionPart
 {
+>>>>>>> Stashed changes
 
 };
 
@@ -75,15 +109,30 @@ class Atome : public ExpressionPart
 private:
     std::string tab;
 public:
-    Atome(std::string text): tab(text) {}
-    std::string getAtome() const {return tab;}
+<<<<<<< Updated upstream
+    Atome(char* text): tab(text) {}
+    char* getAtome() const {return tab;}
+
+
+
 
 };
+
+
+
+
 
 
 /*----------------------Classes de littérales numériques-------------------------*/
 
 
+
+=======
+    Atome(std::string text): tab(text) {}
+    std::string getAtome() const {return tab;}
+};
+
+>>>>>>> Stashed changes
 /*!
  * \class Entier
  */
@@ -106,6 +155,8 @@ public:
     Entier& operator-(Entier& e) {nb-=e.getNb(); return *this;}
     Entier& operator*(Entier& e) {nb*=e.getNb(); return *this;}
 
+
+
 };
 
 
@@ -118,8 +169,13 @@ private:
 	Entier numerateur;
 	Entier denominateur;
 public:
+<<<<<<< Updated upstream
     Entier simplification();
     Rationnel(int e1, int e2);
+=======
+    // Constructeur (Avec conversion implicite de int e1,e2 en Entier
+    Rationnel(int e1, int e2): numerateur(e1), denominateur(e2) {}
+>>>>>>> Stashed changes
 	int getNum() const {return numerateur.getNb();}
 	int getDenom() const {return denominateur.getNb();}
     void setNum(int e) {numerateur=e;}
@@ -138,14 +194,20 @@ private:
     Entier mantisse;
 public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
-    Reel(Entier e1, Entier e2):entiere(e1),mantisse(e2){if(e2.getNb()<0) throw LitteraleException("Mantisse negative.");}
-
-    //Reel NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
+    Reel(Entier e1, Entier e2):entiere(e1),mantisse(e2){/*if(e2.getNb()<0) throw LitteraleException("Mantisse negative.");*/}
+    Reel NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
     double getNb() const;
+<<<<<<< Updated upstream
     int getEntiere() const {return entiere.getNb();}
     int getMantisse() const {return mantisse.getNb();}
     void setEntiere(int e) {entiere=e;}
     void setMantisse(int e) {mantisse=e;}
+    void afficher(std::ostream& f) const {f<<getNb();}
+=======
+    int getEntiere() const {return entiere.getNb();} //Utilité à démontrer
+    int getMantisse() const {return mantisse.getNb();} //Utilité à démontrer
+    void afficher(std::ostream& f=std::cout) const {f<<getNb();}
+>>>>>>> Stashed changes
 
 };
 
@@ -167,5 +229,8 @@ public:
 };
 
 
-#endif
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
+#endif

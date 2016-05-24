@@ -1,9 +1,7 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
-#include <string>
 #include <iostream>
-#include "../litterales/litterales.h"
 
 /*!
  * \class LitteraleException
@@ -17,11 +15,13 @@ public:
 };
 
 
-
 /*!
  * \class FactoryLitterale
  * \brief Création de litterale (Design Patern Factory Method)
 */
+
+class Litterale;
+
 class FactoryLitterale
 {
 
@@ -47,6 +47,8 @@ class FactoryLitterale
         static void libererInstance();
         // On donne un string en entrée à addLitterale qui renvera une reference vers un objet correspondant
         Litterale* addLitterale(std::string litterale);
+
+
 };
 
 

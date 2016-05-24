@@ -1,5 +1,6 @@
 #include "../manager/manager.h"
-#include <stdlib.h>
+#include "../litterales/litterales.h"
+
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
 Litterale* FactoryLitterale::addLitterale(std::string litterale)
@@ -86,10 +87,10 @@ Litterale* FactoryLitterale::addLitterale(std::string litterale)
         }
         if(isReel==true)
         {
-            Entier* monEntier1=new Entier(atoi(partieEntiere.c_str()));
+            /*Entier* monEntier1=new Entier(atoi(partieEntiere.c_str()));
             Entier* monEntier2= new Entier(atoi(partieDecimale.c_str()));
-            Reel* monReel = new Reel(*monEntier1,*monEntier2);
-            return monReel;
+            Reel monReel = new Reel(*monEntier1,*monEntier2);
+            return monReel;*/
         }
         if(isRationnel==true)
         {

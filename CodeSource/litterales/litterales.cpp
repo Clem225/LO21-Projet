@@ -1,68 +1,6 @@
 #include "litterales.h"
 
 
-
-
-/*------Classe Entier------*/
-
-{
-
-/*------Opérateurs------*/
-
-Litterale& Entier::operator+(Litterale& e) {
-    Entier* ent=dynamic_cast<Entier*>(&e);
-    Rationnel* rat=dynamic_cast<Rationnel*>(&e);
-    Reel* real=dynamic_cast<Reel*>(&e);
-    Complexe* comp=dynamic_cast<Complexe*>(&e);
-
-    if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
-    {
-        nb+=ent->getNb();
-        return *this;
-    }
-    if (rat) //c'est un rationnel
-    {
-        rat->setNum(rat->getNum() + nb*rat->getDenom());
-        rat->simplification();
-        return *rat;
-    }
-    if (real) //c'est un reel
-    {
-        real->setEntiere(real->getEntiere() + nb);
-        return *real;
-    }
-    if (comp) //c'est un complexe
-    {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            comp->setReal(Entier(compEnt->getNb() + nb));
-            return *comp;
-        }
-        if (compRat) //C'est un rationnel
-        {
-            compRat->setNum(compRat->getNum() + nb*compRat->getDenom());
-            compRat->simplification();
-            comp->setReal(*compRat);
-            return *comp;
-        }
-
-
-
-    }
-        
-
-}
-
-
-
-
-
-
 /*------Classe rationnel------*/
 
 Entier Rationnel::simplification() {
@@ -94,16 +32,9 @@ Rationnel::Rationnel(int e1, int e2) {
 
 
 
-
-
-
-
-
-
-
 /*------Classe Réel------*/
 
-
+/*
     double temp=mantisse.getNb();
     while (temp>1)
         temp/=10;
@@ -113,7 +44,7 @@ Rationnel::Rationnel(int e1, int e2) {
         return entiere.getNb()-temp;
 }
 
-
+*/
 
 
 

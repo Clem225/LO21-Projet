@@ -1,8 +1,7 @@
-#include <iostream>
 #include "../litterales/litterales.h"
 #include "../manager/manager.h"
 
-using namespace std;
+
 
 int main(/*int argc, char *argv[]*/)
 {
