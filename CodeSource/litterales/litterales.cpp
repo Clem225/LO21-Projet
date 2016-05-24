@@ -5,15 +5,7 @@
 
 /*------Classe Entier------*/
 
-Entier& Entier::operator=(Entier a)
 {
-    // On verifie que ce n'est pas un cas a=a;
-    if(this!=&a)
-    {
-        a.nb=this->getNb();
-    }
-    return *this;
-}
 
 /*------Opérateurs------*/
 
@@ -112,14 +104,6 @@ Rationnel::Rationnel(int e1, int e2) {
 /*------Classe Réel------*/
 
 
-
-Reel::Reel(int& e1, int& e2) {
-    if (e2<0) throw "Erreur, mantisse<0";
-    entiere=e1;
-    mantisse=e2;
-}
-
-double Reel::getNb() const {
     double temp=mantisse.getNb();
     while (temp>1)
         temp/=10;

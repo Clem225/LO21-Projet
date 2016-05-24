@@ -1,4 +1,5 @@
-
+#ifndef LITTERALES_H
+#define LITTERALES_H
 /*!
  * \file litterales.h
  * \brief Implementation des litterales
@@ -10,76 +11,87 @@
 #define LITTERALES_H
 
 #include <iostream>
+#include <string>
+
 
 
 
 
 
 /*----------------------Classes mères-------------------------*/
-
-
-class Operande {
+{
 
 }; //Utilité à vérifier
 
+ * \class Operateur
+*/
+class Operateur : public Operande
+{
 
 /*!
  * \class Litterale
 */
 
-class Litterale : public Operande {
+/*!
+ * \class Litterale
+*/
+class Litterale : public Operande
+{
 public:
-    virtual void afficher(std::ostream& f) const=0;
+    virtual void afficher(std::ostream& f=std::cout) const=0;
 };
 
 
-class Programme : public Litterale {
+ * \class Programme
+*/
+class Programme : public Litterale
+{
 private:
-    Operande** tab;
+
 public:
-    Programme(Operande** op): tab(op) {} // A revoir ensuite biensûr
+
 };
 
 /*!
  * \class ExpressionPart
  */
-class ExpressionPart : public Litterale {
+class ExpressionPart : public Litterale
+{
 
 };
 
 /*!
  * \class Expression
 */
-class Expression : public Litterale {
+class Expression : public Litterale
+{
 private:
-    ExpressionPart** tab;
+
 };
 
 /*!
  * \class LitteraleNumerique
 */
-class LitteraleNumerique : public ExpressionPart {
+class LitteraleNumerique : public ExpressionPart
+
 
 };
 
 /*!
  * \class Atome
  */
-class Atome : public ExpressionPart {
+class Atome : public ExpressionPart
+{
 private:
-    char* tab;
+    std::string tab;
 public:
-    Atome(char* text): tab(text) {}
-    char* getAtome() const {return tab;}
+    Atome(std::string text): tab(text) {}
+    std::string getAtome() const {return tab;}
 
 
 
 
 };
-
-
-
-
 
 
 /*----------------------Classes de littérales numériques-------------------------*/
@@ -89,7 +101,8 @@ public:
 /*!
  * \class Entier
  */
-class Entier : public LitteraleNumerique {
+class Entier : public LitteraleNumerique
+{
 private:
     int nb;
 public:
@@ -97,7 +110,7 @@ public:
     Entier(int n): nb(n) {}
     Entier& operator=(Entier a);
     Entier NEG() {if (nb>0) nb=-nb; return *this;}
-	int getNb() const {return nb;}
+    int getNb() const {return nb;}
     void setValue(int i) {nb=i;}
     void afficher(std::ostream& f) const {f<<nb;}
 
@@ -115,13 +128,14 @@ public:
 /*!
  * \class Rationnel
  */
-class Rationnel : public LitteraleNumerique {
+class Rationnel : public LitteraleNumerique
+{
 private:
 	Entier numerateur;
 	Entier denominateur;
 public:
     Entier simplification();
-    Rationnel(int e1, int e2);
+    Rationnel(int e1, int e2): numerateur(e1), denominateur(e2) {};
 	int getNum() const {return numerateur.getNb();}
 	int getDenom() const {return denominateur.getNb();}
     void setNum(int e) {numerateur=e;}
@@ -130,32 +144,31 @@ public:
     void afficher(std::ostream& f) const {f<<getNum()<<"/"<<getDenom();}
 };
 
-
 /*!
  * \class Reel
  */
-class Reel : public LitteraleNumerique {
+class Reel : public LitteraleNumerique
+{
 private:
     Entier entiere;
     Entier mantisse;
 public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
-    Reel(int& e1, int& e2);
+    Reel(Entier e1, Entier e2):entiere(e1),mantisse(e2){/*if(e2.getNb()<0) throw LitteraleException("Mantisse negative.");*/}
     Reel NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
     double getNb() const;
     int getEntiere() const {return entiere.getNb();}
     int getMantisse() const {return mantisse.getNb();}
     void setEntiere(int e) {entiere=e;}
     void setMantisse(int e) {mantisse=e;}
-    void afficher(std::ostream& f) const {f<<getNb();}
 
 };
 
 /*!
  * \class Complexe
  */
-
-class Complexe : public ExpressionPart {
+class Complexe : public ExpressionPart
+{
 private:
     LitteraleNumerique* realPart; //On ne connait pas le type exact. C'est soit un reel, soit un rationnel, soit un entier.
     LitteraleNumerique* imagPart;
@@ -169,5 +182,5 @@ public:
 };
 
 
-
+#endif
 #endif

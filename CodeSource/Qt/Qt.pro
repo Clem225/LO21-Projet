@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += \
     ../main/main.cpp \
     ../litterales/litterales.cpp \
-    ../operateurs/operateurs.cpp
+    ../manager/manager.cpp \
+    ../litterales/operateurs.cpp
 
 HEADERS += \
     ../litterales/litterales.h \
-    ../operateurs/operateurs.h
+    ../manager/manager.h \
+    ../litterales/operateurs.h
 
