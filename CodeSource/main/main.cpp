@@ -1,7 +1,7 @@
 #include "../litterales/litterales.h"
 #include "../manager/manager.h"
 #include <iostream>
-#include "../GUI/dialog.h"
+#include "../GUI/mainwindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    Dialog test;
+    MainWindow test;
     test.show();
 
     return app.exec();

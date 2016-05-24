@@ -9,14 +9,14 @@ SOURCES += \
     ../litterales/litterales.cpp \
     ../manager/manager.cpp \
     ../litterales/operateurs.cpp \
-    ../GUI/dialog.cpp
+    ../GUI/mainwindow.cpp
 
 HEADERS += \
     ../litterales/litterales.h \
     ../manager/manager.h \
     ../litterales/operateurs.h \
-    ../GUI/dialog.h
+    ../GUI/mainwindow.h
 
 FORMS += \
-    ../GUI/dialog.ui
+    ../GUI/mainwindow.ui
 
