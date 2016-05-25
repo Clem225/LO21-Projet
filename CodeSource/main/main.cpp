@@ -25,7 +25,8 @@ int main(int argc, char *argv[])
     Entier monEntier(2);
     Entier monEntier2(8);
 
-    monReel.setNb(-1.1000);
+    monReel.setNb(-0.1000);
+
     monReel.afficher();
 
     std::cout<<std::endl;

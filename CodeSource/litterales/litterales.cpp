@@ -71,7 +71,7 @@ double Reel::getNb() const {
         // On renvoie simplement la mantisse
         return temp;
     }
-    // Si la valeur est position
+    // Si la valeur est positive
     if (entiere.getNb()>0)
         // On renvoie la partie entiere + la mantisse
         return entiere.getNb()+temp;
