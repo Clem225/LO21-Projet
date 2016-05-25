@@ -1,12 +1,22 @@
 #include "operateurs.h"
+#include <math.h>
+#include <limits>
+#include <iostream>
+
+
+bool areSame(double a, double b)
+{
+    return fabs(a - b) < std::numeric_limits<double>::epsilon() ;
+}
 
 Entier& Entier::operator=(Entier a)
 {
     // On verifie que ce n'est pas un cas a=a;
     if(this!=&a)
     {
-        a.nb=this->getNb();
+        nb=a.getNb();
     }
+
     return *this;
 }
 

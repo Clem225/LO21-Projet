@@ -1,5 +1,9 @@
 #include "litterales.h"
-
+#include "operateurs.h"
+#include <string>
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
 
 /*------Classe rationnel------*/
 
@@ -48,35 +52,40 @@ double Reel::getNb() const {
 }
 
 
-void Reel::setNb(double d) {
-    int i=d;
-    unsigned int j=0, n=0;
-    double temp=d, intToDouble;
-    while (intToDouble!=temp)
+void Reel::setNb(long double d) {
+
+    long double dTemp=d;
+    long double v, e;
+    v=modfl(dTemp,&e);
+
+    int j=0;
+    while(!areSame(dTemp,e))
     {
-        temp*=10;
-        j++; //Représente le nombre de chiffres après la virgule
-        i=temp;
-        intToDouble=i;
+        j++;
+        dTemp*=10;
+        v=modfl(dTemp,&e);
+
     }
-    temp=d;
-    while (temp>1)
+    dTemp=d;
+    int n=0;
+    while (dTemp>1)
     {
-        temp/=10;
+        dTemp/=10;
         n++; //Représente le nombre de chiffres avant la virgule
     }
-    std::string s = std::to_string(i);
-    std::string partieentiere;
-    std::string partiemantisse;
-    for (unsigned int k1=0;k1<n;k1++)
-        partieentiere[k1]=s[k1];
-    for (unsigned int k2=0;k2<j;k2++)
-        partiemantisse[k2]=s[n+1+k2];
-    setEntiere(stoi(partieentiere));
-    setMantisse(stoi(partiemantisse));
+
+    std::string s=std::to_string(d);
+
+    std::string partieentiere = s.substr(0,n);
+    std::string partiemantisse = s.substr(n+1,n+j);
+
+
+    int a = stoi(partieentiere);
+    int b = stoi(partiemantisse);
+
+    setEntiere(a);
+    setMantisse(b);
 }
-
-
 
 
 

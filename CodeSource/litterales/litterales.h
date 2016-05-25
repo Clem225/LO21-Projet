@@ -9,8 +9,6 @@
  */
 
 #include <iostream>
-#include <string>
-#include <QString>
 #include "../manager/manager.h"
 
 class Operande
@@ -35,6 +33,7 @@ class Litterale : public Operande
 {
 public:
     virtual void afficher(std::ostream& f=std::cout) const=0;
+
 };
 
 /*!
@@ -100,7 +99,7 @@ public:
     Entier NEG() {if (nb>0) nb=-nb; return *this;}
     int getNb() const {return nb;}
     void setValue(int i) {nb=i;}
-    void afficher(std::ostream& f) const {f<<nb;}
+    void afficher(std::ostream& f=std::cout) const {f<<nb;}
 
     /*----------Opérateurs-------------*/
 
@@ -148,10 +147,12 @@ public:
     int getEntiere() const {return entiere.getNb();}
     int getMantisse() const {return mantisse.getNb();}
     double getNb() const;
-    void setNb(double d);
-    void setEntiere(int e) {entiere=e;}
-    void setMantisse(int e) {mantisse=e;}
-    void afficher(std::ostream& f) const {f<<getNb();}
+    void setNb(long double d);
+
+    void setEntiere(const Entier& e){entiere=e;}
+
+    void setMantisse(const Entier& e) {mantisse=e;}
+    void afficher(std::ostream& f=std::cout) const {f<<this->getNb();}
 
 };
 
@@ -169,7 +170,7 @@ public:
     LitteraleNumerique* getImag() const {return imagPart;}
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
-    void afficher(std::ostream& f) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
+    //void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
 };
 
 
