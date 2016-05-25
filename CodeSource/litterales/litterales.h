@@ -148,10 +148,8 @@ public:
     int getMantisse() const {return mantisse.getNb();}
     double getNb() const;
     void setNb(long double d);
-
     void setEntiere(const Entier& e){entiere=e;}
-
-    void setMantisse(const Entier& e) {mantisse=e;}
+    void setMantisse(const Entier& e);
     void afficher(std::ostream& f=std::cout) const {f<<this->getNb();}
 
 };
@@ -170,7 +168,7 @@ public:
     LitteraleNumerique* getImag() const {return imagPart;}
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
-    //void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
+    void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
 };
 
 

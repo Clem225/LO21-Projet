@@ -3,12 +3,18 @@
 #include <limits>
 #include <iostream>
 
+/* ---------------- DOUBLE --------------- */
 
-bool areSame(double a, double b)
+
+// Compare deux double
+bool areSame(long double a, long double b)
 {
     return fabs(a - b) < std::numeric_limits<double>::epsilon() ;
 }
 
+/* ---------------- ENTIER --------------- */
+
+// Operateur d'affectation
 Entier& Entier::operator=(Entier a)
 {
     // On verifie que ce n'est pas un cas a=a;
@@ -20,10 +26,14 @@ Entier& Entier::operator=(Entier a)
     return *this;
 }
 
+// Operateur de comparaison
 bool operator==(const Entier& a, const Entier& b)
 {
     return a.getNb()==b.getNb();
 }
+
+/* ---------------- TEMPLATE --------------- */
+
 
 template<typename Type> Type operator/(Entier a, Entier b)
 {
@@ -126,7 +136,10 @@ Litterale& Entier::operator-(Litterale& e)
     }
     if (real) //c'est un reel
     {
-        real->setEntiere(nb - real->getEntiere());
+        double d= real->getNb();
+        double nb2=nb;
+        double result = nb2-d;
+        real->setNb(result);
         return *real;
     }
     if (comp) //c'est un complexe

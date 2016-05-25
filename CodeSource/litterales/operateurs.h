@@ -3,7 +3,7 @@
 
 #include "litterales.h"
 
-bool areSame(double a, double b);
+bool areSame(long double a, long double b);
 
 // Templates
 template<typename Type> Type operator/(Entier e1, Entier e2); // A vérifier par la suite
