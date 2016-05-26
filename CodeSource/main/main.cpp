@@ -11,23 +11,23 @@
 int main(int argc, char *argv[])
 {
 
-    Reel monReel(2,14);
+    Reel monReel(1.54);
 
-    Reel monReelpart1(1,24);
-    Reel monReelpart2(7,9);
+    Reel monReelpart1(1.24);
+    Reel monReelpart2(7.9);
 
-    Reel monReelpart3(1,24);
-    Reel monReelpart4(7,9);
+    Reel monReelpart3(1.24);
+    Reel monReelpart4(7.9);
 
     Complexe monComplexe1(monReelpart1,monReelpart2);
     Complexe monComplexe2(monReelpart3,monReelpart4);
 
-    Entier monEntier(2);
+    Entier monEntier(4);
     Entier monEntier2(8);
 
-    monReel.setNb(-0.1000);
+    Rationnel monRat(3,4);
 
-    monReel.afficher();
+    (monEntier-monComplexe1).afficher();
 
     std::cout<<std::endl;
 

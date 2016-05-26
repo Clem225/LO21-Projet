@@ -162,7 +162,7 @@ Litterale& Entier::operator-(Litterale& e)
         }
         if (compReal) //La partie réelle du complexe est un réel
         {
-            compReal->setEntiere(nb - compReal->getEntiere());
+            compReal->setNb(nb - compReal->getNb());
             comp->setReal(*compReal);
         }
 
@@ -191,18 +191,10 @@ Litterale& Entier::operator*(Litterale& e) {
     }
     if (real) //c'est un reel
     {
-        real->setEntiere(nb * real->getEntiere());
-        double temp=real->getMantisse();
-        while (temp>1)
-            temp/=10;
-        temp*=nb;
-        while (temp>=1)
-        {
-            real->setEntiere(real->getEntiere() + 1);
-            temp-=1;
-        }
-        real->setMantisse(temp);
-        return *real;
+        double d = real->getNb();
+        d = nb * d;
+        real->setNb(d);
+        return  *real;
     }
     if (comp) //c'est un complexe
     {

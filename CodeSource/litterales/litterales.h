@@ -137,20 +137,19 @@ public:
 class Reel : public LitteraleNumerique
 {
 private:
-    Entier entiere;
-    Entier mantisse;
+    double nb;
 public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
-    Reel(Entier e1, Entier e2):entiere(e1),mantisse(e2){if(e2.getNb()<0) throw LitteraleException("Mantisse negative.");}
+    Reel(double d):nb(d) {}
 
-    Reel& NEG() {if (entiere.getNb()>0) entiere=entiere.NEG(); return *this;}
-    int getEntiere() const {return entiere.getNb();}
-    int getMantisse() const {return mantisse.getNb();}
-    double getNb() const;
-    void setNb(long double d);
-    void setEntiere(const Entier& e){entiere=e;}
-    void setMantisse(const Entier& e);
-    void afficher(std::ostream& f=std::cout) const {f<<this->getNb();}
+    Reel& NEG() {if (nb>0) nb=-nb; return *this;}
+    int getEntiere() const;
+    double getMantisse() const;
+    double getNb() const {return nb;}
+    void setNb(long double d) {nb=d;}
+    void setEntiere(const Entier& e);
+    void setMantisse(const double& e);
+    void afficher(std::ostream& f=std::cout) const {f<<getNb();}
 
 };
 
