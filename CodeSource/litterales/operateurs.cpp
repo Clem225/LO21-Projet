@@ -32,6 +32,7 @@ bool operator==(const Entier& a, const Entier& b)
     return a.getNb()==b.getNb();
 }
 
+
 /* ---------------- TEMPLATE --------------- */
 
 
@@ -237,7 +238,7 @@ Litterale& Entier::operator*(Litterale& e) {
 
 
 
-/*Litterale& Entier::operator/(Litterale& e) {
+Litterale& Entier::operator/(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -264,16 +265,12 @@ Litterale& Entier::operator*(Litterale& e) {
     if (real) //c'est un reel
     {
         double d = real->getNb();
-        double res = (double nb / d);
+        double res = nb / d;
         real->setNb(res);
         return *real;
     }
     if (comp) //c'est un complexe
     {
-        Entier* compImag=dynamic_cast<Entier*>(comp->getImag));
-        if (compImag)
-            if (compImag->getNb()==0)
-                nb/=
         //On cherche le type de la partie réelle
         Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
         Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
@@ -281,7 +278,8 @@ Litterale& Entier::operator*(Litterale& e) {
 
         if (compEnt) //La partie reelle du complexe est un entier
         {
-            comp->setReal(Entier(nb * compEnt->getNb()));
+            Reel* r= new Reel(nb / compEnt->getNb());
+            comp->setReal(*r);
         }
         if (compRat) //La partie réelle du complexe est un rationnel
         {
@@ -307,6 +305,36 @@ Litterale& Entier::operator*(Litterale& e) {
             comp->setReal(*compReal);
         }
 
+
+        //On cherche la partie imaginaire
+        Entier* compImEnt=dynamic_cast<Entier*>(comp->getImag());
+        Rationnel* compImRat=dynamic_cast<Rationnel*>(comp->getImag());
+        Reel* compImReal=dynamic_cast<Reel*>(comp->getImag());
+
+        if (compImEnt) //Si la partie imaginaire est entière
+        {
+            if (*compImEnt==0) // Et qu'elle est nulle
+                return *(comp->getReal()); //On renvoie uniquement la partie réelle
+            else
+            {
+                double d = nb / compImEnt->getNb();
+                Reel* r= new Reel(d);
+                comp->setImag(*r);
+            }
+        }
+        if (compImRat) //Si la partie imaginaire est rationnelle
+        {
+            int temp = compImRat->getDenom();
+            compImRat->setDenom(compImRat->getNum());
+            compImRat->setNum(nb*temp);
+            comp->setImag(*compImRat);
+        }
+        if (compImReal) //Si la partie imaginaire est reelle
+        {
+            compImReal->setNb(nb / compImReal->getNb());
+            comp->setImag(*compImReal);
+        }
+
         return *comp;
     }
-}*/
+}

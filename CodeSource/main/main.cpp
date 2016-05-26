@@ -11,10 +11,10 @@
 int main(int argc, char *argv[])
 {
 
-    Reel monReel(1.54);
+    Reel monReel(2);
 
-    Reel monReelpart1(1.24);
-    Reel monReelpart2(7.9);
+    Reel monReelpart1(2);
+    Reel monReelpart2(4);
 
     Reel monReelpart3(1.24);
     Reel monReelpart4(7.9);
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
     Rationnel monRat(3,4);
 
-    (monEntier-monComplexe1).afficher();
+    (monEntier/monRat).afficher();
 
     std::cout<<std::endl;
 
