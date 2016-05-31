@@ -33,6 +33,33 @@ bool operator==(const Entier& a, const Entier& b)
 }
 
 
+/* ---------------- TEST GREG --------------- */
+
+Litterale& Rationnel::operator+(Litterale& e)
+{
+
+}
+
+Litterale& Reel::operator+(Litterale& e)
+{
+
+}
+Litterale& Complexe::operator+(Litterale& e)
+{
+
+}
+Litterale& Programme::operator+(Litterale& e)
+{
+
+}
+Litterale& Expression::operator+(Litterale& e)
+{
+
+}
+Litterale& Atome::operator+(Litterale& e)
+{
+
+}
 /* ---------------- TEMPLATE --------------- */
 
 

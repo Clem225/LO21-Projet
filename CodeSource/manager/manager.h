@@ -1,7 +1,8 @@
 #ifndef MANAGER_H
 #define MANAGER_H
-
+#include <stack>
 #include <iostream>
+#include <string>
 
 /*!
  * \class LitteraleException
@@ -51,6 +52,13 @@ class FactoryLitterale
 
 };
 
+class Controleur {
+private :
+    std::stack<Litterale*> pile;
+public :
+    void empiler(FactoryLitterale& facto, std::string value){pile.push(facto.addLitterale(value));}
+    void commande(const std::string& c);
+};
 
 
 #endif

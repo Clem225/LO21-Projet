@@ -33,7 +33,7 @@ class Litterale : public Operande
 {
 public:
     virtual void afficher(std::ostream& f=std::cout) const=0;
-
+    virtual Litterale& operator+(Litterale& e) =0;
 };
 
 /*!
@@ -41,7 +41,8 @@ public:
 */
 class Programme : public Litterale
 {
-
+public :
+        Litterale& operator+(Litterale& e);
 };
 
 /*!
@@ -57,7 +58,8 @@ class ExpressionPart : public Litterale
 */
 class Expression : public Litterale
 {
-
+public :
+        Litterale& operator+(Litterale& e);
 };
 
 /*!
@@ -78,6 +80,10 @@ private:
 public:
     Atome(std::string text): tab(text) {}
     std::string getAtome() const {return tab;}
+    void afficher(std::ostream& f=std::cout) const {f<<tab;}
+
+    Litterale& operator+(Litterale& e);
+
 
 };
 
@@ -129,6 +135,8 @@ public:
     void setDenom(int e) {denominateur=e;}
     double getNb() const {return numerateur.getNb()/denominateur.getNb();} //Utilité à démontrer
     void afficher(std::ostream& f) const {f<<getNum()<<"/"<<getDenom();}
+
+    Litterale& operator+(Litterale& e);
 };
 
 /*!
@@ -151,6 +159,8 @@ public:
     void setMantisse(const double& e);
     void afficher(std::ostream& f=std::cout) const {f<<getNb();}
 
+    Litterale& operator+(Litterale& e);
+
 };
 
 /*!
@@ -162,12 +172,14 @@ private:
     LitteraleNumerique* realPart; //On ne connait pas le type exact. C'est soit un reel, soit un rationnel, soit un entier.
     LitteraleNumerique* imagPart;
 public:
-    Complexe(LitteraleNumerique& real, LitteraleNumerique& imag): realPart(&real), imagPart(&imag) {}
+    Complexe(LitteraleNumerique* real, LitteraleNumerique* imag): realPart(real), imagPart(imag) {}
     LitteraleNumerique* getReal() const {return realPart;}
     LitteraleNumerique* getImag() const {return imagPart;}
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
     void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
+
+        Litterale& operator+(Litterale& e);
 };
 
 
