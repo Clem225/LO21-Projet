@@ -10,9 +10,6 @@
 
 int main(int argc, char *argv[])
 {
-    Entier monEntier(4);
-    Entier monEntier2(8);
-
 
 
     // Creation du manager de litterales
@@ -23,10 +20,10 @@ int main(int argc, char *argv[])
 
     // On ajoute deux litterales à la pile du controleur
     std::string myString = "3";
-    Complexe monComplexe3(monEntier,monEntier2);
+    std::string myString2 = "5";
 
     controler.empiler(FactoryLitterale::getInstance(),myString);
-    controler.empiler(FactoryLitterale::getInstance(),myString);
+    controler.empiler(FactoryLitterale::getInstance(),myString2);
 
     // On envoie la commande d'addition
     controler.commande("+");
