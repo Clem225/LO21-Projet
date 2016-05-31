@@ -32,6 +32,7 @@ class Operateur : public Operande
 class Litterale : public Operande
 {
 public:
+    virtual Litterale& NEG() =0;
     virtual void afficher(std::ostream& f=std::cout) const=0;
     virtual Litterale& operator+(Litterale& e) =0;
 };
@@ -43,6 +44,7 @@ class Programme : public Litterale
 {
 public :
         Litterale& operator+(Litterale& e);
+        Litterale& NEG();
 };
 
 /*!
@@ -60,6 +62,7 @@ class Expression : public Litterale
 {
 public :
         Litterale& operator+(Litterale& e);
+        Litterale& NEG();
 };
 
 /*!
@@ -79,6 +82,7 @@ private:
     std::string tab;
 public:
     Atome(std::string text): tab(text) {}
+    Litterale& NEG();
     std::string getAtome() const {return tab;}
     void afficher(std::ostream& f=std::cout) const {f<<tab;}
 
@@ -102,7 +106,7 @@ public:
     Entier():nb(0){}
     Entier(int n): nb(n) {}
     Entier& operator=(Entier a);
-    Entier NEG() {if (nb>0) nb=-nb; return *this;}
+    Entier& NEG() {if (nb>0) nb=-nb; return *this;}
     int getNb() const {return nb;}
     void setValue(int i) {nb=i;}
     void afficher(std::ostream& f=std::cout) const {f<<nb;}
@@ -128,15 +132,22 @@ private:
 public:
     Entier simplification();
     Rationnel(int e1, int e2);
+    Rationnel& NEG() {if (numerateur.getNb()>0) numerateur.setValue(-numerateur.getNb());return *this;}
 	int getNum() const {return numerateur.getNb();}
     int getDenom() const {return denominateur.getNb();}
     Rationnel& getInverse() const {Rationnel* r = new Rationnel(denominateur.getNb(),numerateur.getNb()); return *r;}
     void setNum(int e) {numerateur=e;}
     void setDenom(int e) {denominateur=e;}
-    double getNb() const {return numerateur.getNb()/denominateur.getNb();} //Utilité à démontrer
+    double getNb() const {double d1 = numerateur.getNb();double d2=denominateur.getNb();return d1/d2;}
     void afficher(std::ostream& f) const {f<<getNum()<<"/"<<getDenom();}
 
+
+    /*----------Opérateurs-------------*/
+
     Litterale& operator+(Litterale& e);
+    Litterale& operator-(Litterale& e);
+    Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);
 };
 
 /*!
@@ -173,6 +184,7 @@ private:
     LitteraleNumerique* imagPart;
 public:
     Complexe(LitteraleNumerique* real, LitteraleNumerique* imag): realPart(real), imagPart(imag) {}
+    Complexe& NEG();
     LitteraleNumerique* getReal() const {return realPart;}
     LitteraleNumerique* getImag() const {return imagPart;}
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
