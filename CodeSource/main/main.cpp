@@ -23,10 +23,12 @@ int main(int argc, char *argv[])
     Rationnel r2(5,2);
 
     Reel real1(1.25);
+    Reel real2 (2.25);
+    Reel real3 (5.12);
 
-    Complexe c1 (&real1,&e4);
+    Complexe c1 (&e1,&e4);
 
-    (r1/real1).afficher();
+    (real1/c1).afficher();
     std::cout<<std::endl;
 
 

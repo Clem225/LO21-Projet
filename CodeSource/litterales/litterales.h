@@ -170,7 +170,12 @@ public:
     void setMantisse(const double& e);
     void afficher(std::ostream& f=std::cout) const {f<<getNb();}
 
+    /*----------Opérateurs-------------*/
+
     Litterale& operator+(Litterale& e);
+    Litterale& operator-(Litterale& e);
+    Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);
 
 };
 
