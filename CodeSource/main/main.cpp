@@ -10,6 +10,8 @@
 
 int main(int argc, char *argv[])
 {
+    Entier monEntier(4);
+    Entier monEntier2(8);
 
 
 
@@ -21,6 +23,7 @@ int main(int argc, char *argv[])
 
     // On ajoute deux litterales à la pile du controleur
     std::string myString = "3";
+    Complexe monComplexe3(monEntier,monEntier2);
 
     controler.empiler(FactoryLitterale::getInstance(),myString);
     controler.empiler(FactoryLitterale::getInstance(),myString);

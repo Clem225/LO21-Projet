@@ -316,20 +316,10 @@ Litterale& Entier::operator/(Litterale& e) {
         }
         if (compReal) //La partie réelle du complexe est un réel
         {
-            Entier* e= new Entier(nb * compEnt->getNb());
-            comp->setReal(*e);
-            double temp=compReal->getMantisse();
-            while (temp>1)
-                temp/=10;
-            temp*=nb;
-            while (temp>=1)
-            {
-                compReal->setEntiere(compReal->getEntiere() + 1);
-                temp-=1;
-            }
-            compReal->setMantisse(temp);
-
-            comp->setReal(*compReal);
+            double n = nb;
+            double res = n / compReal->getNb();
+            Reel* r= new Reel(res);
+            comp->setReal(*r);
         }
 
 
@@ -340,12 +330,11 @@ Litterale& Entier::operator/(Litterale& e) {
 
         if (compImEnt) //Si la partie imaginaire est entière
         {
-            if (*compImEnt==0) // Et qu'elle est nulle
+            if (compImEnt->getNb()==0) // Et qu'elle est nulle
                 return *(comp->getReal()); //On renvoie uniquement la partie réelle
             else
             {
-                double d = nb / compImEnt->getNb();
-                Reel* r= new Reel(d);
+                Rationnel* r = new Rationnel(nb,compImEnt->getNb());
                 comp->setImag(*r);
             }
         }
@@ -358,7 +347,9 @@ Litterale& Entier::operator/(Litterale& e) {
         }
         if (compImReal) //Si la partie imaginaire est reelle
         {
-            compImReal->setNb(nb / compImReal->getNb());
+            double n = nb;
+            double res= n / compImReal->getNb();
+            compImReal->setNb(res);
             comp->setImag(*compImReal);
         }
 
