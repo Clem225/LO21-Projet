@@ -184,13 +184,18 @@ bool estUnOperateurBinaire(const std::string& c)
 
 void Controleur::commande(const std::string& c)
 {
+
+
+
     if(estUnOperateurBinaire(c))
     {
         // Si c'est un opérateur binaire, il faut que la pile soit supérieur ou égale à 2
         if(pile.size()>=2)
         {
-            Litterale* v1 = pile.top();
+            Operande* v1 = pile.top();
             pile.pop();
+
+            Litterale* l1 = dynamic_cast<Litterale*>(v1);
 
             // On recupere maintenant le bon type de l'objet
 /*
@@ -233,12 +238,13 @@ void Controleur::commande(const std::string& c)
                 Entier* part1=ent1;
             }
 */
-            Litterale* v2 = pile.top();
+            Operande* v2 = pile.top();
             pile.pop();
 
+            Litterale* l2 = dynamic_cast<Litterale*>(v2);
 
 
-            Litterale& res = *v1+*v2;
+            Litterale& res = *l1+*l2;
 
             std::cout<<"RESULT : ";
             res.afficher();

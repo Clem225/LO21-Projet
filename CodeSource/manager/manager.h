@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "../litterales/litterales.h"
+
 /*!
  * \class LitteraleException
  * \brief Gestion des erreurs due à des littterales
@@ -54,7 +56,7 @@ class FactoryLitterale
 
 class Controleur {
 private :
-    std::stack<Litterale*> pile;
+    std::stack<Operande*> pile;
 public :
     void empiler(FactoryLitterale& facto, std::string value){pile.push(facto.addLitterale(value));}
     void commande(const std::string& c);

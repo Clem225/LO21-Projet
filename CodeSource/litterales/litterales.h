@@ -9,21 +9,20 @@
  */
 
 #include <iostream>
-#include "../manager/manager.h"
+
+
+/*!
+ * \class Operande
+*/
 
 class Operande
 {
+private :
 
+public:
+    virtual void afficher(std::ostream& f=std::cout) const=0;
 };
 
-/*!
- * \class Operateur
-*/
-
-class Operateur : public Operande
-{
-
-};
 
 /*!
  * \class Litterale
@@ -32,7 +31,7 @@ class Operateur : public Operande
 class Litterale : public Operande
 {
 public:
-    virtual void afficher(std::ostream& f=std::cout) const=0;
+
     virtual Litterale& NEG() =0;
     virtual Litterale& operator+(Litterale& e) =0;
 };
@@ -202,8 +201,8 @@ public:
 
     Litterale& operator+(Litterale& e);
     Litterale& operator-(Litterale& e);
-    /*Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);*/
+    Litterale& operator*(Litterale& e);
+    /*Litterale& operator/(Litterale& e);*/
 };
 
 
