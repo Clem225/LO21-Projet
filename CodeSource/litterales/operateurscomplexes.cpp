@@ -3,7 +3,7 @@
 
 Complexe& Complexe::NEG()
 {
-return Complexe(0,0);
+//return Complexe(0,0);
 }
 
 Litterale& Complexe::operator+(Litterale& e){

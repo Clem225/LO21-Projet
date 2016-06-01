@@ -5,7 +5,7 @@
 #include <string>
 
 #include "../litterales/litterales.h"
-#include "../litterales/operateurs.h"
+
 
 /*!
  * \class LitteraleException
