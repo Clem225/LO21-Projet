@@ -3,54 +3,9 @@
 
 
 
-// Compare deux double
-bool areSame(long double a, long double b)
-{
-    return fabs(a - b) < std::numeric_limits<double>::epsilon() ;
-}
 
 
 
-
-/* ---------------- TEST GREG --------------- */
-Litterale& Programme::operator+(Litterale& e)
-{
-return Entier(0);
-}
-Litterale& Expression::operator+(Litterale& e)
-{
-return Entier(0);
-}
-Litterale& Atome::operator+(Litterale& e)
-{
-return Entier(0);
-}
-
-
-Complexe& Complexe::NEG()
-{
-return Complexe(0,0);
-}
-Litterale& Programme::NEG()
-{
-return Entier(0);
-}
-Litterale& Expression::NEG()
-{
-return Entier(0);
-}
-Litterale& Atome::NEG()
-{
-return Entier(0);
-}
-
-
-
-
-
-
-
-/*------Classe Rationnel------*/
 
 Litterale& Rationnel::operator+(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);

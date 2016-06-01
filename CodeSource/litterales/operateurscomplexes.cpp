@@ -1,6 +1,11 @@
 #include "operateurs.h"
 
 
+Complexe& Complexe::NEG()
+{
+
+}
+
 Litterale& Complexe::operator+(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);

@@ -13,7 +13,11 @@ SOURCES += \
     ../litterales/operateursentier.cpp \
     ../litterales/operateursrationnel.cpp \
     ../litterales/operateursreel.cpp \
-    ../litterales/operateurscomplexes.cpp
+    ../litterales/operateurscomplexes.cpp \
+    ../litterales/operateursprogramme.cpp \
+    ../litterales/operateursexpression.cpp \
+    ../litterales/operateursatome.cpp \
+    ../operateurs/operateurs.cpp
 
 HEADERS += \
     ../litterales/litterales.h \

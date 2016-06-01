@@ -6,6 +6,8 @@
 #include <iostream>
 #include <limits>
 
+
+
 /*------Classe rationnel------*/
 
 Entier Rationnel::simplification() {
