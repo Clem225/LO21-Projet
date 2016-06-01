@@ -2,11 +2,6 @@
 
 
 
-
-
-
-
-
 Litterale& Rationnel::operator+(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -49,49 +44,12 @@ Litterale& Rationnel::operator+(Litterale& e){
 
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            compEnt->operator +(*this);
-            comp->setReal(*compEnt);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            int num=compRat->getNum(), denom=compRat->getDenom();
-            //Mise sous forme de dénominateur commun
-            compRat->setNum(num*denominateur.getNb());
-            compRat->setDenom(denom*denominateur.getNb());
-            numerateur.setValue(numerateur.getNb()*denom);
-            denominateur.setValue(denominateur.getNb()*denom);
-            //Addition des numérateurs puis simplification
-            numerateur.setValue(numerateur.getNb()+compRat->getNum());
-            simplification();
-            //Test si ça donne un entier
-            if ( (denominateur.getNb()==1) || (numerateur.getNb()==0) )
-            {
-                Entier* e = new Entier(numerateur.getNb());
-                comp->setReal(*e);
-            }
-            else
-            {
-            compRat->setNum(this->getNum());
-            compRat->setDenom(this->getDenom());
-            comp->setReal(*compRat);
-            }
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            this->operator +(*compReal);
-            comp->setReal(*compReal);
-        }
-
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator +(*comp->getReal())   ));
         return *comp;
     }
 }
+
+
 
 Litterale& Rationnel::operator-(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
@@ -136,45 +94,7 @@ Litterale& Rationnel::operator-(Litterale& e){
     }
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            this->operator -(*compEnt);
-            comp->setReal(*this);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            int num=compRat->getNum(), denom=compRat->getDenom();
-            //Mise sous forme de dénominateur commun
-            compRat->setNum(num*denominateur.getNb());
-            compRat->setDenom(denom*denominateur.getNb());
-            numerateur.setValue(numerateur.getNb()*denom);
-            denominateur.setValue(denominateur.getNb()*denom);
-            //Addition des numérateurs puis simplification
-            numerateur.setValue(numerateur.getNb()-compRat->getNum());
-            simplification();
-            //Test si ça donne un entier
-            if ( (denominateur.getNb()==1) || (numerateur.getNb()==0) )
-            {
-                Entier* e = new Entier(numerateur.getNb());
-                comp->setReal(*e);
-            }
-            else
-            {
-            compRat->setNum(this->getNum());
-            compRat->setDenom(this->getDenom());
-            comp->setReal(*compRat);
-            }
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            this->operator -(*compReal);
-            comp->setReal(*compReal);
-        }
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator -(*comp->getReal())  ));
         return *comp;
     }
 }
@@ -210,52 +130,8 @@ Litterale& Rationnel::operator*(Litterale& e){
     }
     if (comp) //c'est un complexe
     {
-        Rationnel temp(this->getNum(),this->getDenom()); // Sinon on écrase la valeur du rationnel (this) entre les calculs de la partie reelle et les calculs de la partie imaginaire
-
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            compEnt->operator *(temp);
-            comp->setReal(temp);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            compRat->operator *(temp); //modifie la valeur de this
-            comp->setReal(*compRat);
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            temp.operator*(*compReal); //modifie la valeur de compReal
-            comp->setReal(*compReal);
-        }
-
-        //On cherche le type de la partie imaginaire
-        Entier* imagEnt=dynamic_cast<Entier*>(comp->getImag());
-        Rationnel* imagRat=dynamic_cast<Rationnel*>(comp->getImag());
-        Reel* imagReal=dynamic_cast<Reel*>(comp->getImag());
-
-        if (imagEnt) //La partie imaginaire du complexe est un entier
-        {
-            this->operator *(*imagEnt);
-            comp->setImag(*this);
-        }
-        if (imagRat) //La partie imaginaire du complexe est un rationnel
-        {
-            this->operator *(*imagRat);
-            comp->setImag(*this);
-        }
-        if (imagReal) //La partie imaginaire du complexe est un réel
-        {
-            this->operator *(*imagReal);
-            comp->setImag(*imagReal);
-        }
-
-
-
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator *(*comp->getReal())   ));
+        comp->setImag(dynamic_cast<LitteraleNumerique&>(   this->operator *(*comp->getImag())   ));
         return *comp;
     }
 }

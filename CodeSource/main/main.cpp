@@ -10,7 +10,20 @@
 int main(int argc, char *argv[])
 {
 
+    Entier e1(1);
+    Entier e2(2);
+    Entier e3(3);
+    Entier e4(4);
 
+    Rationnel r1(3,4);
+
+    Reel real1(3.14);
+    Reel real2(5.12);
+
+    Complexe c1(&real1,&e4);
+    Complexe c2(&real2,&e3);
+    (c1*c2).afficher();
+    std::cout<<std::endl;
 
 
 

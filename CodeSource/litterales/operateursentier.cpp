@@ -50,27 +50,7 @@ Litterale& Entier::operator+(Litterale& e) {
     }
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            this->operator +(*compEnt);
-            comp->setReal(*this);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            this->operator +(*compRat);
-            comp->setReal(*compRat);
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            this->operator +(*compReal);
-            comp->setReal(*compReal);
-        }
-
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator +(*comp->getReal())   ));
         return *comp;
     }
 }
@@ -104,27 +84,7 @@ Litterale& Entier::operator-(Litterale& e)
     }
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            this->operator -(*compEnt);
-            comp->setReal(*this);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            this->operator -(*compRat);
-            comp->setReal(*compRat);
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            this->operator -(*compReal);
-            comp->setReal(*compReal);
-        }
-
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator -(*comp->getReal())   ));
         return *comp;
     }
 
@@ -146,6 +106,12 @@ Litterale& Entier::operator*(Litterale& e) {
     {
         rat->setNum(nb*rat->getNum());
         rat->simplification();
+        //Test si ça donne un entier
+        if ( (rat->getDenom()==1) || (rat->getNum()==0) )
+        {
+            Entier* e = new Entier(rat->getNum());
+            return *e;
+        }
         return *rat;
     }
     if (real) //c'est un reel
@@ -157,48 +123,8 @@ Litterale& Entier::operator*(Litterale& e) {
     }
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
-
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            compEnt->operator *(*this);
-            comp->setReal(*compEnt);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            this->operator *(*compRat);
-            comp->setReal(*compRat);
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            this->operator *(*compReal);
-            comp->setReal(*compReal);
-        }
-
-        //On cherche le type de la partie imaginaire
-        Entier* imagEnt=dynamic_cast<Entier*>(comp->getImag());
-        Rationnel* imagRat=dynamic_cast<Rationnel*>(comp->getImag());
-        Reel* imagReal=dynamic_cast<Reel*>(comp->getImag());
-
-        if (imagEnt) //La partie imaginaire du complexe est un entier
-        {
-            this->operator *(*imagEnt);
-            comp->setImag(*this);
-        }
-        if (imagRat) //La partie imaginaire du complexe est un rationnel
-        {
-            this->operator *(*imagRat);
-            comp->setImag(*imagRat);
-        }
-        if (imagReal) //La partie imaginaire du complexe est un réel
-        {
-            this->operator *(*imagReal);
-            comp->setImag(*imagReal);
-        }
-
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator *(*comp->getReal())   ));
+        comp->setImag(dynamic_cast<LitteraleNumerique&>(   this->operator *(*comp->getImag())   ));
         return *comp;
     }
 }
