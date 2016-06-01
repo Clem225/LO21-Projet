@@ -1,13 +1,10 @@
-#ifndef OPERATEURS_H
-#define OPERATEURS_H
+#ifndef OPERATEURS
+#define OPERATEURS
 
+#include <math.h>
+#include <limits>
+#include <iostream>
 #include "litterales.h"
 
-bool areSame(long double a, long double b);
+#endif // OPERATEURS
 
-// Templates
-template<typename Type> Type operator/(Entier e1, Entier e2); // A vérifier par la suite
-
-
-
-#endif // OPERATEURS_H

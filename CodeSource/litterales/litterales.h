@@ -32,8 +32,8 @@ class Operateur : public Operande
 class Litterale : public Operande
 {
 public:
-    virtual Litterale& NEG() =0;
     virtual void afficher(std::ostream& f=std::cout) const=0;
+    virtual Litterale& NEG() =0;
     virtual Litterale& operator+(Litterale& e) =0;
 };
 
@@ -70,6 +70,8 @@ public :
 */
 class LitteraleNumerique : public ExpressionPart
 {
+public:
+    virtual double getNb() const=0;
 
 };
 
@@ -106,8 +108,8 @@ public:
     Entier():nb(0){}
     Entier(int n): nb(n) {}
     Entier& operator=(Entier a);
-    Entier& NEG() {if (nb>0) nb=-nb; return *this;}
-    int getNb() const {return nb;}
+    Entier& NEG() {nb=-nb; return *this;}
+    double getNb() const {return nb;}
     void setValue(int i) {nb=i;}
     void afficher(std::ostream& f=std::cout) const {f<<nb;}
 
@@ -132,7 +134,7 @@ private:
 public:
     Entier simplification();
     Rationnel(int e1, int e2);
-    Rationnel& NEG() {if (numerateur.getNb()>0) numerateur.setValue(-numerateur.getNb());return *this;}
+    Rationnel& NEG() {numerateur.setValue(-numerateur.getNb());return *this;}
 	int getNum() const {return numerateur.getNb();}
     int getDenom() const {return denominateur.getNb();}
     Rationnel& getInverse() const {Rationnel* r = new Rationnel(denominateur.getNb(),numerateur.getNb()); return *r;}
@@ -161,7 +163,7 @@ public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
     Reel(double d):nb(d) {}
 
-    Reel& NEG() {if (nb>0) nb=-nb; return *this;}
+    Reel& NEG() {nb=-nb; return *this;}
     int getEntiere() const;
     double getMantisse() const;
     double getNb() const {return nb;}
@@ -196,7 +198,12 @@ public:
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
     void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
 
-        Litterale& operator+(Litterale& e);
+    /*----------Opérateurs-------------*/
+
+    Litterale& operator+(Litterale& e);
+    Litterale& operator-(Litterale& e);
+    /*Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);*/
 };
 
 
