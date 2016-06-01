@@ -9,8 +9,11 @@ SOURCES += \
     ../main/main.cpp \
     ../litterales/litterales.cpp \
     ../manager/manager.cpp \
-    ../litterales/operateurs.cpp \
-    ../GUI/mainwindow.cpp
+    ../GUI/mainwindow.cpp \
+    ../litterales/operateursentier.cpp \
+    ../litterales/operateursrationnel.cpp \
+    ../litterales/operateursreel.cpp \
+    ../litterales/operateurscomplexes.cpp
 
 HEADERS += \
     ../litterales/litterales.h \
