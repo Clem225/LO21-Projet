@@ -34,6 +34,9 @@ public:
 
     virtual Litterale& NEG() =0;
     virtual Litterale& operator+(Litterale& e) =0;
+    virtual Litterale& operator-(Litterale& e) =0;
+    virtual Litterale& operator*(Litterale& e) =0;
+    virtual Litterale& operator/(Litterale& e) =0;
 };
 
 /*!
@@ -42,8 +45,11 @@ public:
 class Programme : public Litterale
 {
 public :
-        Litterale& operator+(Litterale& e);
-        Litterale& NEG();
+    Litterale& operator+(Litterale& e);
+    Litterale& operator-(Litterale& e);
+    Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);
+    Litterale& NEG();
 };
 
 /*!
@@ -60,8 +66,11 @@ class ExpressionPart : public Litterale
 class Expression : public Litterale
 {
 public :
-        Litterale& operator+(Litterale& e);
-        Litterale& NEG();
+    Litterale& operator+(Litterale& e);
+    Litterale& operator-(Litterale& e);
+    Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);
+    Litterale& NEG();
 };
 
 /*!
@@ -88,6 +97,9 @@ public:
     void afficher(std::ostream& f=std::cout) const {f<<tab;}
 
     Litterale& operator+(Litterale& e);
+    Litterale& operator-(Litterale& e);
+    Litterale& operator*(Litterale& e);
+    Litterale& operator/(Litterale& e);
 
 
 };
@@ -202,7 +214,7 @@ public:
     Litterale& operator+(Litterale& e);
     Litterale& operator-(Litterale& e);
     Litterale& operator*(Litterale& e);
-    /*Litterale& operator/(Litterale& e);*/
+    Litterale& operator/(Litterale& e);
 };
 
 

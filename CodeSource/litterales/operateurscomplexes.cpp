@@ -276,10 +276,15 @@ Litterale& Complexe::operator*(Litterale& e){
     }
     if (comp) //c'est un complexe
     {
+        // Posons this = a + ib ;;; comp = a' + ib'
+        // On obtient this*comp = (aa'-bb') + (ab'+ba')i
+
         // On cherche la partie reelle du 2e complexe
         Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
         Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
         Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
+
+        //Ajout de aa' à la partie reelle
 
         if (compEnt)
         {
@@ -293,6 +298,9 @@ Litterale& Complexe::operator*(Litterale& e){
         {
             this->operator *(*compReal);
         }
+        //Ici la partie reelle de this vaut aa'
+
+        //Ajout de -bb' à la partie réelle
 
         //On cherche le type de la partie imaginaire du premier complexe
         Entier* imag1Ent=dynamic_cast<Entier*>(getImag());
@@ -310,26 +318,26 @@ Litterale& Complexe::operator*(Litterale& e){
             if (imag2Ent) //Les deux parties imaginaires sont entieres
             {
                 imag1Ent->operator *(*imag2Ent);
-                this->setImag(*imag1Ent);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator-(*imag1Ent)   ));
             }
             if (imag2Rat) //La partie im du 2e est rationnelle
             {
                 imag1Ent->operator *(*imag2Rat);
-                this->setImag(*imag2Rat);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag2Rat)   ));
             }
             if (imag2Real)
             {
                 imag1Ent->operator *(*imag2Real);
-                this->setImag(*imag2Real);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag2Real)   ));
             }
         }
 
-        if (imag1Rat) //La partie réelle du complexe est un rationnel
+        if (imag1Rat) //La partie im du 1er du complexe est un rationnel
         {
-            if (imag2Ent) //Les deux parties imaginaires sont entieres
+            if (imag2Ent) //La partie im du 2e comp est entiere
             {
                 imag1Rat->operator *(*imag2Ent);
-                this->setImag(*imag1Rat);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag2Ent)   ));
             }
             if (imag2Rat) //La partie im du 2e est rationnelle
             {
@@ -339,37 +347,41 @@ Litterale& Complexe::operator*(Litterale& e){
                 if ( (imag1Rat->getDenom()==1) || (imag1Rat->getNum()==0) )
                 {
                     Entier* e = new Entier(imag1Rat->getNum());
-                    this->setImag(*e);
+                    this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*e)   ));
                 }
                 else
                 {
-                    this->setImag(*imag1Rat);
+                    this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag1Rat)   ));
                 }
             }
             if (imag2Real)
             {
                 imag1Rat->operator *(*imag2Real);
-                this->setImag(*imag2Real);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag2Real)   ));
             }
         }
         if (imag1Real) //La partie im du 2e complexe est un réel
         {
-            if (imag2Ent) //Les deux parties imaginaires sont entieres
+            if (imag2Ent) //La partie imaginaire du 2e comp est entiere
             {
                 imag1Real->operator *(*imag2Ent);
-                this->setImag(*imag1Real);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag1Real)   ));
             }
             if (imag2Rat) //La partie im du 2e est rationnelle
             {
                 imag1Real->operator *(*imag2Rat);
-                this->setImag(*imag1Real);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag1Real)   ));
             }
             if (imag2Real)
             {
                 imag1Real->operator *(*imag2Real);
-                this->setImag(*imag1Real);
+                this->setReal(dynamic_cast<LitteraleNumerique&>(   getReal()->operator -(*imag1Real)   ));
             }
         }
+
+        //Etabliseement de la partie imaginaire ci-après
+
+
         return *this;
     }
 
@@ -377,7 +389,6 @@ Litterale& Complexe::operator*(Litterale& e){
 
 
 
+Litterale& Complexe::operator/(Litterale& e){
 
-/*Litterale& operator/(Litterale& e){
-
-}*/
+}
