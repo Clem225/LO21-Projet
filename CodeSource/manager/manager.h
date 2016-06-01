@@ -5,6 +5,7 @@
 #include <string>
 
 #include "../litterales/litterales.h"
+#include "../litterales/operateurs.h"
 
 /*!
  * \class LitteraleException
@@ -17,15 +18,23 @@ public:
     std::string getInfo() const { return info; }
 };
 
+/*!
+ * \class Factory
+ * \brief Création de operateurs ou de litterale (pere des deux factorys)
+*/
+
+class Factory
+{
+public :
+        virtual Operande* create(std::string value) = 0;
+};
 
 /*!
  * \class FactoryLitterale
  * \brief Création de litterale (Design Patern Factory Method)
 */
 
-class Litterale;
-
-class FactoryLitterale
+class FactoryLitterale : public Factory
 {
 
 // SINGLETON
@@ -48,9 +57,35 @@ class FactoryLitterale
     public:
         static FactoryLitterale& getInstance();
         static void libererInstance();
-        // On donne un string en entrée à addLitterale qui renvera une reference vers un objet correspondant
-        Litterale* addLitterale(std::string litterale);
+        Operande* create(std::string value);
 
+
+};
+
+class FactoryOperateur : public Factory
+{
+
+// SINGLETON
+    private :
+        FactoryOperateur(){}
+        FactoryOperateur(const FactoryOperateur& m){}
+        FactoryOperateur& operator=(const FactoryOperateur& m){}
+        ~FactoryOperateur(){}
+
+
+        // On utilise une structure, les attributs sont publiques donc pas besoin d'amitie
+        struct Handler {
+        FactoryOperateur* instance;
+        Handler():instance(nullptr){}
+        ~Handler(){delete instance;} // Le destructeur libere la memoire de li'nstance unique
+        };
+
+        static Handler handler;
+
+    public:
+        static FactoryOperateur& getInstance();
+        static void libererInstance();
+        Operande* create(std::string value);
 
 };
 
@@ -58,8 +93,9 @@ class Controleur {
 private :
     std::stack<Operande*> pile;
 public :
-    void empiler(FactoryLitterale& facto, std::string value){pile.push(facto.addLitterale(value));}
-    void commande(const std::string& c);
+    void empiler(Factory& facto, std::string value){pile.push(facto.create(value));}
+
+    void executer();
 };
 
 

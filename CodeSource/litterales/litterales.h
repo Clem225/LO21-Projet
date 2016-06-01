@@ -140,7 +140,7 @@ public:
     void setNum(int e) {numerateur=e;}
     void setDenom(int e) {denominateur=e;}
     double getNb() const {double d1 = numerateur.getNb();double d2=denominateur.getNb();return d1/d2;}
-    void afficher(std::ostream& f) const {f<<getNum()<<"/"<<getDenom();}
+    void afficher(std::ostream& f=std::cout) const {f<<getNum()<<"/"<<getDenom();}
 
 
     /*----------Opérateurs-------------*/

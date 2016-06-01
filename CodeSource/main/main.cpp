@@ -12,29 +12,20 @@ int main(int argc, char *argv[])
 
 
 
-    Entier e1(2);
-    Entier e2(5);
 
-    Entier e3(7);
-    Entier e4(6);
 
-    Rationnel r1(3,4);
-    Rationnel r2(5,2);
-
-    Reel real1(1.25);
-    Reel real2 (2.25);
-    Reel real3 (5.12);
-
-    Complexe c1 (&e3,&r1);
-    Complexe c2 (&real1,&real2);
-
-    (c1-c2).afficher();
-    std::cout<<std::endl;
 
 
 
     // Creation du manager de litterales
     FactoryLitterale& myFactory = FactoryLitterale::getInstance();
+
+
+
+
+    // Creation du manager de operateurs
+    FactoryOperateur& myFactory2 = FactoryOperateur::getInstance();
+
 
     // Creation du controleur
     Controleur controler;
@@ -42,12 +33,14 @@ int main(int argc, char *argv[])
     // On ajoute deux litterales à la pile du controleur
     std::string myString = "3";
     std::string myString2 = "5";
+    std::string myString3 = "+";
 
     controler.empiler(FactoryLitterale::getInstance(),myString);
     controler.empiler(FactoryLitterale::getInstance(),myString2);
+    controler.empiler(FactoryOperateur::getInstance(),myString3);
 
     // On envoie la commande d'addition
-    controler.commande("+");
+    controler.executer();
 
 
 

@@ -1,9 +1,10 @@
 #include "../manager/manager.h"
 #include "../litterales/litterales.h"
+#include "../litterales/operateurs.h"
 #include <string>
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
-Litterale* FactoryLitterale::addLitterale(std::string litterale)
+Operande *FactoryLitterale::create(std::string litterale)
 {
     // Si le string est vide, on lance une exception
     if(litterale.empty())
@@ -108,8 +109,8 @@ Litterale* FactoryLitterale::addLitterale(std::string litterale)
 
             partieReel=litterale.substr(0,positionDollar);
             partieComplexe=litterale.substr(positionDollar+1,litterale.size());
-            LitteraleNumerique* litReel = dynamic_cast<LitteraleNumerique*>(this->addLitterale(partieReel));
-            LitteraleNumerique* litComplexe = dynamic_cast<LitteraleNumerique*>(this->addLitterale(partieComplexe));
+            LitteraleNumerique* litReel = dynamic_cast<LitteraleNumerique*>(this->create(partieReel));
+            LitteraleNumerique* litComplexe = dynamic_cast<LitteraleNumerique*>(this->create(partieComplexe));
 
             Complexe* monComplexe = new Complexe(litReel,litComplexe);
             return monComplexe;
@@ -167,11 +168,7 @@ void FactoryLitterale::libererInstance()
 
 }
 
-void executer()
-{
 
-
-}
 bool estUnOperateurBinaire(const std::string& c)
 {
     if(c=="+") return true;
@@ -182,13 +179,20 @@ bool estUnOperateurBinaire(const std::string& c)
     return false;
 }
 
-void Controleur::commande(const std::string& c)
+void Controleur::executer()
 {
 
+    std::cout << "COUCOU";
 
 
-    if(estUnOperateurBinaire(c))
-    {
+        // Le premier est un operateur
+        Operande* monOperateur = pile.top();
+        pile.pop();
+
+        monOperateur->afficher();
+
+        Binaire* monOperateurOK = dynamic_cast<Binaire*>(monOperateur);
+
         // Si c'est un opérateur binaire, il faut que la pile soit supérieur ou égale à 2
         if(pile.size()>=2)
         {
@@ -197,47 +201,7 @@ void Controleur::commande(const std::string& c)
 
             Litterale* l1 = dynamic_cast<Litterale*>(v1);
 
-            // On recupere maintenant le bon type de l'objet
-/*
-            Programme* prog1 = dynamic_cast<Programme*>(v1); // Si le dynamique cast vaut NULL, ce n'est pas la bon type, sinon OK
-            Expression* expr1 = dynamic_cast<Expression*>(v1);
-            Atome* atom1 = dynamic_cast<Atome*>(v1);
-            Complexe* comp1 = dynamic_cast<Complexe*>(v1);
-            Reel* reel1 = dynamic_cast<Reel*>(v1);
-            Rationnel* ratio1 = dynamic_cast<Rationnel*>(v1);
-            Entier* ent1 = dynamic_cast<Entier*>(v1);
 
-            Litterale* part1;
-
-            if(prog1!=NULL)
-            {
-                Programme* part1=prog1;
-            }
-            else if(expr1!=NULL)
-            {
-                Expression* part1=expr1;
-            }
-            else if(atom1!=NULL)
-            {
-                Atome* part1=atom1;
-            }
-            else if(comp1!=NULL)
-            {
-                Complexe* part1=comp1;
-            }
-            else if(reel1!=NULL)
-            {
-                Reel* part1=reel1;
-            }
-            else if(ratio1!=NULL)
-            {
-                Rationnel* part1=ratio1;
-            }
-            else if(ent1!=NULL)
-            {
-                Entier* part1=ent1;
-            }
-*/
             Operande* v2 = pile.top();
             pile.pop();
 
@@ -249,18 +213,42 @@ void Controleur::commande(const std::string& c)
             std::cout<<"RESULT : ";
             res.afficher();
 
-            /*if(c=="+") res = *v1+*v2;
-            if(c=="-") res = v1-v2;
-            if(c=="*") res = v1*v2;
-            if(c=="/") res = v1/v2;*/
 
-        }
-        else
-        {
-            throw LitteraleException("Pas assez d element(s) !.\n");
-        }
 
     }
+
+}
+
+
+// Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
+Operande* FactoryOperateur::create(std::string operateur)
+{
+
+
+    Binaire* monOp = new Binaire("+");
+    return monOp;
+
+
+}
+
+
+// Initialisation de l'attribut statique
+FactoryOperateur::Handler FactoryOperateur::handler = FactoryOperateur::Handler();
+
+// Singleton
+FactoryOperateur& FactoryOperateur::getInstance()
+{
+    if(handler.instance==nullptr) {
+    handler.instance=new FactoryOperateur;
+}
+return *handler.instance;
+}
+
+
+void FactoryOperateur::libererInstance()
+{
+  delete handler.instance;
+  handler.instance=nullptr;
 
 }
 
