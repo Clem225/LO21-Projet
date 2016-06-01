@@ -46,6 +46,7 @@ Litterale& Rationnel::operator+(Litterale& e){
         real->setNb(d);
         return *real;
     }
+
     if (comp) //c'est un complexe
     {
         //On cherche le type de la partie réelle
@@ -55,8 +56,8 @@ Litterale& Rationnel::operator+(Litterale& e){
 
         if (compEnt) //La partie reelle du complexe est un entier
         {
-            this->operator +(*compEnt);
-            comp->setReal(*this);
+            compEnt->operator +(*this);
+            comp->setReal(*compEnt);
         }
         if (compRat) //La partie réelle du complexe est un rationnel
         {
@@ -87,6 +88,7 @@ Litterale& Rationnel::operator+(Litterale& e){
             this->operator +(*compReal);
             comp->setReal(*compReal);
         }
+
         return *comp;
     }
 }
@@ -208,6 +210,8 @@ Litterale& Rationnel::operator*(Litterale& e){
     }
     if (comp) //c'est un complexe
     {
+        Rationnel temp(this->getNum(),this->getDenom()); // Sinon on écrase la valeur du rationnel (this) entre les calculs de la partie reelle et les calculs de la partie imaginaire
+
         //On cherche le type de la partie réelle
         Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
         Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
@@ -215,19 +219,43 @@ Litterale& Rationnel::operator*(Litterale& e){
 
         if (compEnt) //La partie reelle du complexe est un entier
         {
-            compEnt->operator *(*this);
-            comp->setReal(*this);
+            compEnt->operator *(temp);
+            comp->setReal(temp);
         }
         if (compRat) //La partie réelle du complexe est un rationnel
         {
-            this->operator*(*compRat); //modifie la valeur de this
-            comp->setReal(*this);
+            compRat->operator *(temp); //modifie la valeur de this
+            comp->setReal(*compRat);
         }
         if (compReal) //La partie réelle du complexe est un réel
         {
-            this->operator*(*compReal); //modifie la valeur de compReal
+            temp.operator*(*compReal); //modifie la valeur de compReal
             comp->setReal(*compReal);
         }
+
+        //On cherche le type de la partie imaginaire
+        Entier* imagEnt=dynamic_cast<Entier*>(comp->getImag());
+        Rationnel* imagRat=dynamic_cast<Rationnel*>(comp->getImag());
+        Reel* imagReal=dynamic_cast<Reel*>(comp->getImag());
+
+        if (imagEnt) //La partie imaginaire du complexe est un entier
+        {
+            this->operator *(*imagEnt);
+            comp->setImag(*this);
+        }
+        if (imagRat) //La partie imaginaire du complexe est un rationnel
+        {
+            this->operator *(*imagRat);
+            comp->setImag(*this);
+        }
+        if (imagReal) //La partie imaginaire du complexe est un réel
+        {
+            this->operator *(*imagReal);
+            comp->setImag(*imagReal);
+        }
+
+
+
         return *comp;
     }
 }

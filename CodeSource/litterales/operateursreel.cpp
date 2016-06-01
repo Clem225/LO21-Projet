@@ -134,6 +134,8 @@ Litterale& Reel::operator*(Litterale& e){
     }
     if (comp) //c'est un complexe
     {
+        Reel temp(this->getNb()); //Sinon on perd la valeur du reel (this) entre calcul part reelle et calcul part imaginaire
+
         //On cherche le type de la partie réelle
         Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
         Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
@@ -141,19 +143,41 @@ Litterale& Reel::operator*(Litterale& e){
 
         if (compEnt) //La partie reelle du complexe est un entier
         {
-            this->operator *(*compEnt);
-            comp->setReal(*this);
+            temp.operator *(*compEnt);
+            comp->setReal(temp);
         }
         if (compRat) //La partie réelle du complexe est un rationnel
         {
-            this->operator*(*compRat);
-            comp->setReal(*this);
+            temp.operator*(*compRat);
+            comp->setReal(temp);
         }
         if (compReal) //La partie réelle du complexe est un réel
         {
-            this->operator*(*compReal);
-            comp->setReal(*this);
+            temp.operator*(*compReal);
+            comp->setReal(temp);
         }
+
+        //On cherche le type de la partie imaginaire
+        Entier* imagEnt=dynamic_cast<Entier*>(comp->getImag());
+        Rationnel* imagRat=dynamic_cast<Rationnel*>(comp->getImag());
+        Reel* imagReal=dynamic_cast<Reel*>(comp->getImag());
+
+        if (imagEnt) //La partie imaginaire du complexe est un entier
+        {
+            this->operator *(*imagEnt);
+            comp->setImag(*this);
+        }
+        if (imagRat) //La partie imaginaire du complexe est un rationnel
+        {
+            this->operator *(*imagRat);
+            comp->setImag(*this);
+        }
+        if (imagReal) //La partie imaginaire du complexe est un réel
+        {
+            this->operator *(*imagReal);
+            comp->setImag(*this);
+        }
+
         return *comp;
     }
 
