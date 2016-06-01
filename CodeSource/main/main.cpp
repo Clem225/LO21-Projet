@@ -3,7 +3,6 @@
 #include <iostream>
 #include "../GUI/mainwindow.h"
 #include <QApplication>
-#include <unistd.h>
 #include <typeinfo>
 
 
@@ -16,7 +15,7 @@ int main(int argc, char *argv[])
     Entier e1(2);
     Entier e2(5);
 
-    Entier e3(5);
+    Entier e3(7);
     Entier e4(6);
 
     Rationnel r1(3,4);
@@ -26,9 +25,10 @@ int main(int argc, char *argv[])
     Reel real2 (2.25);
     Reel real3 (5.12);
 
-    Complexe c1 (&e1,&e4);
+    Complexe c1 (&e3,&r1);
+    Complexe c2 (&real1,&real2);
 
-    (real1/c1).afficher();
+    (c1-c2).afficher();
     std::cout<<std::endl;
 
 
