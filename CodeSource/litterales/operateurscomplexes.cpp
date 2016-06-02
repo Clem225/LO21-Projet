@@ -1,12 +1,14 @@
 #include "operateurs.h"
 
 
-Complexe& Complexe::NEG()
+Complexe* Complexe::NEG()
 {
-//return Complexe(0,0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
-Litterale& Complexe::operator+(Litterale& e){
+Litterale* Complexe::operator+(Litterale& e)
+{
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -30,16 +32,20 @@ Litterale& Complexe::operator+(Litterale& e){
     if (comp) //c'est un complexe
     {
         Complexe * ctemp = new Complexe(getReal(),getImag());
-        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->getReal()->operator +(*comp->getReal())  ));
-        comp->setImag(dynamic_cast<LitteraleNumerique&>(   ctemp->getImag()->operator +(*comp->getImag())  ));
-        return *this;
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->getReal()->operator +(*comp->getReal()))));
+        comp->setImag(dynamic_cast<LitteraleNumerique&>(*(ctemp->getImag()->operator +(*comp->getImag()))));
+        return this;
     }
+
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 
 
 
-Litterale& Complexe::operator-(Litterale& e){
+Litterale* Complexe::operator-(Litterale& e)
+{
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -66,16 +72,20 @@ Litterale& Complexe::operator-(Litterale& e){
     if(comp)
     {
     Complexe * ctemp = new Complexe(getReal(),getImag());
-    comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->getReal()->operator -(*comp->getReal())  ));
-    comp->setImag(dynamic_cast<LitteraleNumerique&>(   ctemp->getImag()->operator -(*comp->getImag())  ));
-    return *comp;
+    comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->getReal()->operator -(*comp->getReal())  )));
+    comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp->getImag()->operator -(*comp->getImag())  )));
+    return comp;
     }
+
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
+
 }
 
 
 
 
-Litterale& Complexe::operator*(Litterale& e){
+Litterale* Complexe::operator*(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -96,18 +106,27 @@ Litterale& Complexe::operator*(Litterale& e){
     {
     Complexe * ctemp1 = new Complexe(getReal(),getImag());
     Complexe * ctemp2 = new Complexe(comp->getReal(),comp->getImag());
-    comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->getReal()->operator *(*comp->getReal())  ));
-    comp->setReal(dynamic_cast<LitteraleNumerique&>(   comp->getReal()->operator -(  this->getImag()->operator *(*comp->getImag())  )  ));
-    comp->setImag(dynamic_cast<LitteraleNumerique&>(   ctemp1->getReal()->operator *(*ctemp2->getImag())  ));
-    comp->setImag(dynamic_cast<LitteraleNumerique&>(   comp->getImag()->operator +(  ctemp->getImag()->operator *(*comp->getReal())  )  ));
 
-    return *comp;
+    comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->getReal()->operator*(*comp->getReal())  )));
+    comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   comp->getReal()->operator-(  *(this->getImag()->operator *(*comp->getImag()))  )  )));
+
+    comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp1->getReal()->operator *(*ctemp2->getImag())  )));
+    // A REFAIRE
+    //comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   comp->getImag()->operator +(  *(ctemp->getImag()->operator *(*comp->getReal()))  )  )));
+
+    return comp;
     }
+
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 
 }
 
 
 
-Litterale& Complexe::operator/(Litterale& e){
+Litterale* Complexe::operator/(Litterale& e){
+
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 
 }

@@ -1,26 +1,31 @@
 #include "operateurs.h"
 
-Litterale& Atome::operator+(Litterale& e)
+Litterale* Atome::operator+(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
-Litterale& Atome::operator-(Litterale& e)
+Litterale* Atome::operator-(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
-Litterale& Atome::operator*(Litterale& e)
+Litterale* Atome::operator*(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
-Litterale& Atome::operator/(Litterale& e)
+Litterale* Atome::operator/(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
-Litterale& Atome::NEG()
+Litterale* Atome::NEG()
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }

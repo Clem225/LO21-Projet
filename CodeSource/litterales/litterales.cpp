@@ -47,26 +47,23 @@ Rationnel::Rationnel(int e1, int e2) {
 }
 
 
-
-
 /*------Classe Reel------*/
 
-
-
+// Renvoie la partie entiere du reel
 int Reel::getEntiere() const {
     long double ent;
     modfl(nb,&ent);
     return ent;
 }
 
-
+// Renvoie la partie decimal du reel
 double Reel::getMantisse() const {
     long double ent,v;
     v=modfl(nb,&ent);
     return v;
 }
 
-
+// Change la partie entiere du reel
 void Reel::setEntiere(const Entier& e) {
     long double ent,v;
     v=modfl(nb,&ent);
@@ -75,6 +72,7 @@ void Reel::setEntiere(const Entier& e) {
     nb=ent;
 }
 
+// Renvoie la partie decimal du reel
 void Reel::setMantisse(const double &e)
 {
     long double ent,v;

@@ -4,7 +4,7 @@
 
 
 // Operateur d'affectation
-Entier& Entier::operator=(Entier a)
+Entier* Entier::operator=(Entier a)
 {
     // On verifie que ce n'est pas un cas a=a;
     if(this!=&a)
@@ -12,7 +12,7 @@ Entier& Entier::operator=(Entier a)
         nb=a.getNb();
     }
 
-    return *this;
+    return this;
 }
 
 // Operateur de comparaison
@@ -23,7 +23,7 @@ bool operator==(const Entier& a, const Entier& b)
 
 
 
-Litterale& Entier::operator+(Litterale& e) {
+Litterale* Entier::operator+(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -35,29 +35,29 @@ Litterale& Entier::operator+(Litterale& e) {
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         nb+=ent->getNb();
-        return *this;
+        return this;
     }
     if (rat) //c'est un rationnel
     {
         rat->setNum(rat->getNum() + nb*rat->getDenom());
         rat->simplification();
-        return *rat;
+        return rat;
     }
     if (real) //c'est un reel
     {
         real->setEntiere(real->getEntiere() + nb);
-        return *real;
+        return real;
     }
     if (comp) //c'est un complexe
     {
-        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator +(*comp->getReal())   ));
-        return *comp;
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->operator +(*comp->getReal()))));
+        return comp;
     }
 }
 
 
 
-Litterale& Entier::operator-(Litterale& e)
+Litterale* Entier::operator-(Litterale& e)
 {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -66,13 +66,13 @@ Litterale& Entier::operator-(Litterale& e)
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         nb-=ent->getNb();
-        return *this;
+        return this;
     }
     if (rat) //c'est un rationnel
     {
         rat->setNum(nb*rat->getDenom() - rat->getNum());
         rat->simplification();
-        return *rat;
+        return rat;
     }
     if (real) //c'est un reel
     {
@@ -80,19 +80,19 @@ Litterale& Entier::operator-(Litterale& e)
         double nb2=nb;
         double result = nb2-d;
         real->setNb(result);
-        return *real;
+        return real;
     }
     if (comp) //c'est un complexe
     {
-        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator -(*comp->getReal())   ));
-        return *comp;
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->operator -(*comp->getReal())   )));
+        return comp;
     }
 
 }
 
 
 
-Litterale& Entier::operator*(Litterale& e) {
+Litterale* Entier::operator*(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -100,7 +100,7 @@ Litterale& Entier::operator*(Litterale& e) {
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         nb*=ent->getNb();
-        return *this;
+        return this;
     }
     if (rat) //c'est un rationnel
     {
@@ -110,28 +110,28 @@ Litterale& Entier::operator*(Litterale& e) {
         if ( (rat->getDenom()==1) || (rat->getNum()==0) )
         {
             Entier* e = new Entier(rat->getNum());
-            return *e;
+            return e;
         }
-        return *rat;
+        return rat;
     }
     if (real) //c'est un reel
     {
         double d = real->getNb();
         d = nb * d;
         real->setNb(d);
-        return  *real;
+        return  real;
     }
     if (comp) //c'est un complexe
     {
-        comp->setReal(dynamic_cast<LitteraleNumerique&>(   this->operator *(*comp->getReal())   ));
-        comp->setImag(dynamic_cast<LitteraleNumerique&>(   this->operator *(*comp->getImag())   ));
-        return *comp;
+        comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->operator *(*comp->getReal())  ) ));
+        comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   this->operator *(*comp->getImag())   )));
+        return comp;
     }
 }
 
 
 
-Litterale& Entier::operator/(Litterale& e) {
+Litterale* Entier::operator/(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
@@ -145,12 +145,12 @@ Litterale& Entier::operator/(Litterale& e) {
         if (e1 % e2==0) // Si le reste de la division est zéro
         {
             nb/=ent->getNb();
-            return *this;
+            return this;
         }
         else
         {
             Rationnel* r = new Rationnel(nb,ent->getNb());
-            return *r;
+            return r;
         }
     }
     if (rat) //c'est un rationnel
@@ -162,7 +162,7 @@ Litterale& Entier::operator/(Litterale& e) {
         double d = real->getNb();
         double res = nb / d;
         real->setNb(res);
-        return *real;
+        return real;
     }
     /* A FAIRE PLUS TARD
     if (comp) //c'est un complexe

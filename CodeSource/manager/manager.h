@@ -6,6 +6,12 @@
 
 #include "../litterales/litterales.h"
 
+/*!
+ * \file manager.h
+ * \brief Creation des Factory et du Controleur
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
 
 /*!
  * \class LitteraleException
@@ -62,6 +68,11 @@ class FactoryLitterale : public Factory
 
 };
 
+/*!
+ * \class FactoryOperateur
+ * \brief Création de operateur (Design Patern Factory Method)
+*/
+
 class FactoryOperateur : public Factory
 {
 
@@ -89,13 +100,18 @@ class FactoryOperateur : public Factory
 
 };
 
+/*!
+ * \class Controleur
+ * \brief Permet l'empilement et l'execution dans une pile
+*/
+
 class Controleur {
 private :
     std::stack<Operande*> pile;
 public :
-    void empiler(Factory& facto, std::string value){pile.push(facto.create(value));}
-
-    void executer();
+    void empiler(Factory& facto, std::string value){pile.push(facto.create(value));this->afficher();}
+    Litterale *executer();
+    void afficher();
 };
 
 

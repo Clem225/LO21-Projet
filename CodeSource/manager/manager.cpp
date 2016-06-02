@@ -179,17 +179,17 @@ bool estUnOperateurBinaire(const std::string& c)
     return false;
 }
 
-void Controleur::executer()
+Litterale* Controleur::executer()
 {
 
-    std::cout << "COUCOU";
+
 
 
         // Le premier est un operateur
         Operande* monOperateur = pile.top();
         pile.pop();
 
-        monOperateur->afficher();
+
 
         Binaire* monOperateurOK = dynamic_cast<Binaire*>(monOperateur);
 
@@ -208,10 +208,14 @@ void Controleur::executer()
             Litterale* l2 = dynamic_cast<Litterale*>(v2);
 
 
-            Litterale& res = *l1+*l2;
+            // Affiche la pile
+            this->afficher();
 
-            std::cout<<"RESULT : ";
-            res.afficher();
+
+            Litterale* res=(*l1+*l2);
+
+            // Calcul
+            return res;
 
 
 
@@ -250,6 +254,20 @@ void FactoryOperateur::libererInstance()
   delete handler.instance;
   handler.instance=nullptr;
 
+}
+void Controleur::afficher()
+{
+    std::stack<Operande*> tampon = pile;
+    Operande* op;
+    std::cout<<"Pile : "<<std::endl<<"------------------------------------"<<std::endl;
+    while(!tampon.empty())
+    {
+           op=tampon.top();
+           tampon.pop();
+           op->afficher();
+           std::cout<<std::endl;
+    }
+     std::cout<<"------------------------------------"<<std::endl;
 }
 
 

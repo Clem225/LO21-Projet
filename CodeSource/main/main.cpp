@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     Complexe c1(&real1,&e4);
     Complexe c2(&real2,&e3);
-    (c1*c2).afficher();
+    //(c1*c2).afficher();
     std::cout<<std::endl;
 
 
@@ -53,8 +53,11 @@ int main(int argc, char *argv[])
     controler.empiler(FactoryOperateur::getInstance(),myString3);
 
     // On envoie la commande d'addition
-    controler.executer();
-
+    Litterale* res;
+    res = controler.executer();
+    std::cout<<"Resultat : ";
+    res->afficher();
+    std::cout<<std::endl;
 
 
 

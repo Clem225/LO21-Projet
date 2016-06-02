@@ -1,26 +1,26 @@
 #include "operateurs.h"
 
-Litterale& Expression::operator+(Litterale& e)
+Litterale* Expression::operator+(Litterale& e)
 {
 //return Entier(0);
 }
 
-Litterale& Expression::operator-(Litterale& e)
+Litterale* Expression::operator-(Litterale& e)
 {
 //return Entier(0);
 }
 
-Litterale& Expression::operator*(Litterale& e)
+Litterale* Expression::operator*(Litterale& e)
 {
 //return Entier(0);
 }
 
-Litterale& Expression::operator/(Litterale& e)
+Litterale* Expression::operator/(Litterale& e)
 {
 //return Entier(0);
 }
 
-Litterale& Expression::NEG()
+Litterale* Expression::NEG()
 {
 //return Entier(0);
 }

@@ -1,14 +1,14 @@
 ﻿#ifndef LITTERALES_H
 #define LITTERALES_H
 
+#include <iostream>
+
 /*!
  * \file litterales.h
  * \brief Implementation des litterales
  * \author Blanquet - Martinache
  * \version 0.1
  */
-
-#include <iostream>
 
 
 /*!
@@ -32,11 +32,12 @@ class Litterale : public Operande
 {
 public:
 
-    virtual Litterale& NEG() =0;
-    virtual Litterale& operator+(Litterale& e) =0;
-    virtual Litterale& operator-(Litterale& e) =0;
-    virtual Litterale& operator*(Litterale& e) =0;
-    virtual Litterale& operator/(Litterale& e) =0;
+    virtual Litterale* NEG() =0;
+    virtual Litterale* operator+(Litterale& e) =0;
+    virtual Litterale* operator-(Litterale& e) =0;
+    virtual Litterale* operator*(Litterale& e) =0;
+    virtual Litterale* operator/(Litterale& e) =0;
+
 };
 
 /*!
@@ -45,11 +46,11 @@ public:
 class Programme : public Litterale
 {
 public :
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
-    Litterale& NEG();
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
+    Litterale* NEG();
 };
 
 /*!
@@ -66,11 +67,11 @@ class ExpressionPart : public Litterale
 class Expression : public Litterale
 {
 public :
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
-    Litterale& NEG();
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
+    Litterale* NEG();
 };
 
 /*!
@@ -92,14 +93,14 @@ private:
     std::string tab;
 public:
     Atome(std::string text): tab(text) {}
-    Litterale& NEG();
+    Litterale* NEG();
     std::string getAtome() const {return tab;}
     void afficher(std::ostream& f=std::cout) const {f<<tab;}
 
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
 
 
 };
@@ -118,18 +119,18 @@ private:
 public:
     Entier():nb(0){}
     Entier(int n): nb(n) {}
-    Entier& operator=(Entier a);
-    Entier& NEG() {nb=-nb; return *this;}
+    Entier* operator=(Entier a);
+    Entier* NEG() {nb=-nb; return this;}
     double getNb() const {return nb;}
     void setValue(int i) {nb=i;}
     void afficher(std::ostream& f=std::cout) const {f<<nb;}
 
     /*----------Opérateurs-------------*/
 
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
 
 };
 
@@ -145,7 +146,7 @@ private:
 public:
     Entier simplification();
     Rationnel(int e1, int e2);
-    Rationnel& NEG() {numerateur.setValue(-numerateur.getNb());return *this;}
+    Rationnel* NEG() {numerateur.setValue(-numerateur.getNb());return this;}
 	int getNum() const {return numerateur.getNb();}
     int getDenom() const {return denominateur.getNb();}
     Rationnel& getInverse() const {Rationnel* r = new Rationnel(denominateur.getNb(),numerateur.getNb()); return *r;}
@@ -157,10 +158,10 @@ public:
 
     /*----------Opérateurs-------------*/
 
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
 };
 
 /*!
@@ -174,7 +175,7 @@ public:
     // Constructeur. Il faut utiliser des references sinon Reel va appeler le constructeur par defaut de Entier qui n'existe pas !
     Reel(double d):nb(d) {}
 
-    Reel& NEG() {nb=-nb; return *this;}
+    Reel* NEG() {nb=-nb; return this;}
     int getEntiere() const;
     double getMantisse() const;
     double getNb() const {return nb;}
@@ -185,10 +186,10 @@ public:
 
     /*----------Opérateurs-------------*/
 
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
 
 };
 
@@ -202,7 +203,7 @@ private:
     LitteraleNumerique* imagPart;
 public:
     Complexe(LitteraleNumerique* real, LitteraleNumerique* imag): realPart(real), imagPart(imag) {}
-    Complexe& NEG();
+    Complexe* NEG();
     LitteraleNumerique* getReal() const {return realPart;}
     LitteraleNumerique* getImag() const {return imagPart;}
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
@@ -211,10 +212,10 @@ public:
 
     /*----------Opérateurs-------------*/
 
-    Litterale& operator+(Litterale& e);
-    Litterale& operator-(Litterale& e);
-    Litterale& operator*(Litterale& e);
-    Litterale& operator/(Litterale& e);
+    Litterale* operator+(Litterale& e);
+    Litterale* operator-(Litterale& e);
+    Litterale* operator*(Litterale& e);
+    Litterale* operator/(Litterale& e);
 };
 
 

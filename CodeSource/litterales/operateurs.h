@@ -7,6 +7,13 @@
 #include "litterales.h"
 
 /*!
+ * \file operateurs.h
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+/*!
  * \class Operateur
 */
 
