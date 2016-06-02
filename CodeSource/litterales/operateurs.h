@@ -16,8 +16,9 @@
 /*!
  * \class Operateur
 */
-
-bool isOperateur(std::string str);
+bool estOperateur(std::string& str);
+bool estUnOperateurUnaire(std::string& c);
+bool estUnOperateurBinaire(std::string& c);
 
 class Operateur : public Operande
 {

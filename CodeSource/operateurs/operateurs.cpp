@@ -1,12 +1,41 @@
 #include <iostream>
-#include "../litterales/litterales.h"
 
-bool isOperateur(std::string str)
+// Liste des opérateurs reconnus
+
+bool estUnOperateurBinaire(const std::string& c)
 {
-    if(str=="+")
+    bool listOperateurBinaire =
+            c=="+" ||
+            c=="-" ||
+            c=="*" ||
+            c=="/";
+
+    if(listOperateurBinaire)
         return true;
 
-    else
+    return false;
+}
+bool estUnOperateurUnaire(const std::string& c)
+{
+    bool listOperateurUnaire =
+            c=="NEG";
+
+    if(listOperateurUnaire)
+        return true;
+
+    return false;
+}
+
+bool estOperateur(std::string& str)
+{
+    bool listOperateur =
+            estUnOperateurBinaire(str) ||
+            estUnOperateurUnaire(str);
+
+
+    if(listOperateur)
+        return true;
+
         return false;
 
 }

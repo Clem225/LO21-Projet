@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QWidget>
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void refresh();
+    void sendCMD();
 };
 
 #endif // MAINWINDOW_H
