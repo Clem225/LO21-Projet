@@ -17,6 +17,8 @@
  * \class Operateur
 */
 
+bool isOperateur(std::string str);
+
 class Operateur : public Operande
 {
 private :

@@ -26,39 +26,12 @@ int main(int argc, char *argv[])
     std::cout<<std::endl;
 
 
-
-
-
-
-    // Creation du manager de litterales
-    FactoryLitterale& myFactory = FactoryLitterale::getInstance();
-
-
-
-
-    // Creation du manager de operateurs
-    FactoryOperateur& myFactory2 = FactoryOperateur::getInstance();
-
-
     // Creation du controleur
     Controleur controler;
 
-    // On ajoute deux litterales à la pile du controleur
-    std::string myString = "3";
-    std::string myString2 = "5";
-    std::string myString3 = "+";
-
-    controler.empiler(FactoryLitterale::getInstance(),myString);
-    controler.empiler(FactoryLitterale::getInstance(),myString2);
-    controler.empiler(FactoryOperateur::getInstance(),myString3);
-
     // On envoie la commande d'addition
-    Litterale* res;
-    res = controler.executer();
-    std::cout<<"Resultat : ";
-    res->afficher();
-    std::cout<<std::endl;
-
+    Litterale* res = controler.commande("3 3 +");
+    std::cout<<"Resultat : "; res->afficher(); std::cout<<std::endl;
 
 
 /*

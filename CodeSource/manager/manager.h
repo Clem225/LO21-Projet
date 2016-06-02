@@ -112,6 +112,7 @@ public :
     void empiler(Factory& facto, std::string value){pile.push(facto.create(value));this->afficher();}
     Litterale *executer();
     void afficher();
+    Litterale *commande(std::string cmd);
 };
 
 

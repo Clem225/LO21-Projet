@@ -2,6 +2,8 @@
 #include "../litterales/litterales.h"
 #include "../litterales/operateurs.h"
 #include <string>
+#include <sstream>
+
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
 Operande *FactoryLitterale::create(std::string litterale)
@@ -268,6 +270,35 @@ void Controleur::afficher()
            std::cout<<std::endl;
     }
      std::cout<<"------------------------------------"<<std::endl;
+}
+
+Litterale* Controleur::commande(std::string cmd)
+{
+    std::istringstream iss(cmd);
+    std::string sub;
+    iss >> sub;
+
+     while(iss)
+     {
+
+         // A ce stade, sub contient la partie du string entre des espaces
+         // Si ce string est un opérateur, on l'ajoute à l'aide de la FactoryOperateur
+         if(isOperateur(sub))
+         {
+             this->empiler(FactoryOperateur::getInstance(),sub);
+         }
+         // Sinon, on considere que c'est une litterale
+         else
+         {
+             this->empiler(FactoryLitterale::getInstance(),sub);
+
+         }
+
+         iss >> sub;
+     }
+     // Quand tous les strings ont étaient empiles, on execute la commande
+     return this->executer();
+
 }
 
 
