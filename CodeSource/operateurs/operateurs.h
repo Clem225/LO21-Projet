@@ -1,10 +1,9 @@
 #ifndef OPERATEURS
 #define OPERATEURS
 
-#include <math.h>
-#include <limits>
+
 #include <iostream>
-#include "litterales.h"
+#include "../litterales/litterales.h"
 
 /*!
  * \file operateurs.h
@@ -13,13 +12,14 @@
  * \version 0.1
  */
 
-
-/*! \brief Verifie si str est un opérateur */
-bool estOperateur(std::string& str);
 /*! \brief Verifie si str est un opérateur numérique unaire */
 bool estUnOperateurUnaire(std::string& c);
 /*! \brief Verifie si str est un opérateur numérique binaire */
 bool estUnOperateurBinaire(std::string& c);
+/*! \brief Verifie si str est un opérateur */
+bool estOperateur(std::string& str);
+
+
 
 /*!
  * \class Operateur

@@ -5,28 +5,30 @@ CONFIG += app_bundle
 CONFIG += qt
 CONFIG += c++11
 
-SOURCES += \
-    ../main/main.cpp \
-    ../litterales/litterales.cpp \
-    ../GUI/mainwindow.cpp \
-    ../litterales/operateursentier.cpp \
-    ../litterales/operateursrationnel.cpp \
-    ../litterales/operateursreel.cpp \
-    ../litterales/operateurscomplexes.cpp \
-    ../litterales/operateursprogramme.cpp \
-    ../litterales/operateursexpression.cpp \
-    ../litterales/operateursatome.cpp \
-    ../operateurs/operateurs.cpp \
-    ../manager/factory.cpp \
-    ../manager/controleur.cpp
 
-HEADERS += \
-    ../litterales/litterales.h \
-    ../litterales/operateurs.h \
-    ../GUI/mainwindow.h \
-    ../manager/factory.h \
-    ../manager/controleur.h
 
 FORMS += \
     ../GUI/mainwindow.ui
+
+HEADERS += \
+    ../GUI/mainwindow.h \
+    ../litterales/litterales.h \
+    ../manager/controleur.h \
+    ../manager/factory.h \
+    ../operateurs/operateurs.h
+
+SOURCES += \
+    ../GUI/mainwindow.cpp \
+    ../litterales/litterales.cpp \
+    ../main/main.cpp \
+    ../manager/controleur.cpp \
+    ../manager/factory.cpp \
+    ../operateurs/operateurs.cpp \
+    ../operateurs/operateursatome.cpp \
+    ../operateurs/operateurscomplexes.cpp \
+    ../operateurs/operateursentier.cpp \
+    ../operateurs/operateursexpression.cpp \
+    ../operateurs/operateursprogramme.cpp \
+    ../operateurs/operateursrationnel.cpp \
+    ../operateurs/operateursreel.cpp
 

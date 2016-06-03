@@ -1,5 +1,5 @@
 #include "litterales.h"
-#include "operateurs.h"
+#include "../operateurs/operateurs.h"
 #include <string>
 #include <stdio.h>
 #include <math.h>

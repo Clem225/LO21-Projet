@@ -1,8 +1,8 @@
 #include "../manager/controleur.h"
 #include "../manager/factory.h"
 #include "../litterales/litterales.h"
-#include "../litterales/operateurs.h"
-
+#include "../operateurs/operateurs.h"
+#include <QString>
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
 Operande* FactoryOperateur::create(std::string operateur)
@@ -167,7 +167,12 @@ Operande *FactoryLitterale::create(std::string litterale)
         // MAIS comme toutes les autres possibilités ont étaient epuises, on est sur que c'est un reel !
         if(isReel==true)
         {
-            Reel* monReel = new Reel(stod(litterale));
+            // ATTENTION : stod ne marche plus avec Qt, il faut utiliser toDouble() de QString !
+            QString value = QString::fromStdString(litterale);
+
+            Reel* monReel = new Reel(value.toDouble());
+            std::cout<<"Creation reel : ";
+            monReel->afficher();
             return monReel;
         }
 

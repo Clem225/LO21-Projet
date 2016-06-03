@@ -3,6 +3,7 @@
 #include <QSignalMapper>
 #include <QMainWindow>
 #include <QWidget>
+
 namespace Ui {
 class MainWindow;
 }

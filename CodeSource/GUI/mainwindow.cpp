@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // On vide recupere le contenu du cmdLine
     connect(ui->cmdLine,SIGNAL(returnPressed()),this,SLOT(sendCMD()));
 
-    //connect(ui->enter,SIGNAL(pressed()),this,SLOT(refresh()));
+    connect(ui->enter,SIGNAL(pressed()),this,SLOT(sendCMD()));
 
     QSignalMapper* signalMapper = new QSignalMapper(this);
 
@@ -74,8 +74,8 @@ void MainWindow::sendCMD()
     QString cmd = ui->cmdLine->text();
     ui->cmdLine->clear();
     std::string cmdStr = cmd.toStdString();
-    Controleur::getInstance().commande(cmdStr);
 
+    Controleur::getInstance().commande(cmdStr);
     this->refresh();
 
 }

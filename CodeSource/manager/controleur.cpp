@@ -1,10 +1,7 @@
-#include "../manager/controleur.h"
-#include "../manager/factory.h"
-#include "../litterales/litterales.h"
-#include "../litterales/operateurs.h"
 #include <string>
 #include <sstream>
-
+#include "../operateurs/operateurs.h"
+#include "controleur.h"
 
 void Controleur::executer()
 {
@@ -79,10 +76,10 @@ void Controleur::commande(std::string cmd)
 
      while(iss)
      {
-
+         std::string t = sub.c_str();
          // A ce stade, sub contient la partie du string entre des espaces
          // Si ce string est un opérateur, on l'ajoute à l'aide de la FactoryOperateur
-         if(estOperateur(sub))
+         if(estOperateur(t))
          {
              this->empiler(FactoryOperateur::getInstance(),sub);
              // SI c'est un opérateur, on execute !

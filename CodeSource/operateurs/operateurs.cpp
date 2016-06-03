@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 // Liste des opérateurs reconnus
 
 bool estUnOperateurBinaire(const std::string& c)
