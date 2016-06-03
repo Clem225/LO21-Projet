@@ -8,7 +8,6 @@ CONFIG += c++11
 SOURCES += \
     ../main/main.cpp \
     ../litterales/litterales.cpp \
-    ../manager/manager.cpp \
     ../GUI/mainwindow.cpp \
     ../litterales/operateursentier.cpp \
     ../litterales/operateursrationnel.cpp \
@@ -17,13 +16,16 @@ SOURCES += \
     ../litterales/operateursprogramme.cpp \
     ../litterales/operateursexpression.cpp \
     ../litterales/operateursatome.cpp \
-    ../operateurs/operateurs.cpp
+    ../operateurs/operateurs.cpp \
+    ../manager/factory.cpp \
+    ../manager/controleur.cpp
 
 HEADERS += \
     ../litterales/litterales.h \
-    ../manager/manager.h \
     ../litterales/operateurs.h \
-    ../GUI/mainwindow.h
+    ../GUI/mainwindow.h \
+    ../manager/factory.h \
+    ../manager/controleur.h
 
 FORMS += \
     ../GUI/mainwindow.ui
