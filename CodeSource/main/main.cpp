@@ -10,22 +10,10 @@
 int main(int argc, char *argv[])
 {
 
-
-
-    // Envoie du commande de test
-
-
-
-
-
-
-
     QApplication app(argc, argv);
 
     MainWindow principale;
     principale.show();
 
     return app.exec();
-
-    return 0;
 }
