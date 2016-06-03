@@ -1,17 +1,33 @@
-#include "../manager/controleur.h"
-#include "../manager/factory.h"
-#include "../litterales/litterales.h"
 #include "../operateurs/operateurs.h"
+#include "factory.h"
+
 #include <QString>
+
+
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
 Operande* FactoryOperateur::create(std::string operateur)
 {
 
+    if(estOperateur(operateur))
+    {
+        if(estUnOperateurUnaire(operateur))
+        {
+            Unaire* monOp = new Unaire(operateur);
+            return monOp;
+        }
+        if(estUnOperateurBinaire(operateur))
+        {
+            Binaire* monOp = new Binaire(operateur);
+            return monOp;
+        }
+        throw LitteraleException("Erreur lors de la création");
 
-    Binaire* monOp = new Binaire("+");
-    return monOp;
-
+    }
+    else
+    {
+        throw LitteraleException("Operateur invalide");
+    }
 
 }
 

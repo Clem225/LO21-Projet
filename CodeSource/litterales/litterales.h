@@ -12,9 +12,22 @@
 
 
 /*!
+ * \class LitteraleException
+ * \brief Gestion des erreurs due à des littterales
+*/
+class LitteraleException {
+    std::string info;
+public:
+    /*! \brief Constructeur */
+    LitteraleException(const std::string& str):info(str){}
+    /*! \brief Renvoie les informations sur l'erreur */
+    std::string getInfo() const { return info; }
+};
+
+
+/*!
  * \class Operande
 */
-
 class Operande
 {
 private :
@@ -24,11 +37,9 @@ public:
     virtual void afficher(std::ostream& f=std::cout) const=0;
 };
 
-
 /*!
  * \class Litterale
 */
-
 class Litterale : public Operande
 {
 public:

@@ -1,3 +1,5 @@
+#include "operateurs.h"
+
 #include <iostream>
 
 
@@ -27,7 +29,7 @@ bool estUnOperateurUnaire(const std::string& c)
     return false;
 }
 
-bool estOperateur(std::string& str)
+bool estOperateur(const std::string& str)
 {
     bool listOperateur =
             estUnOperateurBinaire(str) ||

@@ -1,7 +1,4 @@
 #include "operateurs.h"
-#include "../litterales/litterales.h"
-
-
 
 // Operateur d'affectation
 Entier* Entier::operator=(Entier a)

@@ -1,20 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "../manager/controleur.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setMsg("Bienvenue");
 
 
-    // Quand on appuie sur le bouton entree :
+    // Quand on appuie sur le bouton entree ou enter du clavier:
     // On vide recupere le contenu du cmdLine
     connect(ui->cmdLine,SIGNAL(returnPressed()),this,SLOT(sendCMD()));
-
     connect(ui->enter,SIGNAL(pressed()),this,SLOT(sendCMD()));
 
+    // Signal mapper clavier cliquable
     QSignalMapper* signalMapper = new QSignalMapper(this);
 
     connect(ui->divButton,SIGNAL(clicked()), signalMapper,SLOT(map()));
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->eightButton,SIGNAL(clicked()), signalMapper,SLOT(map()));
     connect(ui->nineButton,SIGNAL(clicked()), signalMapper,SLOT(map()));
 
-
+    // Mapping du clavier cliquable
     signalMapper->setMapping(ui->divButton,"DIV");
     signalMapper->setMapping(ui->modButton,"MOD");
     signalMapper->setMapping(ui->negButton,"NEG");
@@ -54,21 +54,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     signalMapper->setMapping(ui->eightButton,"8");
     signalMapper->setMapping(ui->nineButton,"9");
 
+    // Connection du mapper
     connect(signalMapper,SIGNAL(mapped(QString)),this,SLOT(addCMD(QString)));
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::refresh()
+// Rafraichit l'affichage de la pile
+void MainWindow::refreshPile()
 {
     QString pile = QString::fromStdString(Controleur::getInstance().pileString());
     ui->pileMsg->setText(pile);
 
 }
-
+// Execute la commande indiqué dans la barre de commande
 void MainWindow::sendCMD()
 {
     QString cmd = ui->cmdLine->text();
@@ -76,13 +78,36 @@ void MainWindow::sendCMD()
     std::string cmdStr = cmd.toStdString();
 
     Controleur::getInstance().commande(cmdStr);
-    this->refresh();
+    this->refreshPile();
+
+}
+// Change le texte utilisateur
+void MainWindow::setMsg(QString msg)
+{
+   ui->msgLine->setText(msg);
 
 }
 
+// Ajoute cmd à la barre de commande
 void MainWindow::addCMD(QString cmd)
 {
 
     ui->cmdLine->insert(cmd);
 
 }
+
+// Initialisation de l'attribut statique
+MainWindow::Handler MainWindow::handler = MainWindow::Handler();
+
+// Singleton
+MainWindow* MainWindow::getInstance()
+{
+    if(handler.instance==nullptr) {
+    handler.instance=new MainWindow;
+}
+return handler.instance;
+}
+
+
+
+

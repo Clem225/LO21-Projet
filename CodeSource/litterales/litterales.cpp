@@ -1,12 +1,7 @@
 #include "litterales.h"
-#include "../operateurs/operateurs.h"
-#include <string>
-#include <stdio.h>
+#include "../GUI/mainwindow.h"
+
 #include <math.h>
-#include <iostream>
-#include <limits>
-
-
 
 /*------Classe rationnel------*/
 
@@ -40,10 +35,15 @@ Entier Rationnel::simplification() {
 
 // Constructeur rationnel
 Rationnel::Rationnel(int e1, int e2) {
-    if (e2==0) throw "Erreur, division par zero";
+    if (e2==0)
+    {
+        MainWindow::getInstance()->setMsg("Erreur : Division par zero !");
+        throw "Erreur, division par zero";
+    }
     numerateur=e1;
     denominateur=e2;
     simplification();
+
 }
 
 

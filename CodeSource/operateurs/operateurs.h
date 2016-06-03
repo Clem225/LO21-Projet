@@ -1,7 +1,6 @@
 #ifndef OPERATEURS
 #define OPERATEURS
 
-
 #include <iostream>
 #include "../litterales/litterales.h"
 
@@ -13,12 +12,11 @@
  */
 
 /*! \brief Verifie si str est un opérateur numérique unaire */
-bool estUnOperateurUnaire(std::string& c);
+bool estUnOperateurUnaire(const std::string& c);
 /*! \brief Verifie si str est un opérateur numérique binaire */
-bool estUnOperateurBinaire(std::string& c);
+bool estUnOperateurBinaire(const std::string& c);
 /*! \brief Verifie si str est un opérateur */
-bool estOperateur(std::string& str);
-
+bool estOperateur(const std::string& str);
 
 
 /*!
@@ -39,7 +37,6 @@ public :
 /*!
  * \class Numerique
 */
-
 class OpNumerique : public Operateur
 {
 public :
@@ -52,7 +49,6 @@ public :
 /*!
  * \class Unaire
 */
-
 class Unaire : public OpNumerique
 {
 public :
@@ -65,7 +61,6 @@ public :
 /*!
  * \class Binaire
 */
-
 class Binaire : public OpNumerique
 {
 public :

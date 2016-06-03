@@ -1,73 +1,131 @@
-#include <string>
-#include <sstream>
-#include "../operateurs/operateurs.h"
 #include "controleur.h"
+#include "../litterales/litterales.h"
+#include "../operateurs/operateurs.h"
+#include "../GUI/mainwindow.h"
+#include <sstream>
 
 void Controleur::executer()
 {
 
-        // Le premier est un operateur
+        // On recupere le haut de la pile
         Operande* topOperande = pile.top();
 
-
-        Binaire* monOperateur = dynamic_cast<Binaire*>(topOperande);
+        // Si c'est un opérateur
+        Operateur* monOperateur = dynamic_cast<Operateur*>(topOperande);
         if(monOperateur)
         {
+            // On l'enleve de la pile
             pile.pop();
+            // On verifie son arite
+            Unaire* operateurUnaire = dynamic_cast<Unaire*>(monOperateur);
+            Binaire* operateurBinaire = dynamic_cast<Binaire*>(monOperateur);
 
-        // Si c'est un opérateur binaire, il faut que la pile soit supérieur ou égale à 2
-        if(pile.size()>=2)
-        {
-            Operande* v1 = pile.top();
+            if(operateurUnaire)
+            {
+                if(pile.size()>=1)
+                {
+                }
+                else
+                {
+                    // Si on arrive ici, c'est qu'il n'y a pas assez d'élément dans la pile
+                    MainWindow::getInstance()->setMsg("Erreur : Pas assez d'élément !");
+                }
+            }
+            if(operateurBinaire)
+            {
+                // Si c'est un opérateur binaire, il faut que la pile soit supérieur ou égale à 2
+                if(pile.size()>=2)
+                {
+                // On recupere la premiere opérande
+                Operande* v1 = pile.top();
 
+                Litterale* l1 = dynamic_cast<Litterale*>(v1);
+                // Si ce n'est pas une littérale, c'est un autre opérateur, on relance donc execution
+                if(!l1)
+                    this->executer();
 
-            Litterale* l1 = dynamic_cast<Litterale*>(v1);
+                // On enleve la littérale de la pile
+                pile.pop();
 
-            pile.pop();
+                // On recupere le deuxieme opérande
+                Operande* v2 = pile.top();
 
-            Operande* v2 = pile.top();
-            pile.pop();
+                Litterale* l2 = dynamic_cast<Litterale*>(v2);
+                // Si ce n'est pas une littérale, on relance executer
+                if(!l2)
+                    this->executer();
 
-            Litterale* l2 = dynamic_cast<Litterale*>(v2);
+                // On enleve la littérale de la pile
+                pile.pop();
 
-            Litterale* res=(*l1+*l2);
+                // On cree un pointeur vers le resultat
+                Litterale* res = 0;
+                // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
+                if(operateurBinaire->getValue() == "+")
+                    res=(*l1+*l2);
+                if(operateurBinaire->getValue() == "-")
+                    res=(*l1-*l2);
+                if(operateurBinaire->getValue() == "*")
+                    res=(*l1**l2);
+                if(operateurBinaire->getValue() == "/")
+                    res=(*l1 / *l2);
 
+                // On met le resultat en haut de pile
+                this->pile.push(res);
 
-            this->pile.push(res);
+                MainWindow::getInstance()->setMsg("Calcul effectué !");
+
+                }
+                else
+                {
+                    // Si on arrive ici, c'est qu'il n'y a pas assez d'élément dans la pile
+                    MainWindow::getInstance()->setMsg("Erreur : Pas assez d'élément !");
+                }
+            }
+
 
         }
-        }
+        // Si ce n'est pas un opérateur
         else
         {
+            // Alors c'est une littérale
             Litterale* l1 = dynamic_cast<Litterale*>(topOperande);
-
+            // On l'ajoute à la pile
             this->pile.push(l1);
 
         }
 
 }
 
+// Renvoi la pile sous la forme d'un string
 std::string Controleur::pileString()
 {
+    // On copie la pile dans une pile tampon
     std::stack<Operande*> tampon = pile;
+
+    // Operande buffer
     Operande* op;
 
+    // Stringstream qui contient la pile
     std::stringstream result;
 
-
+    // Tant que le tampon n'est pas vide
     while(!tampon.empty())
     {
-           op=tampon.top();
-           tampon.pop();
-           op->afficher(result);
-           result<<std::endl;
+        // On depile, et on ajoute au string de retour
+        op=tampon.top();
+        tampon.pop();
+        op->afficher(result);
+        result<<std::endl;
     }
-
+    // Si la pile est vide, on le dit !
     if(result.rdbuf()->in_avail()==0) // Test si result contient des caracteres
         return "Pile vide";
-     return result.str();
+    // Sinon, on renvoie le resultat
+    return result.str();
 }
 
+// Permet de separer une commande en différentes opérandes : "3 3 +" empilera 3 puis empilera 3 avant d'empiler + et d'executer la pile
 void Controleur::commande(std::string cmd)
 {
     std::istringstream iss(cmd);

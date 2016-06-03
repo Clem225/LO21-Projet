@@ -1,6 +1,7 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
+#include "../litterales/litterales.h"
 
 /*!
  * \class Factory

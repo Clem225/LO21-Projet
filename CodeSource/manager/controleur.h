@@ -1,12 +1,12 @@
 #ifndef CONTROLEUR_H
 #define CONTROLEUR_H
 
-
 #include <iostream>
 #include <string>
 #include <stack>
-#include "../litterales/litterales.h"
+
 #include "factory.h"
+
 
 /*!
  * \file manager.h
@@ -14,21 +14,6 @@
  * \author Blanquet - Martinache
  * \version 0.1
  */
-
-/*!
- * \class LitteraleException
- * \brief Gestion des erreurs due à des littterales
-*/
-class LitteraleException {
-    std::string info;
-public:
-    /*! \brief Constructeur */
-    LitteraleException(const std::string& str):info(str){}
-    /*! \brief Renvoie les informations sur l'erreur */
-    std::string getInfo() const { return info; }
-};
-
-
 
 
 /*!
@@ -76,6 +61,9 @@ public :
     static Controleur& getInstance();
     /*! \brief (SINGLETON) */
     static void libererInstance();
+
+
+
 
 };
 
