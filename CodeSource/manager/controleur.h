@@ -5,6 +5,7 @@
 #include <string>
 
 #include "../litterales/litterales.h"
+#include "factory.h"
 
 /*!
  * \file manager.h
@@ -20,38 +21,37 @@
 class LitteraleException {
     std::string info;
 public:
+    /*! \brief Constructeur */
     LitteraleException(const std::string& str):info(str){}
+    /*! \brief Renvoie les informations sur l'erreur */
     std::string getInfo() const { return info; }
 };
 
-/*!
- * \class Factory
- * \brief Création de operateurs ou de litterale (pere des deux factorys)
-*/
 
-class Factory
-{
-public :
-        virtual Operande* create(std::string value) = 0;
-};
 
 
 /*!
  * \class Controleur
  * \brief Permet l'empilement et l'execution dans une pile
 */
-
 class Controleur {
 private :
     std::stack<Operande*> pile;
 
-    // SINGLETON
+    /*! \brief Constructeur (SINGLETON) */
     Controleur(){}
+    /*! \brief Constructeur (SINGLETON) */
     Controleur(const Controleur& m){}
+    /*! \brief Recopie (SINGLETON) */
     Controleur& operator=(const Controleur& m){}
+    /*! \brief Destructeur (SINGLETON) */
     ~Controleur(){}
 
-    // On utilise une structure, les attributs sont publiques donc pas besoin d'amitie
+
+    /*!
+     * \class Handler
+     * \brief Gestion du singleton (attribut publique, évite l'amitié)
+    */
     struct Handler {
     Controleur* instance;
     Handler():instance(nullptr){}
@@ -61,15 +61,21 @@ private :
     static Handler handler;
 
 public :
+    /*! \brief Empile une valeur donnée gérée par une factory donnéee */
     void empiler(Factory& facto, std::string value){pile.push(facto.create(value));}
+    /*! \brief Execute le contenu de la pile */
     void executer();
+    /*! \brief Renvoie le contenu de la pile dans un string */
     std::string pileString();
+    /*! \brief Permet la gestion d'un string composé de différentes opérandes separées d'un espace*/
     void commande(std::string cmd);
 
 // SINGLETON
+    /*! \brief (SINGLETON) */
     static Controleur& getInstance();
+    /*! \brief (SINGLETON) */
     static void libererInstance();
-    Operande* create(std::string value);
+
 };
 
 

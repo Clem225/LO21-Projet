@@ -3,15 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.6"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
 <title>Projet LO21: Liste des membres</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { searchBox.OnSelectItem(0); });
+  $(document).ready(function() { init_search(); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
@@ -21,7 +22,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td style="padding-left: 0.5em;">
+  <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Projet LO21
    &#160;<span id="projectnumber">1</span>
    </div>
@@ -31,7 +32,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.6 -->
+<!-- Généré par Doxygen 1.8.11 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
 </script>
@@ -62,6 +63,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Liste&#160;des&#160;classes</span></a></li>
       <li><a href="classes.html"><span>Index&#160;des&#160;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&#160;des&#160;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&#160;de&#160;classe</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -69,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a></div>
+</div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,18 +90,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
 
 <p>Liste complète des membres de <a class="el" href="class_rationnel.html">Rationnel</a>, y compris les membres hérités :</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>afficher</b>() const  (défini dans <a class="el" href="class_rationnel.html">Rationnel</a>)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>getDenom</b>() const  (défini dans <a class="el" href="class_rationnel.html">Rationnel</a>)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getNb</b>() const  (défini dans <a class="el" href="class_rationnel.html">Rationnel</a>)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>getNum</b>() const  (défini dans <a class="el" href="class_rationnel.html">Rationnel</a>)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Rationnel</b>(int e1, int e2) (défini dans <a class="el" href="class_rationnel.html">Rationnel</a>)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>simplification</b>() (défini dans <a class="el" href="class_rationnel.html">Rationnel</a>)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#a4aa0448f26ba7f7e84bc8ca18281911b">afficher</a>(std::ostream &amp;f=std::cout) const </td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#a3809b3a6ac86e4b0a87bbf49f03dac6c">getDenom</a>() const </td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#aee7bc8aa91ceded4ec668dbdb22a72e6">getInverse</a>() const </td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#a9c96ebc33a9c6900080af3fe44053304">getNb</a>() const </td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#ac9596f5d24cef6120c0cabcd7923aa29">getNum</a>() const </td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#a58e731679248daca77a653ec3ff8eece">NEG</a>()</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#ad2bb958cb49758e71995a47de6d09169">operator*</a>(Litterale &amp;e)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#ac9cef88fc5b4c3a06f7e85bb21e3fa6c">operator+</a>(Litterale &amp;e)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#a0277639a95f65e0bc83a3e24d2c5c0ad">operator-</a>(Litterale &amp;e)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#aea5b13c6ad9db147099afd0450c1af78">operator/</a>(Litterale &amp;e)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#aa93d09cbce84a8515f2535014415e591">Rationnel</a>(int e1, int e2)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#a3b7271e6e392ecf881fba4a64ed03270">setDenom</a>(int e)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_rationnel.html#a01dfda42b1c6c73f0ca187ea4e582e73">setNum</a>(int e)</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_rationnel.html#a32a366e95ea529114df51074b382acbc">simplification</a>()</td><td class="entry"><a class="el" href="class_rationnel.html">Rationnel</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Généré le Mercredi 18 Mai 2016 08:54:57 pour Projet LO21 par &#160;<a href="http://www.doxygen.org/index.html">
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.6
+</a> 1.8.11
 </small></address>
 </body>
 </html>

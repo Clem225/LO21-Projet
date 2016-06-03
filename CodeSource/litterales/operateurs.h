@@ -13,18 +13,23 @@
  * \version 0.1
  */
 
+
+/*! \brief Verifie si str est un opérateur */
+bool estOperateur(std::string& str);
+/*! \brief Verifie si str est un opérateur numérique unaire */
+bool estUnOperateurUnaire(std::string& c);
+/*! \brief Verifie si str est un opérateur numérique binaire */
+bool estUnOperateurBinaire(std::string& c);
+
 /*!
  * \class Operateur
 */
-bool estOperateur(std::string& str);
-bool estUnOperateurUnaire(std::string& c);
-bool estUnOperateurBinaire(std::string& c);
-
 class Operateur : public Operande
 {
 private :
     std::string value;
 public :
+    /*! \brief Constructeur */
     Operateur(std::string val):value(val){}
     std::string getValue()const {return value;}
 
@@ -38,6 +43,7 @@ public :
 class OpNumerique : public Operateur
 {
 public :
+    /*! \brief Constructeur */
     OpNumerique(std::string value):Operateur(value){}
 
 
@@ -50,6 +56,7 @@ public :
 class Unaire : public OpNumerique
 {
 public :
+    /*! \brief Constructeur */
     Unaire(std::string value):OpNumerique(value){}
     void afficher(std::ostream& f=std::cout) const {f<<getValue();}
 
@@ -62,6 +69,7 @@ public :
 class Binaire : public OpNumerique
 {
 public :
+    /*! \brief Constructeur */
     Binaire(std::string value):OpNumerique(value){}
     void afficher(std::ostream& f=std::cout) const {f<<getValue();}
 };

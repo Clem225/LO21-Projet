@@ -98,9 +98,6 @@ void Controleur::commande(std::string cmd)
          iss >> sub;
      }
 
-
-
-
 }
 
 // Initialisation de l'attribut statique

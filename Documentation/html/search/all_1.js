@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['litterales_2eh',['litterales.h',['../litterales_8h.html',1,'']]]
+  ['binaire',['Binaire',['../class_binaire.html',1,'']]]
 ];

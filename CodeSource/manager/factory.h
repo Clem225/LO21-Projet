@@ -1,23 +1,41 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
+
+/*!
+ * \class Factory
+ * \brief Création de operateurs ou de litterale (pere des deux factorys)
+*/
+class Factory
+{
+public :
+    /*! \brief Fonction create qui sera implémenté dans les factorys littérales et opérandes */
+    virtual Operande* create(std::string value) = 0;
+};
+
 /*!
  * \class FactoryLitterale
  * \brief Création de litterale (Design Patern Factory Method)
 */
-
 class FactoryLitterale : public Factory
 {
 
 // SINGLETON
     private :
+        /*! \brief Constructeur (SINGLETON) */
         FactoryLitterale(){}
+        /*! \brief Constructeur (SINGLETON) */
         FactoryLitterale(const FactoryLitterale& m){}
+        /*! \brief Recopie (SINGLETON) */
         FactoryLitterale& operator=(const FactoryLitterale& m){}
+        /*! \brief Destructeur (SINGLETON) */
         ~FactoryLitterale(){}
 
 
-        // On utilise une structure, les attributs sont publiques donc pas besoin d'amitie
+        /*!
+         * \class Handler
+         * \brief Gestion du singleton (attribut publique, évite l'amitié)
+        */
         struct Handler {
         FactoryLitterale* instance;
         Handler():instance(nullptr){}
@@ -27,8 +45,11 @@ class FactoryLitterale : public Factory
         static Handler handler;
 
     public:
+        /*! \brief (SINGLETON) */
         static FactoryLitterale& getInstance();
+        /*! \brief (SINGLETON) */
         static void libererInstance();
+        /*! \brief Renvoie un *operande qui pointe vers la bonne littérale */
         Operande* create(std::string value);
 
 
@@ -44,13 +65,20 @@ class FactoryOperateur : public Factory
 
 // SINGLETON
     private :
+        /*! \brief Constructeur (SINGLETON) */
         FactoryOperateur(){}
+        /*! \brief Constructeur (SINGLETON) */
         FactoryOperateur(const FactoryOperateur& m){}
+        /*! \brief Recopie (SINGLETON) */
         FactoryOperateur& operator=(const FactoryOperateur& m){}
+        /*! \brief Destructeur (SINGLETON) */
         ~FactoryOperateur(){}
 
 
-        // On utilise une structure, les attributs sont publiques donc pas besoin d'amitie
+        /*!
+         * \class Handler
+         * \brief Gestion du singleton (attribut publique, évite l'amitié)
+        */
         struct Handler {
         FactoryOperateur* instance;
         Handler():instance(nullptr){}
@@ -60,8 +88,11 @@ class FactoryOperateur : public Factory
         static Handler handler;
 
     public:
+        /*! \brief (SINGLETON) */
         static FactoryOperateur& getInstance();
+        /*! \brief (SINGLETON) */
         static void libererInstance();
+        /*! \brief Renvoie un *operande qui pointe vers le bon opérateur */
         Operande* create(std::string value);
 
 };
