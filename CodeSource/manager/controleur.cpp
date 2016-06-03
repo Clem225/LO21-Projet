@@ -15,7 +15,7 @@ void Controleur::executer()
 
         Binaire* monOperateur = dynamic_cast<Binaire*>(topOperande);
         if(monOperateur)
-    {
+        {
             pile.pop();
 
         // Si c'est un opérateur binaire, il faut que la pile soit supérieur ou égale à 2
@@ -39,9 +39,9 @@ void Controleur::executer()
             this->pile.push(res);
 
         }
-    }
+        }
         else
-    {
+        {
             Litterale* l1 = dynamic_cast<Litterale*>(topOperande);
 
             this->pile.push(l1);
@@ -85,6 +85,8 @@ void Controleur::commande(std::string cmd)
          if(estOperateur(sub))
          {
              this->empiler(FactoryOperateur::getInstance(),sub);
+             // SI c'est un opérateur, on execute !
+             this->executer();
          }
          // Sinon, on considere que c'est une litterale
          else
@@ -95,8 +97,8 @@ void Controleur::commande(std::string cmd)
 
          iss >> sub;
      }
-     // Quand tous les strings ont étaient empiles, on execute la commande
-     this->executer();
+
+
 
 
 }
