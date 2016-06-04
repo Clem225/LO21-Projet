@@ -54,6 +54,10 @@ Xml_Dom::Xml_Dom() : QWidget()
 
 
 
+        QDomElement pile = dom.createElement("Pile");
+        pile.setAttribute("number", 5);
+        param.appendChild(pile);
+
         QTextStream stream( &xml_doc );
         stream << dom.toString();
 
@@ -101,6 +105,42 @@ void Xml_Dom::setKeyboard(int value)
 
     element = noeud.toElement();
     element.setAttribute("value", value);
+
+    QTextStream stream( &xml_doc);
+    stream << dom.toString();
+
+    xml_doc.close();
+}
+
+QString Xml_Dom::getPile()
+{
+
+    xml_doc.open(QIODevice::ReadWrite);
+
+    QDomElement racine = dom.documentElement(); // renvoie la balise racine
+    // Parametres
+    QDomNode noeud = racine.firstChild();
+    QDomElement element;
+
+
+        element = noeud.toElement();
+             xml_doc.close();
+        return element.attribute("value");
+
+
+}
+void Xml_Dom::setPile(int value)
+{
+
+    xml_doc.open(QIODevice::ReadWrite |QFile::Truncate);
+
+    QDomElement racine = dom.documentElement(); // renvoie la balise racine
+    // Parametres
+    QDomNode noeud = racine.firstChild();
+    QDomElement element;
+
+    element = noeud.toElement();
+    element.setAttribute("number", value);
 
     QTextStream stream( &xml_doc);
     stream << dom.toString();

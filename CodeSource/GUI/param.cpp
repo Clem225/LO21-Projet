@@ -11,7 +11,9 @@ Param::Param(QWidget *parent) :
 
 
 
+
     keyboardUpdate();
+    pileUpdate();
     connect(ui->clavier,SIGNAL(toggled(bool)),this,SLOT(keyboardChecked(bool)));
 
 }
@@ -43,6 +45,21 @@ Xml_Dom& Param::getXML()
 void Param::keyboardUpdate()
 {
     QString v = this->getXML().getKeyboard();
+    if(v=="1")
+    {
+
+        ui->clavier->setChecked(true);
+    }
+    else
+    {
+
+        ui->clavier->setChecked(false);
+    }
+
+}
+void Param::pileUpdate()
+{
+    QString v = this->getXML().getPile();
     if(v=="1")
     {
 

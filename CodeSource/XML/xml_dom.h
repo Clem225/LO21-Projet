@@ -17,6 +17,8 @@ public:
     ~Xml_Dom();
     QString getKeyboard();
     void setKeyboard(int value);
+    QString getPile();
+    void setPile(int value);
 };
 
 #endif // XML_DOM_H

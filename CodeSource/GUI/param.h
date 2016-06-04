@@ -24,6 +24,7 @@ public slots:
     // Modifie le XML selon la case coche dans les parametres
     void keyboardChecked(bool b);
     void keyboardUpdate();
+    void pileUpdate();
     Xml_Dom& getXML();
 
 
