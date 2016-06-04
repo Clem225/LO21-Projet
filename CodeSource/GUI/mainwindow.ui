@@ -273,6 +273,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Parametres</string>
     </property>
+    <addaction name="actionModifier"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuParametres"/>
@@ -281,6 +282,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionQuitter">
    <property name="text">
     <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionModifier">
+   <property name="text">
+    <string>Modifier</string>
    </property>
   </action>
  </widget>

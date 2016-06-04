@@ -2,12 +2,16 @@
 #include "ui_mainwindow.h"
 #include "../manager/controleur.h"
 
+#include "param.h"
+#include "ui_param.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     setMsg("Bienvenue");
 
+
+    showKeyboard();
 
     // Quand on appuie sur le bouton entree ou enter du clavier:
     // On vide recupere le contenu du cmdLine
@@ -56,6 +60,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Connection du mapper
     connect(signalMapper,SIGNAL(mapped(QString)),this,SLOT(addCMD(QString)));
+
+    // Button parametre
+    connect(ui->actionModifier, SIGNAL(triggered(bool)),this,SLOT(param()));
+
+    // Button quitter
+    connect(ui->actionQuitter,SIGNAL(triggered(bool)),this,SLOT(close()));
+
+
 
 }
 
@@ -109,5 +121,104 @@ return handler.instance;
 }
 
 
+void MainWindow::param()
+{
+    Param param(this);
+    param.exec();
+}
+
+void MainWindow::showKeyboard()
+{
+
+    int value = paramXML.getKeyboard().toInt();
+
+    if(value==1)
+    {
+
+        ui->divButton->show();
+        ui->modButton->show();
+        ui->negButton->show();
+        ui->slashButton->show();
+        ui->multiplyButton->show();
+        ui->minusButton->show();
+        ui->addButton->show();
+        ui->zeroButton->show();
+        ui->oneButton->show();
+        ui->twoButton->show();
+        ui->threeButton->show();
+        ui->fourButton->show();
+        ui->fiveButton->show();
+        ui->sixButton->show();
+        ui->sevenButton->show();
+        ui->eightButton->show();
+        ui->nineButton->show();
+    }
+    else
+    {
+        ui->divButton->hide();
+        ui->modButton->hide();
+        ui->negButton->hide();
+        ui->slashButton->hide();
+        ui->multiplyButton->hide();
+        ui->minusButton->hide();
+        ui->addButton->hide();
+        ui->zeroButton->hide();
+        ui->oneButton->hide();
+        ui->twoButton->hide();
+        ui->threeButton->hide();
+        ui->fourButton->hide();
+        ui->fiveButton->hide();
+        ui->sixButton->hide();
+        ui->sevenButton->hide();
+        ui->eightButton->hide();
+        ui->nineButton->hide();
+    }
+
+}
+void MainWindow::showKeyboard(bool b)
+{
 
 
+    if(b)
+    {
+
+        ui->divButton->show();
+        ui->modButton->show();
+        ui->negButton->show();
+        ui->slashButton->show();
+        ui->multiplyButton->show();
+        ui->minusButton->show();
+        ui->addButton->show();
+        ui->zeroButton->show();
+        ui->oneButton->show();
+        ui->twoButton->show();
+        ui->threeButton->show();
+        ui->fourButton->show();
+        ui->fiveButton->show();
+        ui->sixButton->show();
+        ui->sevenButton->show();
+        ui->eightButton->show();
+        ui->nineButton->show();
+    }
+    else
+    {
+        ui->divButton->hide();
+        ui->modButton->hide();
+        ui->negButton->hide();
+        ui->slashButton->hide();
+        ui->multiplyButton->hide();
+        ui->minusButton->hide();
+        ui->addButton->hide();
+        ui->zeroButton->hide();
+        ui->oneButton->hide();
+        ui->twoButton->hide();
+        ui->threeButton->hide();
+        ui->fourButton->hide();
+        ui->fiveButton->hide();
+        ui->sixButton->hide();
+        ui->sevenButton->hide();
+        ui->eightButton->hide();
+        ui->nineButton->hide();
+    }
+
+}

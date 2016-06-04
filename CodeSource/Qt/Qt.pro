@@ -1,6 +1,6 @@
 TEMPLATE = app
 QT += widgets
-CONFIG += console
+QT += xml
 CONFIG += app_bundle
 CONFIG += qt
 CONFIG += c++11
@@ -8,14 +8,17 @@ CONFIG += c++11
 
 
 FORMS += \
-    ../GUI/mainwindow.ui
+    ../GUI/mainwindow.ui \
+    ../GUI/param.ui
 
 HEADERS += \
     ../GUI/mainwindow.h \
     ../litterales/litterales.h \
     ../manager/controleur.h \
     ../manager/factory.h \
-    ../operateurs/operateurs.h
+    ../operateurs/operateurs.h \
+    ../GUI/param.h \
+    ../XML/xml_dom.h
 
 SOURCES += \
     ../GUI/mainwindow.cpp \
@@ -30,5 +33,7 @@ SOURCES += \
     ../operateurs/operateursexpression.cpp \
     ../operateurs/operateursprogramme.cpp \
     ../operateurs/operateursrationnel.cpp \
-    ../operateurs/operateursreel.cpp
+    ../operateurs/operateursreel.cpp \
+    ../GUI/param.cpp \
+    ../XML/xml_dom.cpp
 

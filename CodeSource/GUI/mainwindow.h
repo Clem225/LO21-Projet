@@ -4,6 +4,8 @@
 #include <QSignalMapper>
 #include <QMainWindow>
 #include <QWidget>
+#include <QtXml>
+#include "../XML/xml_dom.h"
 
 namespace Ui
 {
@@ -49,6 +51,8 @@ private:
 
     static Handler handler;
 
+    Xml_Dom paramXML;
+
 public slots:
     // Raffraichit l'affichage de la pile
     void refreshPile();
@@ -58,6 +62,11 @@ public slots:
     void addCMD(QString cmd);
     // Message utilisateur
     void setMsg(QString msg);
+    // Affiche la fenetre de parametre
+    void param();
+    // Affiche ou non le clavier
+    void showKeyboard();
+    void showKeyboard(bool b);
 };
 
 #endif // MAINWINDOW_H
