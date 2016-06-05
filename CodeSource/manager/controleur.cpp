@@ -87,13 +87,13 @@ void Controleur::executer()
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
                 if(operateurBinaire->getValue() == "+")
-                    res=(*l1+*l2);
+                    res=(*l2+*l1);
                 if(operateurBinaire->getValue() == "-")
-                    res=(*l1-*l2);
+                    res=(*l2-*l1);
                 if(operateurBinaire->getValue() == "*")
-                    res=(*l1**l2);
+                    res=(*l2**l1);
                 if(operateurBinaire->getValue() == "/")
-                    res=(*l1 / *l2);
+                    res=(*l2 / *l1);
                 if(operateurBinaire->getValue() == "DIV")
                 {
                     isDiv=true;
@@ -102,7 +102,7 @@ void Controleur::executer()
 
                     if (e1&&e2)
                     {
-                        res=DIV(e1,e2);
+                        res=DIV(e2,e1);
                         this->pile.push(res);
                         MainWindow::getInstance()->setMsg("Calcul effectué !");
                     }
@@ -123,7 +123,7 @@ void Controleur::executer()
 
                     if (e1&&e2)
                     {
-                        res=MOD(e1,e2);
+                        res=MOD(e2,e1);
                         this->pile.push(res);
                         MainWindow::getInstance()->setMsg("Calcul effectué !");
                     }
