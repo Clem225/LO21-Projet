@@ -147,6 +147,67 @@ Litterale* Complexe::operator*(Litterale& e){
 
 Litterale* Complexe::operator/(Litterale& e){
 
+    Complexe* comp=dynamic_cast<Complexe*>(&e);
+
+    // Division entre deux complexes
+    if(comp)
+    {
+        Litterale* aSave = comp->getReal()->clone();
+        Litterale* bSave = comp->getImag()->clone();
+
+        Litterale* apSave = comp->getReal()->clone();
+        Litterale* bpSave = comp->getImag()->clone();
+
+        // On calcule a * a'
+        LitteraleNumerique* partReel1 = dynamic_cast<LitteraleNumerique*>(aSave->operator *(*apSave));
+        // On calcule b * b'
+        LitteraleNumerique* partReel2 = dynamic_cast<LitteraleNumerique*>(bSave->operator *(*bpSave));
+        // On calcule aa' - bb'
+        LitteraleNumerique* partReelNum = dynamic_cast<LitteraleNumerique*>(partReel1->operator +(*partReel2));
+        // On calcule a'²
+        Litterale* apSaveb = comp->getReal()->clone();
+        LitteraleNumerique* partReel3 = dynamic_cast<LitteraleNumerique*>(apSaveb->operator *(*apSaveb));
+        // On calcule b'²
+        Litterale* bpSaveb = comp->getReal()->clone();
+        LitteraleNumerique* partReel4 = dynamic_cast<LitteraleNumerique*>(bpSaveb->operator *(*bpSaveb));
+        // On calcule a'² + b'²
+        LitteraleNumerique* partReelDenom = dynamic_cast<LitteraleNumerique*>(partReel3->operator +(*partReel4));
+        // On calcule la partie reel
+        LitteraleNumerique* partReel = dynamic_cast<LitteraleNumerique*>(partReelNum->operator /(*partReelDenom));
+
+
+        Litterale* aSave2 = comp->getReal()->clone();
+        Litterale* bSave2 = comp->getImag()->clone();
+
+        Litterale* apSave2 = comp->getReal()->clone();
+        Litterale* bpSave2 = comp->getImag()->clone();
+
+        // On calcule b * a'
+        LitteraleNumerique* partImag1 = dynamic_cast<LitteraleNumerique*>(bSave2->operator *(*apSave2));
+        // On calcule a * b'
+        LitteraleNumerique* partImag2 = dynamic_cast<LitteraleNumerique*>(aSave2->operator *(*bpSave2));
+        // On calcule ba' - ab'
+        LitteraleNumerique* partImagNum = dynamic_cast<LitteraleNumerique*>(partImag1->operator -(*partImag2));
+        // On calcule a'²
+        Litterale* apSaveb2 = comp->getReal()->clone();
+        LitteraleNumerique* partImag3 = dynamic_cast<LitteraleNumerique*>(apSaveb2->operator *(*apSaveb2));
+        // On calcule b'²
+        Litterale* bpSaveb2 = comp->getReal()->clone();
+        LitteraleNumerique* partImag4 = dynamic_cast<LitteraleNumerique*>(bpSaveb2->operator *(*bpSaveb2));
+        // On calcule a'² + b'²
+        LitteraleNumerique* partImagDenom = dynamic_cast<LitteraleNumerique*>(partImag3->operator +(*partImag4));
+        // On calcule la partie reel
+        LitteraleNumerique* partImag = dynamic_cast<LitteraleNumerique*>(partImagNum->operator /(*partImagDenom));
+
+        comp->setReal(*partReel);
+        comp->setImag(*partImag);
+
+
+
+        return comp;
+
+    }
+
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 
