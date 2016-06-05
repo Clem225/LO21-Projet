@@ -1,4 +1,5 @@
 <Parametres>
  <Clavier value="1"/>
- <Pile number="1"/>
+ <Pile number="3"/>
+ <BIP activated="1"/>
 </Parametres>

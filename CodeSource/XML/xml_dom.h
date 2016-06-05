@@ -19,6 +19,8 @@ public:
     void setKeyboard(int value);
     QString getPile();
     void setPile(int value);
+    QString getBip();
+    void setBip(int value);
 };
 
 #endif // XML_DOM_H

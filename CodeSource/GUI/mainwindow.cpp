@@ -78,8 +78,19 @@ MainWindow::~MainWindow()
 // Rafraichit l'affichage de la pile
 void MainWindow::refreshPile()
 {
-    QString pile = QString::fromStdString(Controleur::getInstance().pileString());
+    ui->pileMsg->clear();
+    int value = paramXML.getPile().toInt();
+    qDebug()<<value;
+    QString pile = QString::fromStdString(Controleur::getInstance().pileString(value));
     ui->pileMsg->setText(pile);
+
+}
+// Execute la commande indiqué dans la barre de commande
+void MainWindow::doBip()
+{
+    int value = paramXML.getBip().toInt();
+    if(value==1)
+        QApplication::beep();
 
 }
 // Execute la commande indiqué dans la barre de commande
@@ -97,6 +108,7 @@ void MainWindow::sendCMD()
 void MainWindow::setMsg(QString msg)
 {
    ui->msgLine->setText(msg);
+   this->doBip();
 
 }
 
@@ -120,21 +132,19 @@ MainWindow* MainWindow::getInstance()
 return handler.instance;
 }
 
-
+// Lance la fenetre param
 void MainWindow::param()
 {
     Param param(this);
     param.exec();
 }
-
+// Cache ou affiche le clavier selon la valeur dans le XML
 void MainWindow::showKeyboard()
 {
-
     int value = paramXML.getKeyboard().toInt();
 
     if(value==1)
     {
-
         ui->divButton->show();
         ui->modButton->show();
         ui->negButton->show();
@@ -173,52 +183,4 @@ void MainWindow::showKeyboard()
         ui->eightButton->hide();
         ui->nineButton->hide();
     }
-
-}
-void MainWindow::showKeyboard(bool b)
-{
-
-
-    if(b)
-    {
-
-        ui->divButton->show();
-        ui->modButton->show();
-        ui->negButton->show();
-        ui->slashButton->show();
-        ui->multiplyButton->show();
-        ui->minusButton->show();
-        ui->addButton->show();
-        ui->zeroButton->show();
-        ui->oneButton->show();
-        ui->twoButton->show();
-        ui->threeButton->show();
-        ui->fourButton->show();
-        ui->fiveButton->show();
-        ui->sixButton->show();
-        ui->sevenButton->show();
-        ui->eightButton->show();
-        ui->nineButton->show();
-    }
-    else
-    {
-        ui->divButton->hide();
-        ui->modButton->hide();
-        ui->negButton->hide();
-        ui->slashButton->hide();
-        ui->multiplyButton->hide();
-        ui->minusButton->hide();
-        ui->addButton->hide();
-        ui->zeroButton->hide();
-        ui->oneButton->hide();
-        ui->twoButton->hide();
-        ui->threeButton->hide();
-        ui->fourButton->hide();
-        ui->fiveButton->hide();
-        ui->sixButton->hide();
-        ui->sevenButton->hide();
-        ui->eightButton->hide();
-        ui->nineButton->hide();
-    }
-
 }

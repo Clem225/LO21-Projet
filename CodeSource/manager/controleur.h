@@ -6,7 +6,7 @@
 #include <stack>
 
 #include "factory.h"
-
+#include "../XML/xml_dom.h"
 
 /*!
  * \file manager.h
@@ -52,7 +52,7 @@ public :
     /*! \brief Execute le contenu de la pile */
     void executer();
     /*! \brief Renvoie le contenu de la pile dans un string */
-    std::string pileString();
+    std::string pileString(int size);
     /*! \brief Permet la gestion d'un string composé de différentes opérandes separées d'un espace*/
     void commande(std::string cmd);
 

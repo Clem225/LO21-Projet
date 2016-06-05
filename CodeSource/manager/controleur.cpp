@@ -166,8 +166,8 @@ void Controleur::executer()
 
 }
 
-// Renvoi la pile sous la forme d'un string
-std::string Controleur::pileString()
+// Renvoi la pile sous la forme d'un string (uniquement les size premiers resultats)
+std::string Controleur::pileString(int size)
 {
     // On copie la pile dans une pile tampon
     std::stack<Operande*> tampon = pile;
@@ -177,15 +177,21 @@ std::string Controleur::pileString()
 
     // Stringstream qui contient la pile
     std::stringstream result;
+    int i=0;
 
     // Tant que le tampon n'est pas vide
-    while(!tampon.empty())
+    while(!tampon.empty() && i<size)
     {
         // On depile, et on ajoute au string de retour
         op=tampon.top();
         tampon.pop();
         op->afficher(result);
         result<<std::endl;
+        i++;
+    }
+    if(!tampon.empty())
+    {
+        result<<"..."<<std::endl;
     }
     // Si la pile est vide, on le dit !
     if(result.rdbuf()->in_avail()==0) // Test si result contient des caracteres

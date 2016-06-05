@@ -28,8 +28,8 @@ Xml_Dom::Xml_Dom() : QWidget()
 
             {
 
-             xml_doc.close();
 
+            xml_doc.close();
              QMessageBox::warning(this, "Erreur à l'ouverture du document XML", "Le document XML n'a pas pu être attribué à l'objet QDomDocument.");
 
              return;
@@ -58,6 +58,10 @@ Xml_Dom::Xml_Dom() : QWidget()
         pile.setAttribute("number", 5);
         param.appendChild(pile);
 
+        QDomElement bip = dom.createElement("BIP");
+        bip.setAttribute("activated", 1);
+        param.appendChild(bip);
+
         QTextStream stream( &xml_doc );
         stream << dom.toString();
 
@@ -80,7 +84,7 @@ QString Xml_Dom::getKeyboard()
 {
 
     xml_doc.open(QIODevice::ReadWrite);
-
+    dom.setContent(&xml_doc);
     QDomElement racine = dom.documentElement(); // renvoie la balise racine
     // Parametres
     QDomNode noeud = racine.firstChild();
@@ -88,8 +92,9 @@ QString Xml_Dom::getKeyboard()
 
 
         element = noeud.toElement();
-             xml_doc.close();
+                     xml_doc.close();
         return element.attribute("value");
+
 
 
 }
@@ -110,22 +115,25 @@ void Xml_Dom::setKeyboard(int value)
     stream << dom.toString();
 
     xml_doc.close();
+
 }
 
 QString Xml_Dom::getPile()
 {
 
     xml_doc.open(QIODevice::ReadWrite);
-
+    dom.setContent(&xml_doc);
     QDomElement racine = dom.documentElement(); // renvoie la balise racine
     // Parametres
-    QDomNode noeud = racine.firstChild();
+    QDomNode noeud = racine.firstChild().nextSibling();
     QDomElement element;
 
 
         element = noeud.toElement();
              xml_doc.close();
-        return element.attribute("value");
+         return element.attribute("number");
+
+
 
 
 }
@@ -136,11 +144,47 @@ void Xml_Dom::setPile(int value)
 
     QDomElement racine = dom.documentElement(); // renvoie la balise racine
     // Parametres
-    QDomNode noeud = racine.firstChild();
+    QDomNode noeud = racine.firstChild().nextSibling();
     QDomElement element;
 
     element = noeud.toElement();
     element.setAttribute("number", value);
+
+    QTextStream stream( &xml_doc);
+    stream << dom.toString();
+
+    xml_doc.close();
+}
+QString Xml_Dom::getBip()
+{
+
+    xml_doc.open(QIODevice::ReadWrite);
+    dom.setContent(&xml_doc);
+    QDomElement racine = dom.documentElement(); // renvoie la balise racine
+    // Parametres
+    QDomNode noeud = racine.firstChild().nextSibling().nextSibling();
+    QDomElement element;
+
+
+        element = noeud.toElement();
+               xml_doc.close();
+        return element.attribute("activated");
+
+
+
+}
+void Xml_Dom::setBip(int value)
+{
+
+    xml_doc.open(QIODevice::ReadWrite |QFile::Truncate);
+
+    QDomElement racine = dom.documentElement(); // renvoie la balise racine
+    // Parametres
+    QDomNode noeud = racine.firstChild().nextSibling().nextSibling();
+    QDomElement element;
+
+    element = noeud.toElement();
+    element.setAttribute("activated", value);
 
     QTextStream stream( &xml_doc);
     stream << dom.toString();

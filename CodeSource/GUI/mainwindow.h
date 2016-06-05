@@ -66,7 +66,8 @@ public slots:
     void param();
     // Affiche ou non le clavier
     void showKeyboard();
-    void showKeyboard(bool b);
+    // Fait un bip si active
+    void doBip();
 };
 
 #endif // MAINWINDOW_H
