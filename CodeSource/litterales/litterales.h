@@ -289,7 +289,7 @@ public:
     /*! \brief Accesseurs en ecriture */
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
     void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);}
-    double getNb() const {return NULL;} //juste pour empeche l'abstrait
+    double getNb() const {return 0;} //juste pour empeche l'abstrait
 
     /*----------Opérateurs-------------*/
 

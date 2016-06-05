@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include "../litterales/litterales.h"
+#include <sstream>
+#include "../manager/factory.h"
 
 /*!
  * \file operateurs.h

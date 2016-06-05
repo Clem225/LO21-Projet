@@ -1,6 +1,6 @@
 #include "operateurs.h"
-#include "../manager/factory.h"
-#include <sstream>
+
+
 
 Complexe* Complexe::NEG()
 {
@@ -58,17 +58,17 @@ Litterale* Complexe::operator-(Litterale& e)
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         ent->operator -(*this);
-        this->getReal()->NEG();
+        return this->getReal()->NEG();
     }
     if (rat) //c'est un rationnel
     {
         rat->operator -(*this);
-        this->getReal()->NEG();
+        return this->getReal()->NEG();
     }
     if (real) //c'est un reel
     {
         real->operator -(*this);
-        this->getReal()->NEG();
+        return this->getReal()->NEG();
     }
     if(comp)
     {
@@ -92,15 +92,15 @@ Litterale* Complexe::operator*(Litterale& e){
     Complexe* comp=dynamic_cast<Complexe*>(&e);
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
-        ent->operator*(*this);
+        return ent->operator*(*this);
     }
     if (rat) //c'est un rationnel
     {
-        rat->operator *(*this);
+        return rat->operator *(*this);
     }
     if (real) //c'est un reel
     {
-       real->operator *(*this);
+       return real->operator *(*this);
     }
     if(comp)
     {
@@ -139,16 +139,80 @@ Litterale* Complexe::operator*(Litterale& e){
 
 
 Litterale* Complexe::operator/(Litterale& e){
-
+    Entier* ent=dynamic_cast<Entier*>(&e);
+    Rationnel* rat=dynamic_cast<Rationnel*>(&e);
+    Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
 
+    double a = this->getReal()->getNb();
+    double b = this->getImag()->getNb();
+
+    // Si c'est un entier
+    if(ent)
+    {
+
+        double partReel = a/(ent->getNb());
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = b/(ent->getNb());
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        this->setReal(*partReelLit);
+        this->setImag(*partImagLit);
+
+        return this;
+    }
+    if(rat)
+    {
+        double partReel = a/(rat->getNb());
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = b/(rat->getNb());
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        this->setReal(*partReelLit);
+        this->setImag(*partImagLit);
+
+        return this;
+    }
+    if(real)
+    {
+        double partReel = a/(real->getNb());
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = b/(real->getNb());
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        this->setReal(*partReelLit);
+        this->setImag(*partImagLit);
+
+        return this;
+    }
     // Division entre deux complexes
     if(comp)
     {
 
-
-        double a = this->getReal()->getNb();
-        double b = this->getImag()->getNb();
         double ap = comp->getReal()->getNb();
         double bp = comp->getImag()->getNb();
 

@@ -1,5 +1,5 @@
 #include "operateurs.h"
-
+#include <sstream>
 #include <iostream>
 
 

@@ -33,6 +33,8 @@ Litterale* Reel::operator+(Litterale& e){
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->operator +(*comp->getReal())   )));
         return comp;
     }
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 
@@ -70,6 +72,8 @@ Litterale* Reel::operator-(Litterale& e){
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->operator -(*comp->getReal())   )));
         return comp;
     }
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 
@@ -97,11 +101,32 @@ Litterale* Reel::operator*(Litterale& e){
     }
     if (comp) //c'est un complexe
     {
-        Reel* newr = new Reel(this->getNb());
-        comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->operator *(*comp->getReal())   )));
-        comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   newr->operator *(*comp->getImag())   )));
+        double a = this->getNb();
+        double b = 0;
+        double ap = comp->getReal()->getNb();
+        double bp = comp->getImag()->getNb();
+        double partReel = (a*ap)-(b*bp);
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = (a*bp)+(b*ap);
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        comp->setReal(*partReelLit);
+        comp->setImag(*partImagLit);
+
+
+
         return comp;
     }
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 
 }
 
@@ -133,31 +158,36 @@ Litterale* Reel::operator/(Litterale& e){
         setNb(d);
         return this;
     }
-    /* A FAIRE PLUS TARD
+
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
+        double a = this->getNb();
+        double b = 0;
+        double ap = comp->getReal()->getNb();
+        double bp = comp->getImag()->getNb();
 
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            this->operator *(*compEnt);
-            comp->setReal(*this);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            this->operator*(*compRat);
-            comp->setReal(*this);
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            this->operator*(*compReal);
-            comp->setReal(*this);
-        }
-        return *comp;
-    }*/
+        double partReel = ((a*ap)+(b*bp))/(ap*ap+bp*bp);
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = (b*ap-a*bp)/(ap*ap+bp*bp);
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        comp->setReal(*partReelLit);
+        comp->setImag(*partImagLit);
+
+
+
+        return comp;
+    }
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 
 }
 

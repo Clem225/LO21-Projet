@@ -50,6 +50,8 @@ Litterale* Entier::operator+(Litterale& e) {
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->operator +(*comp->getReal()))));
         return comp;
     }
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 
@@ -84,7 +86,8 @@ Litterale* Entier::operator-(Litterale& e)
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->operator -(*comp->getReal())   )));
         return comp;
     }
-
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 
@@ -120,10 +123,32 @@ Litterale* Entier::operator*(Litterale& e) {
     }
     if (comp) //c'est un complexe
     {
-        comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->operator *(*comp->getReal())  ) ));
-        comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   this->operator *(*comp->getImag())   )));
+        double a = this->getNb();
+        double b = 0;
+        double ap = comp->getReal()->getNb();
+        double bp = comp->getImag()->getNb();
+        double partReel = (a*ap)-(b*bp);
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = (a*bp)+(b*ap);
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        comp->setReal(*partReelLit);
+        comp->setImag(*partImagLit);
+
+
+
         return comp;
     }
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 
@@ -161,64 +186,35 @@ Litterale* Entier::operator/(Litterale& e) {
         real->setNb(res);
         return real;
     }
-    /* A FAIRE PLUS TARD
+
     if (comp) //c'est un complexe
     {
-        //On cherche le type de la partie réelle
-        Entier* compEnt=dynamic_cast<Entier*>(comp->getReal());
-        Rationnel* compRat=dynamic_cast<Rationnel*>(comp->getReal());
-        Reel* compReal=dynamic_cast<Reel*>(comp->getReal());
+        double a = this->getNb();
+        double b = 0;
+        double ap = comp->getReal()->getNb();
+        double bp = comp->getImag()->getNb();
 
-        if (compEnt) //La partie reelle du complexe est un entier
-        {
-            Reel* r= new Reel(nb / compEnt->getNb());
-            comp->setReal(*r);
-        }
-        if (compRat) //La partie réelle du complexe est un rationnel
-        {
-            compRat->setNum(nb*compRat->getNum());
-            compRat->simplification();
-            comp->setReal(*compRat);
-        }
-        if (compReal) //La partie réelle du complexe est un réel
-        {
-            double n = nb;
-            double res = n / compReal->getNb();
-            Reel* r= new Reel(res);
-            comp->setReal(*r);
-        }
+        double partReel = ((a*ap)+(b*bp))/(ap*ap+bp*bp);
+        std::ostringstream strs;
+        strs << partReel;
+        std::string partReelString = strs.str();
+
+        double partImag = (b*ap-a*bp)/(ap*ap+bp*bp);
+        std::ostringstream strs2;
+        strs2 << partImag;
+        std::string partImagString = strs2.str();
+
+        LitteraleNumerique* partReelLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partReelString));
+        LitteraleNumerique* partImagLit = dynamic_cast<LitteraleNumerique*>(FactoryLitterale::getInstance().create(partImagString));
+
+        comp->setReal(*partReelLit);
+        comp->setImag(*partImagLit);
 
 
-        //On cherche la partie imaginaire
-        Entier* compImEnt=dynamic_cast<Entier*>(comp->getImag());
-        Rationnel* compImRat=dynamic_cast<Rationnel*>(comp->getImag());
-        Reel* compImReal=dynamic_cast<Reel*>(comp->getImag());
 
-        if (compImEnt) //Si la partie imaginaire est entière
-        {
-            if (compImEnt->getNb()==0) // Et qu'elle est nulle
-                return *(comp->getReal()); //On renvoie uniquement la partie réelle
-            else
-            {
-                Rationnel* r = new Rationnel(nb,compImEnt->getNb());
-                comp->setImag(*r);
-            }
-        }
-        if (compImRat) //Si la partie imaginaire est rationnelle
-        {
-            int temp = compImRat->getDenom();
-            compImRat->setDenom(compImRat->getNum());
-            compImRat->setNum(nb*temp);
-            comp->setImag(*compImRat);
-        }
-        if (compImReal) //Si la partie imaginaire est reelle
-        {
-            double n = nb;
-            double res= n / compImReal->getNb();
-            compImReal->setNb(res);
-            comp->setImag(*compImReal);
-        }
+        return comp;
 
-        return *comp;
-    }*/
+    }
+
+    return NULL;
 }

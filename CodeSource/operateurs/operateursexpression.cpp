@@ -2,27 +2,32 @@
 
 Litterale* Expression::operator+(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Expression::operator-(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Expression::operator*(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Expression::operator/(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Expression::NEG()
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 double Expression::getNb() const

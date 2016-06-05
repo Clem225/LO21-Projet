@@ -2,25 +2,30 @@
 
 Litterale* Programme::operator+(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Programme::operator-(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Programme::operator*(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Programme::operator/(Litterale& e)
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
 
 Litterale* Programme::NEG()
 {
-//return Entier(0);
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
 }
