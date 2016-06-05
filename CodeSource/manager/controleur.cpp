@@ -69,6 +69,18 @@ void Controleur::executer()
                     res=(*l1**l2);
                 if(operateurBinaire->getValue() == "/")
                     res=(*l1 / *l2);
+                if(operateurBinaire->getValue() == "DIV")
+                {
+                    Entier* e1 = dynamic_cast<Entier*>(l1);
+                    Entier* e2 = dynamic_cast<Entier*>(l2);
+                    if (e1&&e2)
+                        res=DIV(e1,e2);
+                    else
+                    {
+                        MainWindow::getInstance()->setMsg("Erreur : DIV ne peut s'applique que sur deux entiers !");
+                        res=nullptr;
+                    }
+                }
 
                 // On met le resultat en haut de pile
                 this->pile.push(res);

@@ -87,14 +87,15 @@ class ExpressionPart : public Litterale
 */
 class Expression : public Litterale
 {
+    std::string str;
 public :
-    // COnstructeur de recopie à faire
+    Expression(std::string s): str(s) {};
+    void afficher(std::ostream& f=std::cout) const {f<<str;}
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
-
     Litterale* clone();
 };
 
@@ -163,7 +164,7 @@ public:
 
     double getNb() const {return nb;}
     /*! \brief Accesseurs en écriture */
-    void setValue(int i) {nb=i;}
+    Entier* setValue(int i) {nb=i;return this;}
     void afficher(std::ostream& f=std::cout) const {f<<nb;}
 
     /*----------Opérateurs-------------*/
@@ -184,8 +185,8 @@ public:
 class Rationnel : public LitteraleNumerique
 {
 private:
-	Entier numerateur;
-	Entier denominateur;
+    Entier numerateur;
+    Entier denominateur;
 public:
     /*! \brief Simplification d'un rationnel */
     Entier simplification();
@@ -198,7 +199,7 @@ public:
     Rationnel* NEG() {numerateur.setValue(-numerateur.getNb());return this;}
 
     /*! \brief Accesseurs en lecture */
-	int getNum() const {return numerateur.getNb();}
+    int getNum() const {return numerateur.getNb();}
     /*! \brief Accesseurs en lecture */
     int getDenom() const {return denominateur.getNb();}
 

@@ -149,7 +149,8 @@ Operande *FactoryLitterale::create(std::string litterale)
         // Seule une expression peut commencer par un ', on est sur du type
         if(isExpression==true)
         {
-            return NULL;
+            Expression* monExpression = new Expression(litterale);
+            return monExpression;
         }
         // Seul un complexe peut contenir un $, on est sur du type
         if(isComplexe==true)
