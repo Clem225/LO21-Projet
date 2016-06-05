@@ -3,6 +3,7 @@
 #include "../operateurs/operateurs.h"
 #include "../GUI/mainwindow.h"
 #include <sstream>
+#include <string>
 
 void Controleur::executer()
 {
@@ -58,6 +59,8 @@ void Controleur::executer()
                 // On enleve la littérale de la pile
                 pile.pop();
 
+                //On cree une serie de bool pour un test ulterieur
+                bool isDiv=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -71,21 +74,32 @@ void Controleur::executer()
                     res=(*l1 / *l2);
                 if(operateurBinaire->getValue() == "DIV")
                 {
+                    isDiv=true;
                     Entier* e1 = dynamic_cast<Entier*>(l1);
                     Entier* e2 = dynamic_cast<Entier*>(l2);
+
                     if (e1&&e2)
+                    {
                         res=DIV(e1,e2);
+                        this->pile.push(res);
+                        MainWindow::getInstance()->setMsg("Calcul effectué !");
+                    }
                     else
                     {
-                        MainWindow::getInstance()->setMsg("Erreur : DIV ne peut s'applique que sur deux entiers !");
-                        res=nullptr;
+                        MainWindow::getInstance()->setMsg("Erreur : DIV ne peut s'appliquer que sur deux entiers !");
+                        //On re-empile
+                        this->pile.push(l2);
+                        this->pile.push(l1);
                     }
                 }
 
+                if (!isDiv)
+                {
                 // On met le resultat en haut de pile
                 this->pile.push(res);
 
                 MainWindow::getInstance()->setMsg("Calcul effectué !");
+                }
 
                 }
                 else

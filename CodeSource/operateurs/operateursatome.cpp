@@ -29,3 +29,9 @@ Litterale* Atome::NEG()
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
+
+double Atome::getNb() const
+{
+    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    return NULL;
+}
