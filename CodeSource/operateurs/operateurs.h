@@ -19,6 +19,8 @@ bool estUnOperateurBinaire(const std::string& c);
 bool estOperateur(const std::string& str);
 /*! \brief La fonction DIV effectue la division entiere entre deux entiers */
 Entier* DIV(Entier* e1, Entier* e2);
+/*! \brief La fonction MOD renvoie le reste de la division entre deux entiers */
+Entier* MOD(Entier* e1, Entier* e2);
 
 
 /*!

@@ -24,6 +24,8 @@ Litterale* Reel::operator+(Litterale& e){
     {
         double d = real->getNb();
         nb+=d;
+        if (getMantisse()==0)
+            return new Entier(getNb());
         return this;
     }
     if (comp) //c'est un complexe

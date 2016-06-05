@@ -12,7 +12,8 @@ bool estUnOperateurBinaire(const std::string& c)
             c=="-" ||
             c=="*" ||
             c=="/" ||
-            c=="DIV";
+            c=="DIV" ||
+            c=="MOD";
 
     if(listOperateurBinaire)
         return true;
@@ -49,4 +50,8 @@ bool estOperateur(const std::string& str)
 
 Entier* DIV(Entier* e1, Entier* e2) {
         return e1->setValue(e1->getNb()/e2->getNb());
+}
+
+Entier* MOD(Entier* e1, Entier* e2) {
+        return e1->setValue(static_cast<int>(e1->getNb())%(static_cast<int>(e2->getNb())));
 }

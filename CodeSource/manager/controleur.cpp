@@ -61,6 +61,7 @@ void Controleur::executer()
 
                 //On cree une serie de bool pour un test ulterieur
                 bool isDiv=false;
+                bool isMod=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -93,7 +94,29 @@ void Controleur::executer()
                     }
                 }
 
-                if (!isDiv)
+                if(operateurBinaire->getValue() == "MOD")
+                {
+                    isMod=true;
+                    Entier* e1 = dynamic_cast<Entier*>(l1);
+                    Entier* e2 = dynamic_cast<Entier*>(l2);
+
+                    if (e1&&e2)
+                    {
+                        res=MOD(e1,e2);
+                        this->pile.push(res);
+                        MainWindow::getInstance()->setMsg("Calcul effectué !");
+                    }
+                    else
+                    {
+                        MainWindow::getInstance()->setMsg("Erreur : MOD ne peut s'appliquer que sur deux entiers !");
+                        //On re-empile
+                        this->pile.push(l2);
+                        this->pile.push(l1);
+                    }
+                }
+
+
+                if (!isDiv&&!isMod)
                 {
                 // On met le resultat en haut de pile
                 this->pile.push(res);
