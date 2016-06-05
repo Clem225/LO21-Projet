@@ -146,18 +146,6 @@ Litterale* Complexe::operator*(Litterale& e){
         comp->setImag(*partImag);
 
 
-        delete aSave;
-        delete bSave;
-
-        delete aSave2;
-        delete aSave2;
-
-        delete apSave;
-        delete bpSave;
-
-        delete apSave2;
-        delete bpSave2;
-
 
         return this;
 
