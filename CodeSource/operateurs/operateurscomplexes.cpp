@@ -116,19 +116,51 @@ Litterale* Complexe::operator*(Litterale& e){
     }
     if(comp)
     {
+        Litterale* aSave = comp->getReal()->clone();
+        Litterale* bSave = comp->getImag()->clone();
 
-    Complexe * ctemp2 = new Complexe(comp->getReal(),comp->getImag());
+        Litterale* apSave = comp->getReal()->clone();
+        Litterale* bpSave = comp->getImag()->clone();
 
-    comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->getReal()->operator*(*comp->getReal())  )));
-    comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   comp->getReal()->operator-(  *(this->getImag()->operator *(*comp->getImag()))  )  )));
+        // On calcule a * a'
+        LitteraleNumerique* partReel1 = dynamic_cast<LitteraleNumerique*>(aSave->operator *(*apSave));
+        // On calcule b * b'
+        LitteraleNumerique* partReel2 = dynamic_cast<LitteraleNumerique*>(bSave->operator *(*bpSave));
+        // On calcule aa' - bb'
+        LitteraleNumerique* partReel = dynamic_cast<LitteraleNumerique*>(partReel1->operator -(*partReel2));
+
+        Litterale* aSave2 = comp->getReal()->clone();
+        Litterale* bSave2 = comp->getImag()->clone();
+
+        Litterale* apSave2 = comp->getReal()->clone();
+        Litterale* bpSave2 = comp->getImag()->clone();
+
+        // On calcule a * b'
+        LitteraleNumerique* partImag1 = dynamic_cast<LitteraleNumerique*>(aSave2->operator *(*bpSave2));
+        // On calcule b * a''
+        LitteraleNumerique* partImag2 = dynamic_cast<LitteraleNumerique*>(bSave2->operator *(*apSave2));
+        // On calcule ab' + ba'
+        LitteraleNumerique* partImag = dynamic_cast<LitteraleNumerique*>(partImag1->operator +(*partImag2));
+
+        comp->setReal(*partReel);
+        comp->setImag(*partImag);
 
 
-    //Litterale* partieEntiere = (*this->operator *(ct))
+        delete aSave;
+        delete bSave;
 
-    //comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp1->getReal()->operator *(*ctemp2->getImag())  )));
+        delete aSave2;
+        delete aSave2;
+
+        delete apSave;
+        delete bpSave;
+
+        delete apSave2;
+        delete bpSave2;
 
 
-    return comp;
+        return this;
+
     }
 
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
