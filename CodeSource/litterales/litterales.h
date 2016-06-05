@@ -54,6 +54,8 @@ public:
         /*! \brief Operateur entre littérale */
     virtual Litterale* operator/(Litterale& e) =0;
 
+    /*! \brief Renvoi la valeur d'une littérale numérique */
+    virtual double getNb() const=0;
     virtual Litterale* clone()=0;
 
 };
@@ -97,6 +99,7 @@ public :
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
     Litterale* clone();
+    double getNb() const;
 };
 
 /*!
@@ -105,8 +108,7 @@ public :
 class LitteraleNumerique : public ExpressionPart
 {
 public:
-    /*! \brief Renvoi la valeur d'une littérale numérique */
-    virtual double getNb() const=0;
+
 
 };
 
@@ -127,6 +129,7 @@ public:
     /*! \brief Renvoie  l'atome*/
     std::string getAtome() const {return str;}
     void afficher(std::ostream& f=std::cout) const {f<<str;}
+    double getNb() const;
 
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
@@ -285,7 +288,8 @@ public:
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
     /*! \brief Accesseurs en ecriture */
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
-    void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);} // A vérif
+    void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);}
+    double getNb() const {return NULL;} //juste pour empeche l'abstrait
 
     /*----------Opérateurs-------------*/
 
