@@ -25,6 +25,26 @@ void Controleur::executer()
             {
                 if(pile.size()>=1)
                 {
+                    // On recupere la premiere opérande
+                    Operande* v1 = pile.top();
+
+                    Litterale* l1 = dynamic_cast<Litterale*>(v1);
+                    // Si ce n'est pas une littérale, c'est un autre opérateur, on relance donc execution
+                    if(!l1)
+                        this->executer();
+
+                    // On enleve la littérale de la pile
+                    pile.pop();
+
+                    // On cree un pointeur vers le resultat
+                    Litterale* res = 0;
+
+                    if(operateurUnaire->getValue() == "NEG")
+                    {
+                        res=l1->NEG();
+                        this->pile.push(res);
+                    }
+
                 }
                 else
                 {
