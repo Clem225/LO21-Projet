@@ -143,8 +143,45 @@ Operande *FactoryLitterale::create(std::string litterale)
         // Seul un atome peut commencer par une majuscule, on est sur du type
         if(isAtome==true)
         {
-            Atome* monAtome = new Atome(litterale);
-            return monAtome;
+            Atome* corres=nullptr;
+            //On cherche ce nom d'atome dans AtomeManager grace à un iterator
+            for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
+            {
+                if (it.current().getAtome()==litterale) //On a trouvé l'atome dans atomMng
+                {
+                    corres=&it.current();
+                    break;
+                }
+            }
+            //S'il existe dans AtomeManager
+            if (corres)
+            {
+                LitteraleNumerique* littNum = dynamic_cast<LitteraleNumerique*>(corres->getLink());
+                Complexe* littComp = dynamic_cast<Complexe*>(corres->getLink());
+
+                //Si c'est une variable, on la renvoie
+                if (littNum||littComp)
+                {
+                    if (littNum)
+                        return littNum;
+                    if (littComp)
+                        return littComp;
+                }
+                else
+                {
+                    //C'est un programme, l'évaluer
+                }
+            }
+            else //S'il n'existe pas dans AtomeManager, il n'est lié à rien, alors on crée une expression
+            {
+                //rajout des quotes autour
+                std::string temp = "'";
+                temp = temp+litterale;
+                temp = temp+"'";
+                Expression* exp = new Expression(temp);
+                return exp;
+            }
+
         }
         // Seule une expression peut commencer par un ', on est sur du type
         if(isExpression==true)

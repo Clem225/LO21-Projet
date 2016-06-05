@@ -99,6 +99,9 @@ public :
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
     Litterale* clone();
+    std::string getExpr() const {return str;}
+
+
     double getNb() const;
 };
 
@@ -119,26 +122,74 @@ class Atome : public ExpressionPart
 {
 private:
     std::string str;
+    Litterale* link;
 public:
     /*! \brief Constructeur Atome */
-    Atome(std::string text): str(text) {}
+    Atome(std::string text, Litterale* p=nullptr): str(text), link(p) {}
     /*! \brief Constructeur de recopie */
     Atome(const Atome& atom):str(atom.getAtome()){}
-
-    Litterale* NEG();
     /*! \brief Renvoie  l'atome*/
     std::string getAtome() const {return str;}
-    void afficher(std::ostream& f=std::cout) const {f<<str;}
-    double getNb() const;
+    /*! \brief Renvoie  la variable ou le programme auquel est lie l'atome*/
+    Litterale* getLink() const {return link;}
 
+    void afficher(std::ostream& f=std::cout) const {f<<str;}
+
+    /*INUTILE, JUSTE POUR EVITER ABSTRAIT*/
+    Litterale* NEG();
+    double getNb() const;
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
-
     Litterale* clone();
+};
 
 
+
+/*------Classes de MANAGER------*/
+
+class AtomeManager {
+private:
+    Atome** atoms;
+    unsigned int nb;
+    unsigned int nbMax;
+    struct Handler{
+        AtomeManager* instance;
+        Handler():instance(nullptr){}
+        // destructeur appelé à la fin du programme
+        ~Handler(){ delete instance; }
+    };
+    static Handler handler;
+public:
+    AtomeManager(): atoms(nullptr), nb(0), nbMax(0) {}
+    Atome* addAtome(Atome* a);
+    void agrandissementCapacite();
+    static AtomeManager& getInstance();
+    static void libererInstance();
+
+    //ITERATOR
+    class Iterator {
+        friend class AtomeManager;
+        Atome** currentExp;
+        unsigned int nbRemain;
+        Iterator(Atome** u, unsigned nb):currentExp(u),nbRemain(nb){}
+    public:
+        Iterator():currentExp(nullptr),nbRemain(0){}
+        bool isDone() const { return nbRemain==0; }
+        void next() {
+            if (isDone())
+                throw LitteraleException("error, next on an iterator which is done");
+            nbRemain--;
+            currentExp++;
+        }
+        Atome& current() const {
+            if (isDone())
+                throw LitteraleException("error, indirection on an iterator which is done");
+            return **currentExp;
+        }
+    };
+   Iterator getIterator() { return Iterator(atoms,nb); }
 };
 
 

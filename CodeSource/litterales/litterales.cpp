@@ -3,6 +3,37 @@
 
 #include <math.h>
 
+/*------Classes AtomeManager------*/
+
+AtomeManager::Handler AtomeManager::handler=AtomeManager::Handler();
+
+AtomeManager& AtomeManager::getInstance(){
+    if (handler.instance==nullptr) handler.instance=new AtomeManager;
+    return *handler.instance;
+}
+
+void AtomeManager::libererInstance(){
+    delete handler.instance;
+    handler.instance=nullptr;
+}
+
+Atome* AtomeManager::addAtome(Atome* a) {
+    if (nb==nbMax)
+        agrandissementCapacite();
+    atoms[nb++]=a;
+    return atoms[nb-1];
+}
+
+void AtomeManager::agrandissementCapacite() {
+    nbMax=(nbMax+1)*2;
+    Atome** newtab=new Atome*[nbMax];
+    for(unsigned int i=0; i<nb; i++) newtab[i]=atoms[i];
+    Atome** old=atoms;
+    atoms=newtab;
+    delete old;
+}
+
+
 /*------Classe rationnel------*/
 
 Entier Rationnel::simplification() {

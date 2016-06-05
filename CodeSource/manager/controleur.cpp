@@ -82,6 +82,7 @@ void Controleur::executer()
                 //On cree une serie de bool pour un test ulterieur
                 bool isDiv=false;
                 bool isMod=false;
+                bool isSto=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -135,8 +136,26 @@ void Controleur::executer()
                     }
                 }
 
+                if(operateurBinaire->getValue() == "STO")
+                {
+                    MainWindow::getInstance()->setMsg("enter sto !");
+                    isSto=true;
+                    Expression* e2 = dynamic_cast<Expression*>(l2);
 
-                if (!isDiv&&!isMod)
+                    //Si le deuxieme argument est bien une expression ne comportant qu'un atome,
+                    //On ajoute cet atome à AtomeManager en le liant à la litterale
+                    if (e2)
+                    {
+                        std::string temp = e2->getExpr();
+                        int temp2 = e2->getExpr().length()-2; //taille du string sans les quotes
+                        temp = temp.substr(1,temp2); //On retire les quotes
+                        Atome* a = new Atome(temp,l1); //On ajoute l'identificateur lié à la variable l1
+                        AtomeManager::getInstance().addAtome(a);
+                    }
+                }
+
+
+                if (!isDiv&&!isMod&&!isSto)
                 {
                 // On met le resultat en haut de pile
                 this->pile.push(res);
