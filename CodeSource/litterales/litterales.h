@@ -54,6 +54,8 @@ public:
         /*! \brief Operateur entre littérale */
     virtual Litterale* operator/(Litterale& e) =0;
 
+    virtual Litterale* clone()=0;
+
 };
 
 /*!
@@ -62,11 +64,14 @@ public:
 class Programme : public Litterale
 {
 public :
+    // COnstructeur de recopie à faire
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
+
+    Litterale* clone();
 };
 
 /*!
@@ -83,11 +88,14 @@ class ExpressionPart : public Litterale
 class Expression : public Litterale
 {
 public :
+    // COnstructeur de recopie à faire
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
+
+    Litterale* clone();
 };
 
 /*!
@@ -111,6 +119,9 @@ private:
 public:
     /*! \brief Constructeur Atome */
     Atome(std::string text): str(text) {}
+    /*! \brief Constructeur de recopie */
+    Atome(const Atome& atom):str(atom.getAtome()){}
+
     Litterale* NEG();
     /*! \brief Renvoie  l'atome*/
     std::string getAtome() const {return str;}
@@ -120,6 +131,8 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
+
+    Litterale* clone();
 
 
 };
@@ -140,9 +153,14 @@ public:
     Entier():nb(0){}
     /*! \brief Constructeur de Entier */
     Entier(int n): nb(n) {}
+    /*! \brief Constructeur de recopie */
+    Entier(const Entier& ent):nb(ent.getNb()){}
+
     /*! \brief Opérateur de recopie pour entier */
     Entier* operator=(Entier a);
+
     Entier* NEG() {nb=-nb; return this;}
+
     double getNb() const {return nb;}
     /*! \brief Accesseurs en écriture */
     void setValue(int i) {nb=i;}
@@ -154,6 +172,8 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
+
+    Litterale* clone();
 
 };
 
@@ -169,19 +189,27 @@ private:
 public:
     /*! \brief Simplification d'un rationnel */
     Entier simplification();
+
     /*! \brief Constructeur : e1 = numérateur, e2 = denominateur */
     Rationnel(int e1, int e2);
+    /*! \brief Constructeur de recopie */
+    Rationnel(const Rationnel& rat):numerateur(rat.getNum()),denominateur(rat.getDenom()){}
+
     Rationnel* NEG() {numerateur.setValue(-numerateur.getNb());return this;}
+
     /*! \brief Accesseurs en lecture */
 	int getNum() const {return numerateur.getNb();}
     /*! \brief Accesseurs en lecture */
     int getDenom() const {return denominateur.getNb();}
+
     /*! \brief Renvoie l'inverse */
     Rationnel& getInverse() const {Rationnel* r = new Rationnel(denominateur.getNb(),numerateur.getNb()); return *r;}
+
     /*! \brief Accesseurs en ecriture */
-    void setNum(int e) {numerateur=e;}
+    void setNum(const int e) {numerateur=e;}
     /*! \brief Accesseurs en ecriture */
-    void setDenom(int e) {denominateur=e;}
+    void setDenom(const int e) {denominateur=e;}
+
     double getNb() const {double d1 = numerateur.getNb();double d2=denominateur.getNb();return d1/d2;}
     void afficher(std::ostream& f=std::cout) const {f<<getNum()<<"/"<<getDenom();}
 
@@ -192,6 +220,7 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
+    Litterale* clone();
 };
 
 /*!
@@ -204,6 +233,8 @@ private:
 public:
     /*! \brief Constructeur */
     Reel(double d):nb(d) {}
+    /*! \brief Constructeur de recopie */
+    Reel(const Reel& rel):nb(rel.getNb()){}
 
     Reel* NEG() {nb=-nb; return this;}
     /*! \brief Accesseurs en lecture */
@@ -226,6 +257,7 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
+    Litterale* clone();
 
 };
 
@@ -240,6 +272,9 @@ private:
 public:
     /*! \brief Constructeur */
     Complexe(LitteraleNumerique* real, LitteraleNumerique* imag): realPart(real), imagPart(imag) {}
+    /*! \brief Constructeur de recopie */
+    Complexe(const Complexe& comp):realPart(comp.getReal()),imagPart(comp.getImag()){}
+
     Complexe* NEG();
     /*! \brief Accesseurs en lecture */
     LitteraleNumerique* getReal() const {return realPart;}
@@ -257,6 +292,7 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
+    Litterale* clone();
 };
 
 

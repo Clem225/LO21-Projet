@@ -35,5 +35,6 @@ SOURCES += \
     ../operateurs/operateursrationnel.cpp \
     ../operateurs/operateursreel.cpp \
     ../GUI/param.cpp \
-    ../XML/xml_dom.cpp
+    ../XML/xml_dom.cpp \
+    ../litterales/cloning.cpp
 

@@ -71,15 +71,27 @@ Litterale* Complexe::operator-(Litterale& e)
     }
     if(comp)
     {
-    Complexe * ctemp = new Complexe(getReal(),getImag());
-    comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->getReal()->operator -(*comp->getReal())  )));
-    comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp->getImag()->operator -(*comp->getImag())  )));
-    return comp;
+        /*
+    Litterale* a = this->getReal();
+    Litterale* b = this->getImag();
+    Litterale* ap = comp->getReal();
+    Litterale* bp = comp->getImag();
+
+    // a * a' - b * b'
+    LitteraleNumerique* partReel = (*a)*(*ap) + (*b)*(*bp);
+
+    // a * b' + b * a'
+    LitteraleNumerique* partImg = dynamic_cast<LitteraleNumerique*>(((this->getReal())->operator *(comp->getImag())));
+    partImg->operator +(comp->getReal()->operator *(this->getReal()));
+
+    Litterale* result = new Litterale(partReel,partImg);
+
+    return result;
     }
 
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
-    return NULL;
-
+    return NULL;*/
+    }
 }
 
 
@@ -104,15 +116,17 @@ Litterale* Complexe::operator*(Litterale& e){
     }
     if(comp)
     {
-    Complexe * ctemp1 = new Complexe(getReal(),getImag());
+
     Complexe * ctemp2 = new Complexe(comp->getReal(),comp->getImag());
 
     comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->getReal()->operator*(*comp->getReal())  )));
     comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   comp->getReal()->operator-(  *(this->getImag()->operator *(*comp->getImag()))  )  )));
 
-    comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp1->getReal()->operator *(*ctemp2->getImag())  )));
-    // A REFAIRE
-    //comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   comp->getImag()->operator +(  *(ctemp->getImag()->operator *(*comp->getReal()))  )  )));
+
+    //Litterale* partieEntiere = (*this->operator *(ct))
+
+    //comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp1->getReal()->operator *(*ctemp2->getImag())  )));
+
 
     return comp;
     }
