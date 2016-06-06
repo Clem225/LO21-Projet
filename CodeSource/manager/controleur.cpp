@@ -138,7 +138,6 @@ void Controleur::executer()
 
                 if(operateurBinaire->getValue() == "STO")
                 {
-                    MainWindow::getInstance()->setMsg("enter sto !");
                     isSto=true;
                     Expression* e2 = dynamic_cast<Expression*>(l2);
 
@@ -151,6 +150,14 @@ void Controleur::executer()
                         temp = temp.substr(1,temp2); //On retire les quotes
                         Atome* a = new Atome(temp,l1); //On ajoute l'identificateur lié à la variable l1
                         AtomeManager::getInstance().addAtome(a);
+                        MainWindow::getInstance()->setMsg("Variable initialisee !");
+                    }
+                    else
+                    {
+                        MainWindow::getInstance()->setMsg("Erreur : une variable doit etre liee a une expression contenant un atome !");
+                        //On re-empile
+                        this->pile.push(l2);
+                        this->pile.push(l1);
                     }
                 }
 
