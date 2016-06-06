@@ -15,7 +15,13 @@ bool estUnOperateurBinaire(const std::string& c)
             c=="DIV" ||
             c=="MOD" ||
             c=="STO" ||
-            c=="$";
+            c=="$" ||
+            c=="="  ||
+            c=="!=" ||
+            c=="<=" ||
+            c==">=" ||
+            c=="<" ||
+            c==">";
 
     if(listOperateurBinaire)
         return true;

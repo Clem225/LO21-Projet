@@ -213,8 +213,8 @@ Operande *FactoryLitterale::create(std::string litterale)
             denominateur=litterale.substr(positionSlash+1,litterale.size());
 
             Rationnel* monRationnel = new Rationnel(atoi(numerateur.c_str()),atoi(denominateur.c_str()));
-
-            return monRationnel;
+            Entier* a = new Entier(1);
+            return monRationnel->operator *(*a);
         }
 
         // ATTENTION : Ici, on est plus sur du type, en effet, un complexe peut contenir un point, comme un reel ou bien meme un programme ...

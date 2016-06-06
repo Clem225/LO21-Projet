@@ -173,6 +173,12 @@ void Controleur::executer()
                 bool isMod=false;
                 bool isSto=false;
                 bool isComp=false;
+                bool isEqual=false;
+                bool isNotEqual=false;
+                bool isInfOrEqual=false;
+                bool isSupOrEqual=false;
+                bool isInf=false;
+                bool isSup=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -270,9 +276,266 @@ void Controleur::executer()
                         this->pile.push(l1);
                     }
                 }
+                if(operateurBinaire->getValue() == "=")
+                {
+                    isEqual=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        if (littNum1->getNb()==littNum2->getNb())
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        Complexe* comp1=dynamic_cast<Complexe*>(l1);
+                        Complexe* comp2=dynamic_cast<Complexe*>(l2);
+                        if (comp1&&comp2)
+                        {
+                            if ( (comp1->getReal()->getNb()==comp2->getReal()->getNb()) && (comp1->getImag()->getNb()==comp2->getImag()->getNb()) )
+                            {
+                                res=new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                }
+
+                if(operateurBinaire->getValue() == "!=")
+                {
+                    isNotEqual=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        if (littNum1->getNb()!=littNum2->getNb())
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        Complexe* comp1=dynamic_cast<Complexe*>(l1);
+                        Complexe* comp2=dynamic_cast<Complexe*>(l2);
+                        if (comp1&&comp2)
+                        {
+                            if ( (comp1->getReal()->getNb()!=comp2->getReal()->getNb()) && (comp1->getImag()->getNb()!=comp2->getImag()->getNb()) )
+                            {
+                                res=new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                }
+
+                if(operateurBinaire->getValue() == "<=")
+                {
+                    isInfOrEqual=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        if (littNum1->getNb()<=littNum2->getNb())
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        Complexe* comp1=dynamic_cast<Complexe*>(l1);
+                        Complexe* comp2=dynamic_cast<Complexe*>(l2);
+                        if (comp1&&comp2)
+                        {
+                            if ( (comp1->getReal()->getNb()<=comp2->getReal()->getNb()) && (comp1->getImag()->getNb()<=comp2->getImag()->getNb()) )
+                            {
+                                res=new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                }
+
+                if(operateurBinaire->getValue() == ">=")
+                {
+                    isSupOrEqual=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        if (littNum1->getNb()>=littNum2->getNb())
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        Complexe* comp1=dynamic_cast<Complexe*>(l1);
+                        Complexe* comp2=dynamic_cast<Complexe*>(l2);
+                        if (comp1&&comp2)
+                        {
+                            if ( (comp1->getReal()->getNb()>=comp2->getReal()->getNb()) && (comp1->getImag()->getNb()>=comp2->getImag()->getNb()) )
+                            {
+                                res=new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                }
+
+                if(operateurBinaire->getValue() == "<")
+                {
+                    isInf=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        if (littNum1->getNb()<littNum2->getNb())
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        Complexe* comp1=dynamic_cast<Complexe*>(l1);
+                        Complexe* comp2=dynamic_cast<Complexe*>(l2);
+                        if (comp1&&comp2)
+                        {
+                            if ( (comp1->getReal()->getNb()<comp2->getReal()->getNb()) && (comp1->getImag()->getNb()<comp2->getImag()->getNb()) )
+                            {
+                                res=new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                }
+
+                if(operateurBinaire->getValue() == ">")
+                {
+                    isSup=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        if (littNum1->getNb()>littNum2->getNb())
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        Complexe* comp1=dynamic_cast<Complexe*>(l1);
+                        Complexe* comp2=dynamic_cast<Complexe*>(l2);
+                        if (comp1&&comp2)
+                        {
+                            if ( (comp1->getReal()->getNb()>comp2->getReal()->getNb()) && (comp1->getImag()->getNb()>comp2->getImag()->getNb()) )
+                            {
+                                res=new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+                }
 
 
-                if (!isDiv&&!isMod&&!isSto&&!isComp)
+                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup)
                 {
                 // On met le resultat en haut de pile
                 this->pile.push(res);
