@@ -45,6 +45,46 @@ void Controleur::executer()
                         this->pile.push(res);
                     }
 
+                    if(operateurUnaire->getValue() == "NUM")
+                    {
+                        Rationnel* r1 = dynamic_cast<Rationnel*>(l1);
+                        Entier* e1 = dynamic_cast<Entier*>(l1);
+                        if (r1||e1)
+                        {
+                            if (r1)
+                                res= new Entier(r1->getNum());
+                            if (e1)
+                                res=e1;
+                            this->pile.push(res);
+                            MainWindow::getInstance()->setMsg("NUM bien effectué !");
+                        }
+                        else
+                        {
+                            this->pile.push(l1);
+                            MainWindow::getInstance()->setMsg("Erreur : l'operateur NUM ne s'applique que sur des rationnels ou des entiers !");
+                        }
+                    }
+
+                    if(operateurUnaire->getValue() == "DEN")
+                    {
+                        Rationnel* r1 = dynamic_cast<Rationnel*>(l1);
+                        Entier* e1 = dynamic_cast<Entier*>(l1);
+                        if (r1||e1)
+                        {
+                            if (r1)
+                                res= new Entier(r1->getDenom());
+                            if (e1)
+                                res= new Entier(1);
+                            this->pile.push(res);
+                            MainWindow::getInstance()->setMsg("DEN bien effectué !");
+                        }
+                        else
+                        {
+                            this->pile.push(l1);
+                            MainWindow::getInstance()->setMsg("Erreur : l'operateur DEN ne s'applique que sur des rationnels ou des entiers !");
+                        }
+                    }
+
                 }
                 else
                 {
@@ -83,6 +123,7 @@ void Controleur::executer()
                 bool isDiv=false;
                 bool isMod=false;
                 bool isSto=false;
+                bool isComp=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -161,8 +202,28 @@ void Controleur::executer()
                     }
                 }
 
+                if(operateurBinaire->getValue() == "$")
+                {
+                    isComp=true;
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    if (littNum1&&littNum2)
+                    {
+                        res=new Complexe(littNum1,littNum2);
+                        this->pile.push(res);
+                        MainWindow::getInstance()->setMsg("Complexe bien créé !");
+                    }
+                    else
+                    {
+                        MainWindow::getInstance()->setMsg("Erreur : un complexe ne peut être constitué que de variables numeriques (entier, reel ou rationnel)");
+                        //On re-empile
+                        this->pile.push(l2);
+                        this->pile.push(l1);
+                    }
+                }
 
-                if (!isDiv&&!isMod&&!isSto)
+
+                if (!isDiv&&!isMod&&!isSto&&!isComp)
                 {
                 // On met le resultat en haut de pile
                 this->pile.push(res);
