@@ -134,6 +134,29 @@ void Controleur::executer()
                         }
                     }
 
+                    if(operateurUnaire->getValue() == "NOT")
+                    {
+                        Entier* ent=dynamic_cast<Entier*>(l1);
+                        if (ent)
+                        {
+                            if (ent->getNb()==0)
+                            {
+                                res = new Entier(1);
+                                this->pile.push(res);
+                            }
+                            else
+                            {
+                                res = new Entier(0);
+                                this->pile.push(res);
+                            }
+                        }
+                        else
+                        {
+                            res = new Entier(0);
+                            this->pile.push(res);
+                        }
+                    }
+
                 }
                 else
                 {
@@ -179,6 +202,8 @@ void Controleur::executer()
                 bool isSupOrEqual=false;
                 bool isInf=false;
                 bool isSup=false;
+                bool isAND=false;
+                bool isOR=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -534,8 +559,59 @@ void Controleur::executer()
                     }
                 }
 
+                if(operateurBinaire->getValue() == "AND")
+                {
+                    isAND=true;
+                    Entier* ent1=dynamic_cast<Entier*>(l1);
+                    Entier* ent2=dynamic_cast<Entier*>(l2);
+                    if (ent1&&ent2)
+                    {
+                        if (ent1->getNb()==0||ent2->getNb()==0)
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        res=new Entier(1);
+                        this->pile.push(res);
+                    }
+                }
 
-                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup)
+                if(operateurBinaire->getValue() == "OR")
+                {
+                    isOR=true;
+                    Entier* ent1=dynamic_cast<Entier*>(l1);
+                    Entier* ent2=dynamic_cast<Entier*>(l2);
+                    if (ent1&&ent2)
+                    {
+                        if (ent1->getNb()==0&&ent2->getNb()==0)
+                        {
+                            res=new Entier(0);
+                            this->pile.push(res);
+                        }
+                        else
+                        {
+                            res=new Entier(1);
+                            this->pile.push(res);
+                        }
+                    }
+                    else
+                    {
+                        res=new Entier(1);
+                        this->pile.push(res);
+                    }
+                }
+
+
+
+                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup&&!isAND&&!isOR)
                 {
                 // On met le resultat en haut de pile
                 this->pile.push(res);

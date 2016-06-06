@@ -21,7 +21,9 @@ bool estUnOperateurBinaire(const std::string& c)
             c=="<=" ||
             c==">=" ||
             c=="<" ||
-            c==">";
+            c==">" ||
+            c=="AND" ||
+            c=="OR";
 
     if(listOperateurBinaire)
         return true;
@@ -35,7 +37,8 @@ bool estUnOperateurUnaire(const std::string& c)
             c=="NUM" ||
             c=="DEN" ||
             c=="RE"  ||
-            c=="IM";
+            c=="IM"  ||
+            c=="NOT";
 
     if(listOperateurUnaire)
         return true;
