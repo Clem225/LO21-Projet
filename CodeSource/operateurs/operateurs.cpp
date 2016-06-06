@@ -27,7 +27,9 @@ bool estUnOperateurUnaire(const std::string& c)
     bool listOperateurUnaire =
             c=="NEG" ||
             c=="NUM" ||
-            c=="DEN";
+            c=="DEN" ||
+            c=="RE"  ||
+            c=="IM";
 
     if(listOperateurUnaire)
         return true;

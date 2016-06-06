@@ -84,6 +84,55 @@ void Controleur::executer()
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur DEN ne s'applique que sur des rationnels ou des entiers !");
                         }
                     }
+                    if(operateurUnaire->getValue() == "RE")
+                    {
+                        Complexe* c1 = dynamic_cast<Complexe*>(l1);
+                        LitteraleNumerique* littNum = dynamic_cast<LitteraleNumerique*>(l1);
+                        if (c1||littNum)
+                        {
+                            if (c1)
+                            {
+                               res = c1->getReal();
+                               this->pile.push(res);
+                               MainWindow::getInstance()->setMsg("RE bien effectué !");
+                            }
+                            if (littNum)
+                            {
+                                this->pile.push(littNum);
+                                MainWindow::getInstance()->setMsg("RE bien effectué !");
+                            }
+                        }
+                        else
+                        {
+                            this->pile.push(l1);
+                            MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
+                        }
+                    }
+                    if(operateurUnaire->getValue() == "IM")
+                    {
+                        Complexe* c1 = dynamic_cast<Complexe*>(l1);
+                        LitteraleNumerique* littNum = dynamic_cast<LitteraleNumerique*>(l1);
+                        if (c1||littNum)
+                        {
+                            if (c1)
+                            {
+                               res = c1->getImag();
+                               this->pile.push(res);
+                               MainWindow::getInstance()->setMsg("RE bien effectué !");
+                            }
+                            if (littNum)
+                            {
+                                res=new Entier(0);
+                                this->pile.push(res);
+                                MainWindow::getInstance()->setMsg("RE bien effectué !");
+                            }
+                        }
+                        else
+                        {
+                            this->pile.push(l1);
+                            MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
+                        }
+                    }
 
                 }
                 else
