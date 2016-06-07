@@ -156,6 +156,20 @@ void Controleur::executer()
                             this->pile.push(res);
                         }
                     }
+                    if(operateurUnaire->getValue() == "EVAL")
+                    {
+                        Expression* expr=dynamic_cast<Expression*>(l1);
+                        if (expr)
+                        {
+                            std::string temp = EVAL(*expr);
+                            this->commande(temp);
+                        }
+                        else
+                        {
+                            this->pile.push(l1);
+                            MainWindow::getInstance()->setMsg("Erreur : EVAL ne s'applque que sur des expressions !");
+                        }
+                    }
 
                 }
                 else
