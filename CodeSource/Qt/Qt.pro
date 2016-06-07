@@ -9,7 +9,9 @@ CONFIG += c++11
 
 FORMS += \
     ../GUI/mainwindow.ui \
-    ../GUI/param.ui
+    ../GUI/param.ui \
+    ../GUI/progedit.ui \
+    ../GUI/varedit.ui
 
 HEADERS += \
     ../GUI/mainwindow.h \
@@ -18,7 +20,9 @@ HEADERS += \
     ../manager/factory.h \
     ../operateurs/operateurs.h \
     ../GUI/param.h \
-    ../XML/xml_dom.h
+    ../XML/xml_dom.h \
+    ../GUI/progedit.h \
+    ../GUI/varedit.h
 
 SOURCES += \
     ../GUI/mainwindow.cpp \
@@ -36,5 +40,7 @@ SOURCES += \
     ../operateurs/operateursreel.cpp \
     ../GUI/param.cpp \
     ../XML/xml_dom.cpp \
-    ../litterales/cloning.cpp
+    ../litterales/cloning.cpp \
+    ../GUI/progedit.cpp \
+    ../GUI/varedit.cpp
 
