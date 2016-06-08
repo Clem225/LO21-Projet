@@ -42,9 +42,9 @@
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>250</x>
      <y>50</y>
-     <width>961</width>
+     <width>741</width>
      <height>281</height>
     </rect>
    </property>
@@ -83,6 +83,16 @@
    </property>
    <property name="text">
     <string>Valider et quitter</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listeProgrammes">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>221</width>
+     <height>281</height>
+    </rect>
    </property>
   </widget>
  </widget>

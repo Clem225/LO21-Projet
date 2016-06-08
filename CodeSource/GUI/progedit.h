@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::progEdit *ui;
+
+public slots:
+    void afficheProgrammes();
 };
 
 #endif // PROGEDIT_H

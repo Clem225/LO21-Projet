@@ -2,6 +2,7 @@
 #define VAREDIT_H
 
 #include <QDialog>
+#include <QStringListModel>
 
 namespace Ui {
 class varEdit;
@@ -17,6 +18,10 @@ public:
 
 private:
     Ui::varEdit *ui;
+
+
+public slots:
+    void afficheAtomes();
 };
 
 #endif // VAREDIT_H
