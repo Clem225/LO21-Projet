@@ -177,8 +177,7 @@ void Controleur::executer()
                         {
                             std::string temp = expr->getExpr();
                             //On enleve les quotes
-                            temp.erase(0,1);
-                            temp.erase(temp.length(),1);
+                            temp=temp.substr(1,temp.length()-2);
                             //On cherche l'atome correspondant
                             Atome* corres=nullptr;
                             for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
@@ -197,6 +196,7 @@ void Controleur::executer()
                             else
                             {
                                 MainWindow::getInstance()->setMsg("Erreur : la variable n'existe pas !");
+                                this->pile.push(l1);
                             }
                         }
                         else
