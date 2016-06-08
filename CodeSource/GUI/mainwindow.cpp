@@ -140,7 +140,6 @@ void MainWindow::refreshPile()
 {
     ui->pileMsg->clear();
     int value = paramXML.getPile().toInt();
-    qDebug()<<value;
     QString pile = QString::fromStdString(Controleur::getInstance().pileString(value));
     ui->pileMsg->setText(pile);
 
