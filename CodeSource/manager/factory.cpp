@@ -3,6 +3,7 @@
 #include "../operateurs/operateurs.h"
 #include "../litterales/litterales.h"
 #include "../manager/controleur.h"
+#include "../GUI/mainwindow.h"
 
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
@@ -178,8 +179,15 @@ Operande *FactoryLitterale::create(std::string litterale)
                     if (expr) //C'est une expression
                     {
                         std::string temp = EVAL(expr);
-                        Controleur::getInstance().commande(temp);
+                        if (temp=="error")
+                        {
+                            MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans l'expression/programme que vous avez tenté d'évaluer en entrant l'identifiant!");
 
+                        }
+                        else
+                        {
+                        Controleur::getInstance().commande(temp);
+                        }
                         return NULL;
                     }
                     else //C'est un programme
