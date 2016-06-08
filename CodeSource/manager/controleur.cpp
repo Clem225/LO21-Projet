@@ -29,6 +29,26 @@ void Controleur::executer()
                     MainWindow::getInstance()->programmes();
                     return;
                 }
+                if(operateurZero->toString() == "DUP")
+                {
+                    // On recupere la premiere opérande
+                    Operande* v1 = pile.top();
+                    this->empiler(v1);
+                }
+                if(operateurZero->toString() == "DROP")
+                {
+                    pile.pop();
+                }
+                if(operateurZero->toString() == "SWAP")
+                {
+                    // On recupere la premiere opérande
+                    Operande* v1 = pile.top();
+                    pile.pop();
+                    Operande* v2 = pile.top();
+                    pile.pop();
+                    this->empiler(v1);
+                    this->empiler(v2);
+                }
             }
             if(operateurUnaire)
             {
@@ -51,8 +71,8 @@ void Controleur::executer()
                     if(operateurUnaire->toString() == "NEG")
                     {
                         res=l1->NEG();
-                        this->empiler(res);;
-;
+                        this->empiler(res);
+
                     }
 
                     if(operateurUnaire->toString() == "NUM")

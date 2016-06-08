@@ -24,7 +24,8 @@ bool estUnOperateurBinaire(const std::string& c)
             c=="<" ||
             c==">" ||
             c=="AND" ||
-            c=="OR";
+            c=="OR" ||
+            c=="IFT";
 
     if(listOperateurBinaire)
         return true;
@@ -52,7 +53,15 @@ bool estUnOperateurZero(const std::string& c)
 {
 
     bool listOperateurZero =
-            c=="EDIT";
+            c=="EDIT" ||
+            c=="DUP" ||
+            c=="DROP" ||
+            c=="SWAP" ||
+            c=="LASTOP" ||
+            c=="LASTARGS" ||
+            c=="UNDO" ||
+            c=="REDO" ||
+            c=="CLEAR";
 
     if(listOperateurZero)
         return true;
