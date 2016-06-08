@@ -1,5 +1,7 @@
 #include "../operateurs/operateurs.h"
 #include "factory.h"
+#include "controleur.h"
+#include "../litterales/litterales.h"
 
 #include <QString>
 
@@ -169,7 +171,16 @@ Operande *FactoryLitterale::create(std::string litterale)
                 }
                 else
                 {
-                    //C'est un programme, l'évaluer
+                    Expression* expr = dynamic_cast<Expression*>(corres->getLink());
+                    if (expr) //C'est une expression
+                    {
+                        std::string temp = EVAL(*expr);
+                        Controleur::getInstance().commande(temp);
+                    }
+                    else
+                    {
+                        //C'est un programme, l'évaluer
+                    }
                 }
             }
             else //S'il n'existe pas dans AtomeManager, il n'est lié à rien, alors on crée une expression

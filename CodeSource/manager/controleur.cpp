@@ -312,7 +312,7 @@ void Controleur::executer()
                     isSto=true;
                     Expression* e1 = dynamic_cast<Expression*>(l1);
 
-                    //Si le deuxieme argument est bien une expression ne comportant qu'un atome,
+                    //Si le premier argument est bien une expression ne comportant qu'un atome,
                     //On ajoute cet atome à AtomeManager en le liant à la litterale
                     if (e1)
                     {
@@ -325,7 +325,7 @@ void Controleur::executer()
                     }
                     else
                     {
-                        MainWindow::getInstance()->setMsg("Erreur : une variable doit etre liee a une expression contenant un atome !");
+                        MainWindow::getInstance()->setMsg("Erreur : une variable/expression/programme doit etre liee a une expression contenant un atome !");
                         //On re-empile
                         this->pile.push(l2);
                         this->pile.push(l1);
