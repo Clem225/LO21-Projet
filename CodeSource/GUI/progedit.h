@@ -17,9 +17,12 @@ public:
 
 private:
     Ui::progEdit *ui;
+    QString nomSelected;
 
 public slots:
     void afficheProgrammes();
+    void selected(const QString &nom);
+        void valid();
 };
 
 #endif // PROGEDIT_H

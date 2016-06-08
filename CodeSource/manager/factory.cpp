@@ -1,10 +1,8 @@
-#include "../operateurs/operateurs.h"
 #include "factory.h"
-#include "controleur.h"
+
+#include "../operateurs/operateurs.h"
 #include "../litterales/litterales.h"
-
-#include <QString>
-
+#include "../manager/controleur.h"
 
 
 // Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu

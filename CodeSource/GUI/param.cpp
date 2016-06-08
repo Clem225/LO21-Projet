@@ -1,8 +1,11 @@
 #include "param.h"
 #include "ui_param.h"
+
 #include "../XML/xml_dom.h"
+
 #include "mainwindow.h"
-#include <unistd.h>
+
+
 Param::Param(QWidget *parent) : QDialog(parent), ui(new Ui::Param)
 {
     ui->setupUi(this);

@@ -1,10 +1,9 @@
 #include "controleur.h"
+
 #include "../litterales/litterales.h"
 #include "../operateurs/operateurs.h"
+
 #include "../GUI/mainwindow.h"
-#include <sstream>
-#include <string>
-#include <QMessageBox>
 
 void Controleur::executer()
 {
@@ -822,14 +821,14 @@ if(cmd[k]==' ')
             }
 
             std::string avant=cmd.substr(0,premier);
-            qDebug()<<"Avant : "<<QString::fromStdString(avant);
+
             this->commande(avant);
             std::string programme=cmd.substr(premier,dernier-premier+1);
-            qDebug()<<"programme : "<<QString::fromStdString(programme);
+
             this->empiler(FactoryLitterale::getInstance(),programme);
 
             std::string suite=cmd.substr(dernier+1,cmd.size()-dernier);
-            qDebug()<<"suite : "<<QString::fromStdString(suite);
+
             this->commande(suite);
 
             return;

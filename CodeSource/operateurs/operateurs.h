@@ -2,8 +2,9 @@
 #define OPERATEURS
 
 #include <iostream>
-#include "../litterales/litterales.h"
 #include <sstream>
+
+#include "../litterales/litterales.h"
 #include "../manager/factory.h"
 
 /*!

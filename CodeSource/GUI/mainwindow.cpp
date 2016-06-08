@@ -10,7 +10,6 @@
 
 #include <fstream>
 #include <QMessageBox>
-
 #include <limits.h>
 
 bool hasLoaded=false;
@@ -75,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Button atome
     connect(ui->actionAtomes, SIGNAL(triggered(bool)),this,SLOT(atomes()));
+    connect(ui->actionProgrammes, SIGNAL(triggered(bool)),this,SLOT(programmes()));
 
     // Button quitter
     connect(ui->actionQuitter,SIGNAL(triggered(bool)),this,SLOT(close()));

@@ -1,6 +1,7 @@
 #include "xml_dom.h"
-#include <iostream>
+
 #include <QMessageBox>
+
 
 using namespace std;
 

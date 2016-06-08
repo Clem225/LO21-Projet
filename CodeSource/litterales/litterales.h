@@ -173,7 +173,7 @@ public:
     void delAtome(Atome* a);
     void delAtome(std::string name);
     Litterale* getValeur(std::string name) const; //Renvoie la valeur de l'atome de nom name
-    void modifAtome(std::string oldname, std::string newname, Litterale* newval);
+    void modifAtome(const std::string oldname, const std::string newname, Litterale* newval);
     void agrandissementCapacite();
     static AtomeManager& getInstance();
     static void libererInstance();

@@ -1,7 +1,10 @@
-#include "litterales.h"
+#include "../litterales/litterales.h"
+
 #include "../GUI/mainwindow.h"
 
-#include <math.h>
+
+
+
 
 
 
@@ -60,22 +63,22 @@ void AtomeManager::delAtome(std::string name) {
 }
 
 Litterale* AtomeManager::getValeur(std::string name) const {
-    Atome* corres=nullptr;
+
     for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
     {
         if (it.current().getAtome()==name) //On a trouvé l'atome dans atomMng
         {
-            corres=&it.current();
+            //corres=&it.current();
+            return it.current().getLink();
+
             break;
         }
     }
-    if (corres)
-        return corres;
-    else
         return NULL;
 }
 
-void modifAtome(std::string oldname, std::string newname, Litterale* newval) {
+void AtomeManager::modifAtome(const std::string oldname, const std::string newname, Litterale* newval)
+{
     Atome* corres=nullptr;
     for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
     {

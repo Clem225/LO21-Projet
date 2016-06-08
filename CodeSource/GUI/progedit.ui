@@ -39,7 +39,7 @@
     <string>Programme :</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="valeur">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -62,7 +62,7 @@
     <string>Stocker dans l'atome :</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="nom">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -72,7 +72,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="valid">
    <property name="geometry">
     <rect>
      <x>720</x>
@@ -82,7 +82,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Valider et quitter</string>
+    <string>Valider </string>
    </property>
   </widget>
   <widget class="QListWidget" name="listeProgrammes">

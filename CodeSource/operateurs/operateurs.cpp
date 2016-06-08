@@ -1,8 +1,4 @@
 #include "operateurs.h"
-#include <sstream>
-#include <iostream>
-#include <stack>
-
 
 // Liste des opérateurs reconnus
 

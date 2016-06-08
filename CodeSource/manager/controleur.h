@@ -8,8 +8,7 @@
 #include "factory.h"
 #include "../XML/xml_dom.h"
 
-#include "../GUI/mainwindow.h"
-#include <QMessageBox>
+
 
 /*!
  * \file manager.h
