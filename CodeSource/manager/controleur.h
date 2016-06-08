@@ -55,7 +55,7 @@ public :
     std::string pileString(int size);
     /*! \brief Permet la gestion d'un string composé de différentes opérandes separées d'un espace*/
     void commande(std::string cmd);
-
+    std::stack<Operande*> returnPile() const {return pile;}
 // SINGLETON
     /*! \brief (SINGLETON) */
     static Controleur& getInstance();

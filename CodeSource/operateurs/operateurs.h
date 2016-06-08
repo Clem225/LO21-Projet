@@ -37,44 +37,32 @@ private :
 public :
     /*! \brief Constructeur */
     Operateur(std::string val):value(val){}
-    std::string getValue()const {return value;}
+    std::string toString()const {return value;}
 
 };
 
 
-/*!
- * \class Numerique
-*/
-class OpNumerique : public Operateur
-{
-public :
-    /*! \brief Constructeur */
-    OpNumerique(std::string value):Operateur(value){}
-
-
-};
 
 /*!
  * \class Unaire
 */
-class Unaire : public OpNumerique
+class Unaire : public Operateur
 {
 public :
     /*! \brief Constructeur */
-    Unaire(std::string value):OpNumerique(value){}
-    void afficher(std::ostream& f=std::cout) const {f<<getValue();}
-
+    Unaire(std::string value):Operateur(value){}
+    //void afficher(std::ostream& f=std::cout) const {f<<getValue();}
 };
 
 /*!
  * \class Binaire
 */
-class Binaire : public OpNumerique
+class Binaire : public Operateur
 {
 public :
     /*! \brief Constructeur */
-    Binaire(std::string value):OpNumerique(value){}
-    void afficher(std::ostream& f=std::cout) const {f<<getValue();}
+    Binaire(std::string value):Operateur(value){}
+    //void afficher(std::ostream& f=std::cout) const {f<<getValue();}
 };
 
 

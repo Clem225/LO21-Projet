@@ -34,7 +34,8 @@ private :
 
 public:
     /*! \brief Permet d'afficher une opérande*/
-    virtual void afficher(std::ostream& f=std::cout) const=0;
+    void afficher(std::ostream& f=std::cout){f<<toString();}
+    virtual std::string toString() const =0;
 };
 
 /*!
@@ -56,7 +57,6 @@ public:
 
     /*! \brief Renvoi la valeur d'une littérale numérique */
     virtual double getNb() const=0;
-    virtual Litterale* clone()=0;
 
 };
 
@@ -72,8 +72,6 @@ public :
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
-
-    Litterale* clone();
 };
 
 /*!
@@ -92,13 +90,13 @@ class Expression : public Litterale
     std::string str;
 public :
     Expression(std::string s): str(s) {};
-    void afficher(std::ostream& f=std::cout) const {f<<str;}
+    //void afficher(std::ostream& f=std::cout) const {f<<str;}
+    std::string toString() const {return str;}
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
-    Litterale* clone();
     std::string getExpr() const {return str;}
 
 
@@ -133,7 +131,8 @@ public:
     /*! \brief Renvoie  la variable ou le programme auquel est lie l'atome*/
     Litterale* getLink() const {return link;}
 
-    void afficher(std::ostream& f=std::cout) const {f<<str;}
+    //void afficher(std::ostream& f=std::cout) const {f<<str;}
+    std::string toString() const {return str;}
 
     /*INUTILE, JUSTE POUR EVITER ABSTRAIT*/
     Litterale* NEG();
@@ -142,7 +141,6 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
-    Litterale* clone();
 };
 
 
@@ -205,6 +203,9 @@ class Entier : public LitteraleNumerique
 private:
     int nb;
 public:
+    //void afficher(std::ostream& f=std::cout) const {f<<nb;}
+    std::string toString() const {return std::to_string(nb);}
+
     /*! \brief Constructeur par defaut - Initialise l'entier à 0 */
     Entier():nb(0){}
     /*! \brief Constructeur de Entier */
@@ -220,7 +221,6 @@ public:
     double getNb() const {return nb;}
     /*! \brief Accesseurs en écriture */
     Entier* setValue(int i) {nb=i;return this;}
-    void afficher(std::ostream& f=std::cout) const {f<<nb;}
 
     /*----------Opérateurs-------------*/
 
@@ -228,8 +228,6 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
-
-    Litterale* clone();
 
 };
 
@@ -267,8 +265,8 @@ public:
     void setDenom(const int e) {denominateur=e;}
 
     double getNb() const {double d1 = numerateur.getNb();double d2=denominateur.getNb();return d1/d2;}
-    void afficher(std::ostream& f=std::cout) const {f<<getNum()<<"/"<<getDenom();}
-
+    //void afficher(std::ostream& f=std::cout) const {f<<getNum()<<"/"<<getDenom();}
+    std::string toString() const {return std::to_string(numerateur.getNb())+"/"+std::to_string(denominateur.getNb());}
 
     /*----------Opérateurs-------------*/
 
@@ -276,7 +274,6 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
-    Litterale* clone();
 };
 
 /*!
@@ -305,7 +302,8 @@ public:
     void setEntiere(const Entier& e);
     /*! \brief Accesseurs en ecriture */
     void setMantisse(const double& e);
-    void afficher(std::ostream& f=std::cout) const {f<<getNb();}
+    //void afficher(std::ostream& f=std::cout) const {f<<getNb();}
+    std::string toString() const {return std::to_string(nb);}
 
     /*----------Opérateurs-------------*/
 
@@ -313,7 +311,6 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
-    Litterale* clone();
 
 };
 
@@ -340,7 +337,8 @@ public:
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
     /*! \brief Accesseurs en ecriture */
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
-    void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);}
+    //void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);}
+    std::string toString() const {return std::to_string(realPart->getNb())+"$"+std::to_string(imagPart->getNb());}
     double getNb() const {return 0;} //juste pour empeche l'abstrait
 
     /*----------Opérateurs-------------*/
@@ -349,7 +347,6 @@ public:
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
-    Litterale* clone();
 };
 
 

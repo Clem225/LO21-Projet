@@ -68,6 +68,7 @@ public slots:
     void showKeyboard();
     // Fait un bip si active
     void doBip();
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H

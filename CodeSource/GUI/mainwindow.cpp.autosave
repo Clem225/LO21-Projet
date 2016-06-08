@@ -74,15 +74,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 }
 void MainWindow::closeEvent(QCloseEvent *event)
  {
-    /*std::ofstream ofs("../Save/data.dat");
      if (ofs.good()) {
-        //ofs<<Controleur::getInstance().returnPile();
-
+        
+        std::stack<Operande*> pileSave = Controleur::getInstance().returnPile();
+        std::ofstream out("../Save/output.txt");
+        while(!pileSave.empty())
+         {
+            pileSave.top()
+        }
+         
          event->accept();
      } else {
          std::cerr << "Couldn't open text file!\n";
          event->ignore();
-     }*/
+     }
  }
 MainWindow::~MainWindow()
 {

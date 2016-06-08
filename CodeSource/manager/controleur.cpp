@@ -39,13 +39,13 @@ void Controleur::executer()
                     // On cree un pointeur vers le resultat
                     Litterale* res = 0;
 
-                    if(operateurUnaire->getValue() == "NEG")
+                    if(operateurUnaire->toString() == "NEG")
                     {
                         res=l1->NEG();
                         this->pile.push(res);
                     }
 
-                    if(operateurUnaire->getValue() == "NUM")
+                    if(operateurUnaire->toString() == "NUM")
                     {
                         Rationnel* r1 = dynamic_cast<Rationnel*>(l1);
                         Entier* e1 = dynamic_cast<Entier*>(l1);
@@ -65,7 +65,7 @@ void Controleur::executer()
                         }
                     }
 
-                    if(operateurUnaire->getValue() == "DEN")
+                    if(operateurUnaire->toString() == "DEN")
                     {
                         Rationnel* r1 = dynamic_cast<Rationnel*>(l1);
                         Entier* e1 = dynamic_cast<Entier*>(l1);
@@ -84,7 +84,7 @@ void Controleur::executer()
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur DEN ne s'applique que sur des rationnels ou des entiers !");
                         }
                     }
-                    if(operateurUnaire->getValue() == "RE")
+                    if(operateurUnaire->toString() == "RE")
                     {
                         Complexe* c1 = dynamic_cast<Complexe*>(l1);
                         LitteraleNumerique* littNum = dynamic_cast<LitteraleNumerique*>(l1);
@@ -108,7 +108,7 @@ void Controleur::executer()
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
                         }
                     }
-                    if(operateurUnaire->getValue() == "IM")
+                    if(operateurUnaire->toString() == "IM")
                     {
                         Complexe* c1 = dynamic_cast<Complexe*>(l1);
                         LitteraleNumerique* littNum = dynamic_cast<LitteraleNumerique*>(l1);
@@ -134,7 +134,7 @@ void Controleur::executer()
                         }
                     }
 
-                    if(operateurUnaire->getValue() == "NOT")
+                    if(operateurUnaire->toString() == "NOT")
                     {
                         Entier* ent=dynamic_cast<Entier*>(l1);
                         if (ent)
@@ -156,7 +156,7 @@ void Controleur::executer()
                             this->pile.push(res);
                         }
                     }
-                    if(operateurUnaire->getValue() == "EVAL")
+                    if(operateurUnaire->toString() == "EVAL")
                     {
                         Expression* expr=dynamic_cast<Expression*>(l1);
                         if (expr)
@@ -170,7 +170,7 @@ void Controleur::executer()
                             MainWindow::getInstance()->setMsg("Erreur : EVAL ne s'applque que sur des expressions !");
                         }
                     }
-                    if(operateurUnaire->getValue() == "FORGET")
+                    if(operateurUnaire->toString() == "FORGET")
                     {
                         Expression* expr=dynamic_cast<Expression*>(l1);
                         if (expr)
@@ -256,15 +256,15 @@ void Controleur::executer()
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
-                if(operateurBinaire->getValue() == "+")
+                if(operateurBinaire->toString() == "+")
                     res=(*l2+*l1);
-                if(operateurBinaire->getValue() == "-")
+                if(operateurBinaire->toString() == "-")
                     res=(*l2-*l1);
-                if(operateurBinaire->getValue() == "*")
+                if(operateurBinaire->toString() == "*")
                     res=(*l2**l1);
-                if(operateurBinaire->getValue() == "/")
+                if(operateurBinaire->toString() == "/")
                     res=(*l2 / *l1);
-                if(operateurBinaire->getValue() == "DIV")
+                if(operateurBinaire->toString() == "DIV")
                 {
                     isDiv=true;
                     Entier* e1 = dynamic_cast<Entier*>(l1);
@@ -285,7 +285,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "MOD")
+                if(operateurBinaire->toString() == "MOD")
                 {
                     isMod=true;
                     Entier* e1 = dynamic_cast<Entier*>(l1);
@@ -306,7 +306,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "STO")
+                if(operateurBinaire->toString() == "STO")
                 {
                     isSto=true;
                     Expression* e2 = dynamic_cast<Expression*>(l2);
@@ -331,7 +331,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "$")
+                if(operateurBinaire->toString() == "$")
                 {
                     isComp=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -350,7 +350,7 @@ void Controleur::executer()
                         this->pile.push(l1);
                     }
                 }
-                if(operateurBinaire->getValue() == "=")
+                if(operateurBinaire->toString() == "=")
                 {
                     isEqual=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -393,7 +393,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "!=")
+                if(operateurBinaire->toString() == "!=")
                 {
                     isNotEqual=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -436,7 +436,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "<=")
+                if(operateurBinaire->toString() == "<=")
                 {
                     isInfOrEqual=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -479,7 +479,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == ">=")
+                if(operateurBinaire->toString() == ">=")
                 {
                     isSupOrEqual=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -522,7 +522,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "<")
+                if(operateurBinaire->toString() == "<")
                 {
                     isInf=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -565,7 +565,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == ">")
+                if(operateurBinaire->toString() == ">")
                 {
                     isSup=true;
                     LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
@@ -608,7 +608,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "AND")
+                if(operateurBinaire->toString() == "AND")
                 {
                     isAND=true;
                     Entier* ent1=dynamic_cast<Entier*>(l1);
@@ -633,7 +633,7 @@ void Controleur::executer()
                     }
                 }
 
-                if(operateurBinaire->getValue() == "OR")
+                if(operateurBinaire->toString() == "OR")
                 {
                     isOR=true;
                     Entier* ent1=dynamic_cast<Entier*>(l1);
