@@ -293,6 +293,7 @@ void Controleur::executer()
                 bool isSup=false;
                 bool isAND=false;
                 bool isOR=false;
+                bool isIFT=false;
                 // On cree un pointeur vers le resultat
                 Litterale* res = 0;
                 // On fait le calcul correspondant à l'opérateur (qui renvoie un pointeur vers le résultat)
@@ -717,10 +718,37 @@ void Controleur::executer()
                         this->empiler(res);;
                     }
                 }
+                if(operateurBinaire->toString() == "IFT")
+                {
+                    isIFT=true;
+                    Entier* e2 = dynamic_cast<Entier*>(l2);
+                    Expression* exp1 = dynamic_cast<Expression*>(l1);
+                    Programme* prog1 = dynamic_cast<Programme*>(l1);
+                    if ((e2) && (exp1||prog1))
+                    {
+                        if (e2->getNb()!=0)
+                        {
+                            MainWindow::getInstance()->setMsg("Test VRAI");
+                            std::string temp = EVAL(l1);
+                            this->commande(temp);
+                        }
+                        else
+                        {
+                            MainWindow::getInstance()->setMsg("Test FAUX");
+                        }
+                    }
+                    else
+                    {
+                        this->empiler(l2);
+                        this->empiler(l1);
+                        MainWindow::getInstance()->setMsg("Erreur : IFT ne peut s'appliquer que sur le test d'un entier d'abord, pour évaluer une expression ou un programme !");
+                    }
+
+                }
 
 
 
-                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup&&!isAND&&!isOR)
+                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup&&!isAND&&!isOR&&!isIFT)
                 {
                 // On met le resultat en haut de pile
                 this->empiler(res);;
