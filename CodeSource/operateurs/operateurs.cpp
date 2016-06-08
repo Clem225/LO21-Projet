@@ -138,7 +138,7 @@ std::string EVAL(Expression& expr) {
 
 
 std::string EVAL(Expression& expr) {
-    std::string exp = expr.getExpr();
+    std::string exp = expr.toString();
     std::string finalResult="";
     exp.erase(0,1);
     exp.erase(exp.length(),1);

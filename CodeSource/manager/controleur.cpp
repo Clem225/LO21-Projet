@@ -175,7 +175,7 @@ void Controleur::executer()
                         Expression* expr=dynamic_cast<Expression*>(l1);
                         if (expr)
                         {
-                            std::string temp = expr->getExpr();
+                            std::string temp = expr->toString();
                             //On enleve les quotes
                             temp=temp.substr(1,temp.length()-2);
                             //On cherche l'atome correspondant
@@ -309,16 +309,16 @@ void Controleur::executer()
                 if(operateurBinaire->toString() == "STO")
                 {
                     isSto=true;
-                    Expression* e2 = dynamic_cast<Expression*>(l2);
+                    Expression* e1 = dynamic_cast<Expression*>(l1);
 
                     //Si le deuxieme argument est bien une expression ne comportant qu'un atome,
                     //On ajoute cet atome à AtomeManager en le liant à la litterale
-                    if (e2)
+                    if (e1)
                     {
-                        std::string temp = e2->getExpr();
-                        int temp2 = e2->getExpr().length()-2; //taille du string sans les quotes
-                        temp = temp.substr(1,temp2); //On retire les quotes
-                        Atome* a = new Atome(temp,l1); //On ajoute l'identificateur lié à la variable l1
+                        std::string temp = e1->toString();
+                        int temp1 = e1->toString().length()-2; //taille du string sans les quotes
+                        temp = temp.substr(1,temp1); //On retire les quotes
+                        Atome* a = new Atome(temp,l2); //On ajoute l'identificateur lié à la variable l1
                         AtomeManager::getInstance().addAtome(a);
                         MainWindow::getInstance()->setMsg("Variable initialisee !");
                     }

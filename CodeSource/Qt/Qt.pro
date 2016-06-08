@@ -40,7 +40,6 @@ SOURCES += \
     ../operateurs/operateursreel.cpp \
     ../GUI/param.cpp \
     ../XML/xml_dom.cpp \
-    ../litterales/cloning.cpp \
     ../GUI/progedit.cpp \
     ../GUI/varedit.cpp
 

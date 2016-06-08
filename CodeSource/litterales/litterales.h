@@ -65,8 +65,13 @@ public:
 */
 class Programme : public Litterale
 {
+    std::string str;
 public :
-    // COnstructeur de recopie à faire
+    Programme(std::string s): str(s) {}
+    std::string getProg() const {return str;}
+    std::string toString() const {return str;}
+
+    // Constructeur de recopie à faire
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
@@ -97,7 +102,7 @@ public :
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
-    std::string getExpr() const {return str;}
+    //std::string getExpr() const {return str;}
 
 
     double getNb() const;
