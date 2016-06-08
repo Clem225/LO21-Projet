@@ -179,22 +179,20 @@ Operande *FactoryLitterale::create(std::string litterale)
                     if (expr) //C'est une expression
                     {
                         std::string temp = EVAL(expr);
-                        if (temp=="error")
-                        {
-                            MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans l'expression/programme que vous avez tenté d'évaluer en entrant l'identifiant!");
-
-                        }
+                        if (temp.find("error")!=-1)
+                            MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans l'expression que vous avez tentée d'évaluer en entrant l'identifiant!");
                         else
-                        {
-                        Controleur::getInstance().commande(temp);
-                        }
+                            Controleur::getInstance().commande(temp);
                         return NULL;
                     }
                     else //C'est un programme
                     {
                         Programme* prog = dynamic_cast<Programme*>(corres->getLink());
                         std::string temp = EVAL(prog);
-                        Controleur::getInstance().commande(temp);
+                        if (temp.find("error")!=-1)
+                            MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans le programme que vous avez tenté d'évaluer en entrant l'identifiant!");
+                        else
+                            Controleur::getInstance().commande(temp);
 
                         return NULL;
                     }

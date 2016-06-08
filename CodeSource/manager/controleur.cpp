@@ -196,15 +196,13 @@ void Controleur::executer()
                                 temp = EVAL(expr);
                             if (progr)
                                 temp = EVAL(progr);
-                            if (temp=="error")
+                            if (temp.find("error")!=-1)
                             {
                                 this->pile.push(l1);
-                                MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans l'expression !");
+                                MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé pour l'évaluation était dans l'expression/programme !");
                             }
                             else
-                            {
                                 this->commande(temp);
-                            }
                         }
                         else
                         {
