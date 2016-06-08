@@ -140,7 +140,7 @@ Operande *FactoryLitterale::create(std::string litterale)
         // Seul un programme peut commencer par un crochet, on est sur du type
         if(isProgramme==true)
         {
-            return NULL;
+            return new Programme(litterale);
         }
         // Seul un atome peut commencer par une majuscule, on est sur du type
         if(isAtome==true)

@@ -161,15 +161,20 @@ void Controleur::executer()
                     if(operateurUnaire->toString() == "EVAL")
                     {
                         Expression* expr=dynamic_cast<Expression*>(l1);
-                        if (expr)
+                        Programme* progr=dynamic_cast<Programme*>(l1);
+                        if (expr||progr)
                         {
-                            std::string temp = EVAL(expr);
+                            std::string temp;
+                            if (expr)
+                                temp = EVAL(expr);
+                            if (progr)
+                                temp = EVAL(progr);
                             this->commande(temp);
                         }
                         else
                         {
                             this->empiler(l1);
-                            MainWindow::getInstance()->setMsg("Erreur : EVAL ne s'applque que sur des expressions !");
+                            MainWindow::getInstance()->setMsg("Erreur : EVAL ne s'applque que sur des expressions ou des programmes !");
                         }
                     }
                     if(operateurUnaire->toString() == "FORGET")

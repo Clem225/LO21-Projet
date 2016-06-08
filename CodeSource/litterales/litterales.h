@@ -65,12 +65,13 @@ public:
 */
 class Programme : public Litterale
 {
+private:
     std::string str;
 public :
     Programme(std::string s): str(s) {}
     std::string toString() const {return str;}
-
     // Constructeur de recopie à faire
+    double getNb() const {};
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
