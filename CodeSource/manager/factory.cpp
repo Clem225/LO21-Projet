@@ -176,6 +176,8 @@ Operande *FactoryLitterale::create(std::string litterale)
                     {
                         std::string temp = EVAL(*expr);
                         Controleur::getInstance().commande(temp);
+
+                        return NULL;
                     }
                     else
                     {

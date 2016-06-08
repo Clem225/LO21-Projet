@@ -43,7 +43,8 @@ void Controleur::executer()
                     if(operateurUnaire->toString() == "NEG")
                     {
                         res=l1->NEG();
-                        this->pile.push(res);
+                        this->empiler(res);;
+;
                     }
 
                     if(operateurUnaire->toString() == "NUM")
@@ -56,12 +57,12 @@ void Controleur::executer()
                                 res= new Entier(r1->getNum());
                             if (e1)
                                 res=e1;
-                            this->pile.push(res);
+                            this->empiler(res);;
                             MainWindow::getInstance()->setMsg("NUM bien effectué !");
                         }
                         else
                         {
-                            this->pile.push(l1);
+                            this->empiler(l1);
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur NUM ne s'applique que sur des rationnels ou des entiers !");
                         }
                     }
@@ -76,12 +77,12 @@ void Controleur::executer()
                                 res= new Entier(r1->getDenom());
                             if (e1)
                                 res= new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                             MainWindow::getInstance()->setMsg("DEN bien effectué !");
                         }
                         else
                         {
-                            this->pile.push(l1);
+                            this->empiler(l1);
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur DEN ne s'applique que sur des rationnels ou des entiers !");
                         }
                     }
@@ -94,18 +95,18 @@ void Controleur::executer()
                             if (c1)
                             {
                                res = c1->getReal();
-                               this->pile.push(res);
+                               this->empiler(res);;
                                MainWindow::getInstance()->setMsg("RE bien effectué !");
                             }
                             if (littNum)
                             {
-                                this->pile.push(littNum);
+                                this->empiler(littNum);
                                 MainWindow::getInstance()->setMsg("RE bien effectué !");
                             }
                         }
                         else
                         {
-                            this->pile.push(l1);
+                            this->empiler(l1);
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
                         }
                     }
@@ -118,19 +119,19 @@ void Controleur::executer()
                             if (c1)
                             {
                                res = c1->getImag();
-                               this->pile.push(res);
+                               this->empiler(res);;
                                MainWindow::getInstance()->setMsg("RE bien effectué !");
                             }
                             if (littNum)
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                                 MainWindow::getInstance()->setMsg("RE bien effectué !");
                             }
                         }
                         else
                         {
-                            this->pile.push(l1);
+                            this->empiler(l1);
                             MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
                         }
                     }
@@ -143,18 +144,18 @@ void Controleur::executer()
                             if (ent->getNb()==0)
                             {
                                 res = new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res = new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res = new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     if(operateurUnaire->toString() == "EVAL")
@@ -167,7 +168,7 @@ void Controleur::executer()
                         }
                         else
                         {
-                            this->pile.push(l1);
+                            this->empiler(l1);
                             MainWindow::getInstance()->setMsg("Erreur : EVAL ne s'applque que sur des expressions !");
                         }
                     }
@@ -197,12 +198,12 @@ void Controleur::executer()
                             else
                             {
                                 MainWindow::getInstance()->setMsg("Erreur : la variable n'existe pas !");
-                                this->pile.push(l1);
+                                this->empiler(l1);
                             }
                         }
                         else
                         {
-                            this->pile.push(l1);
+                            this->empiler(l1);
                             MainWindow::getInstance()->setMsg("Erreur : FORGET ne s'applque que sur des expressions (qui représentent des noms de variable !");
                         }
                     }
@@ -274,15 +275,15 @@ void Controleur::executer()
                     if (e1&&e2)
                     {
                         res=DIV(e2,e1);
-                        this->pile.push(res);
+                        this->empiler(res);;
                         MainWindow::getInstance()->setMsg("Calcul effectué !");
                     }
                     else
                     {
                         MainWindow::getInstance()->setMsg("Erreur : DIV ne peut s'appliquer que sur deux entiers !");
                         //On re-empile
-                        this->pile.push(l2);
-                        this->pile.push(l1);
+                        this->empiler(l2);
+                        this->empiler(l1);
                     }
                 }
 
@@ -295,15 +296,15 @@ void Controleur::executer()
                     if (e1&&e2)
                     {
                         res=MOD(e2,e1);
-                        this->pile.push(res);
+                        this->empiler(res);;
                         MainWindow::getInstance()->setMsg("Calcul effectué !");
                     }
                     else
                     {
                         MainWindow::getInstance()->setMsg("Erreur : MOD ne peut s'appliquer que sur deux entiers !");
                         //On re-empile
-                        this->pile.push(l2);
-                        this->pile.push(l1);
+                        this->empiler(l2);
+                        this->empiler(l1);
                     }
                 }
 
@@ -327,8 +328,8 @@ void Controleur::executer()
                     {
                         MainWindow::getInstance()->setMsg("Erreur : une variable/expression/programme doit etre liee a une expression contenant un atome !");
                         //On re-empile
-                        this->pile.push(l2);
-                        this->pile.push(l1);
+                        this->empiler(l2);
+                        this->empiler(l1);
                     }
                 }
 
@@ -340,15 +341,15 @@ void Controleur::executer()
                     if (littNum1&&littNum2)
                     {
                         res=new Complexe(littNum1,littNum2);
-                        this->pile.push(res);
+                        this->empiler(res);;
                         MainWindow::getInstance()->setMsg("Complexe bien créé !");
                     }
                     else
                     {
                         MainWindow::getInstance()->setMsg("Erreur : un complexe ne peut être constitué que de variables numeriques (entier, reel ou rationnel)");
                         //On re-empile
-                        this->pile.push(l2);
-                        this->pile.push(l1);
+                        this->empiler(l2);
+                        this->empiler(l1);
                     }
                 }
                 if(operateurBinaire->toString() == "=")
@@ -361,12 +362,12 @@ void Controleur::executer()
                         if (littNum1->getNb()==littNum2->getNb())
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
@@ -378,18 +379,18 @@ void Controleur::executer()
                             if ( (comp1->getReal()->getNb()==comp2->getReal()->getNb()) && (comp1->getImag()->getNb()==comp2->getImag()->getNb()) )
                             {
                                 res=new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                 }
@@ -404,12 +405,12 @@ void Controleur::executer()
                         if (littNum1->getNb()!=littNum2->getNb())
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
@@ -421,18 +422,18 @@ void Controleur::executer()
                             if ( (comp1->getReal()->getNb()!=comp2->getReal()->getNb()) && (comp1->getImag()->getNb()!=comp2->getImag()->getNb()) )
                             {
                                 res=new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                 }
@@ -447,12 +448,12 @@ void Controleur::executer()
                         if (littNum1->getNb()<=littNum2->getNb())
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
@@ -464,18 +465,18 @@ void Controleur::executer()
                             if ( (comp1->getReal()->getNb()<=comp2->getReal()->getNb()) && (comp1->getImag()->getNb()<=comp2->getImag()->getNb()) )
                             {
                                 res=new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                 }
@@ -490,12 +491,12 @@ void Controleur::executer()
                         if (littNum1->getNb()>=littNum2->getNb())
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
@@ -507,18 +508,18 @@ void Controleur::executer()
                             if ( (comp1->getReal()->getNb()>=comp2->getReal()->getNb()) && (comp1->getImag()->getNb()>=comp2->getImag()->getNb()) )
                             {
                                 res=new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                 }
@@ -533,12 +534,12 @@ void Controleur::executer()
                         if (littNum1->getNb()<littNum2->getNb())
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
@@ -550,18 +551,18 @@ void Controleur::executer()
                             if ( (comp1->getReal()->getNb()<comp2->getReal()->getNb()) && (comp1->getImag()->getNb()<comp2->getImag()->getNb()) )
                             {
                                 res=new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                 }
@@ -576,12 +577,12 @@ void Controleur::executer()
                         if (littNum1->getNb()>littNum2->getNb())
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
@@ -593,18 +594,18 @@ void Controleur::executer()
                             if ( (comp1->getReal()->getNb()>comp2->getReal()->getNb()) && (comp1->getImag()->getNb()>comp2->getImag()->getNb()) )
                             {
                                 res=new Entier(1);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                             else
                             {
                                 res=new Entier(0);
-                                this->pile.push(res);
+                                this->empiler(res);;
                             }
                         }
                         else
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                 }
@@ -619,18 +620,18 @@ void Controleur::executer()
                         if (ent1->getNb()==0||ent2->getNb()==0)
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
                     {
                         res=new Entier(1);
-                        this->pile.push(res);
+                        this->empiler(res);;
                     }
                 }
 
@@ -644,18 +645,18 @@ void Controleur::executer()
                         if (ent1->getNb()==0&&ent2->getNb()==0)
                         {
                             res=new Entier(0);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                         else
                         {
                             res=new Entier(1);
-                            this->pile.push(res);
+                            this->empiler(res);;
                         }
                     }
                     else
                     {
                         res=new Entier(1);
-                        this->pile.push(res);
+                        this->empiler(res);;
                     }
                 }
 
@@ -664,7 +665,7 @@ void Controleur::executer()
                 if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup&&!isAND&&!isOR)
                 {
                 // On met le resultat en haut de pile
-                this->pile.push(res);
+                this->empiler(res);;
 
                 MainWindow::getInstance()->setMsg("Calcul effectué !");
                 }
@@ -685,7 +686,7 @@ void Controleur::executer()
             // Alors c'est une littérale
             Litterale* l1 = dynamic_cast<Litterale*>(topOperande);
             // On l'ajoute à la pile
-            this->pile.push(l1);
+            this->empiler(l1);
 
         }
 
@@ -776,4 +777,9 @@ void Controleur::libererInstance()
 
 }
 
-
+void Controleur::empiler(Operande* value ){pile.push(value);}
+void Controleur::empiler(Factory& facto, std::string value){
+    Operande* temp = facto.create(value);
+    if(temp!=NULL)
+    pile.push(temp);
+}

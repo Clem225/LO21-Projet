@@ -8,6 +8,9 @@
 #include "factory.h"
 #include "../XML/xml_dom.h"
 
+#include "../GUI/mainwindow.h"
+#include <QMessageBox>
+
 /*!
  * \file manager.h
  * \brief Creation des Factory et du Controleur
@@ -48,7 +51,8 @@ private :
 
 public :
     /*! \brief Empile une valeur donnée gérée par une factory donnéee */
-    void empiler(Factory& facto, std::string value){pile.push(facto.create(value));}
+    void empiler(Operande* value );
+    void empiler(Factory& facto, std::string value);
     /*! \brief Execute le contenu de la pile */
     void executer();
     /*! \brief Renvoie le contenu de la pile dans un string */
