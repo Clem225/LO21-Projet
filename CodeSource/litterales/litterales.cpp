@@ -3,7 +3,11 @@
 
 #include <math.h>
 
+
+
 /*------Classes AtomeManager------*/
+
+
 
 AtomeManager::Handler AtomeManager::handler=AtomeManager::Handler();
 
@@ -24,6 +28,12 @@ Atome* AtomeManager::addAtome(Atome* a) {
     return atoms[nb-1];
 }
 
+Atome* AtomeManager::addAtome(std::string name, Litterale* val) {
+    Atome* a = new Atome(name,val);
+    this->addAtome(a);
+}
+
+
 void AtomeManager::delAtome(Atome* a) {
     unsigned int i=0;
     while(i<nb && atoms[i]!=a) i++;
@@ -34,6 +44,54 @@ void AtomeManager::delAtome(Atome* a) {
     nb--;
 }
 
+
+void AtomeManager::delAtome(std::string name) {
+    Atome* corres=nullptr;
+    for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
+    {
+        if (it.current().getAtome()==name) //On a trouvé l'atome dans atomMng
+        {
+            corres=&it.current();
+            break;
+        }
+    }
+    if (corres)
+        AtomeManager::getInstance().delAtome(corres);
+}
+
+Litterale* AtomeManager::getValeur(std::string name) const {
+    Atome* corres=nullptr;
+    for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
+    {
+        if (it.current().getAtome()==name) //On a trouvé l'atome dans atomMng
+        {
+            corres=&it.current();
+            break;
+        }
+    }
+    if (corres)
+        return corres;
+    else
+        return NULL;
+}
+
+void modifAtome(std::string oldname, std::string newname, Litterale* newval) {
+    Atome* corres=nullptr;
+    for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
+    {
+        if (it.current().getAtome()==oldname) //On a trouvé l'atome dans atomMng
+        {
+            corres=&it.current();
+            break;
+        }
+    }
+    if (corres)
+    {
+        corres->setName(newname);
+        corres->setLink(newval);
+    }
+}
+
 void AtomeManager::agrandissementCapacite() {
     nbMax=(nbMax+1)*2;
     Atome** newtab=new Atome*[nbMax];
@@ -42,6 +100,10 @@ void AtomeManager::agrandissementCapacite() {
     atoms=newtab;
     delete old;
 }
+
+
+
+
 
 
 /*------Classe rationnel------*/

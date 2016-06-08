@@ -135,6 +135,8 @@ public:
     std::string getAtome() const {return str;}
     /*! \brief Renvoie  la variable ou le programme auquel est lie l'atome*/
     Litterale* getLink() const {return link;}
+    void setName (std::string name) {str=name;}
+    void setLink (Litterale* litt) {link=litt;}
 
     //void afficher(std::ostream& f=std::cout) const {f<<str;}
     std::string toString() const {return str;}
@@ -167,7 +169,11 @@ private:
 public:
     AtomeManager(): atoms(nullptr), nb(0), nbMax(0) {}
     Atome* addAtome(Atome* a);
+    Atome* addAtome(std::string name, Litterale* val);
     void delAtome(Atome* a);
+    void delAtome(std::string name);
+    Litterale* getValeur(std::string name) const; //Renvoie la valeur de l'atome de nom name
+    void modifAtome(std::string oldname, std::string newname, Litterale* newval);
     void agrandissementCapacite();
     static AtomeManager& getInstance();
     static void libererInstance();
