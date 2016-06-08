@@ -275,7 +275,14 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionModifier"/>
    </widget>
+   <widget class="QMenu" name="menuEdition">
+    <property name="title">
+     <string>Edition</string>
+    </property>
+    <addaction name="actionAtomes"/>
+   </widget>
    <addaction name="menuFichier"/>
+   <addaction name="menuEdition"/>
    <addaction name="menuParametres"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -287,6 +294,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionModifier">
    <property name="text">
     <string>Modifier</string>
+   </property>
+  </action>
+  <action name="actionAtomes">
+   <property name="text">
+    <string>Atomes</string>
    </property>
   </action>
  </widget>

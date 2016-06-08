@@ -19,9 +19,17 @@ void Controleur::executer()
             // On l'enleve de la pile
             pile.pop();
             // On verifie son arite
+            Zero* operateurZero = dynamic_cast<Zero*>(monOperateur);
             Unaire* operateurUnaire = dynamic_cast<Unaire*>(monOperateur);
             Binaire* operateurBinaire = dynamic_cast<Binaire*>(monOperateur);
-
+            if(operateurZero)
+            {
+                if(operateurZero->toString() == "EDIT")
+                {
+                    MainWindow::getInstance()->programmes();
+                    return;
+                }
+            }
             if(operateurUnaire)
             {
                 if(pile.size()>=1)

@@ -64,6 +64,8 @@ public slots:
     void setMsg(QString msg);
     // Affiche la fenetre de parametre
     void param();
+    void atomes();
+    void programmes();
     // Affiche ou non le clavier
     void showKeyboard();
     // Fait un bip si active

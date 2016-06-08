@@ -48,12 +48,24 @@ bool estUnOperateurUnaire(const std::string& c)
 
     return false;
 }
+bool estUnOperateurZero(const std::string& c)
+{
+
+    bool listOperateurZero =
+            c=="EDIT";
+
+    if(listOperateurZero)
+        return true;
+
+    return false;
+}
 
 bool estOperateur(const std::string& str)
 {
     bool listOperateur =
             estUnOperateurBinaire(str) ||
-            estUnOperateurUnaire(str);
+            estUnOperateurUnaire(str) ||
+            estUnOperateurZero(str);
 
 
     if(listOperateur)

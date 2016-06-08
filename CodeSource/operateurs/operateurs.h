@@ -12,10 +12,11 @@
  * \author Blanquet - Martinache
  * \version 0.1
  */
-
-/*! \brief Verifie si str est un opérateur numérique unaire */
+/*! \brief Verifie si str est un opérateur zero */
+bool estUnOperateurZero(const std::string& c);
+/*! \brief Verifie si str est un opérateur unaire */
 bool estUnOperateurUnaire(const std::string& c);
-/*! \brief Verifie si str est un opérateur numérique binaire */
+/*! \brief Verifie si str est un opérateur binaire */
 bool estUnOperateurBinaire(const std::string& c);
 /*! \brief Verifie si str est un opérateur */
 bool estOperateur(const std::string& str);
@@ -40,8 +41,16 @@ public :
     std::string toString()const {return value;}
 
 };
-
-
+/*!
+ * \class Zero
+*/
+class Zero : public Operateur
+{
+public :
+    /*! \brief Constructeur */
+    Zero(std::string value):Operateur(value){}
+    //void afficher(std::ostream& f=std::cout) const {f<<getValue();}
+};
 
 /*!
  * \class Unaire

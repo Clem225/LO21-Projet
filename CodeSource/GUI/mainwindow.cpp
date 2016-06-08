@@ -2,8 +2,13 @@
 #include "ui_mainwindow.h"
 #include "../manager/controleur.h"
 
+
+
 #include "param.h"
 #include "ui_param.h"
+
+#include "progedit.h"
+#include "varedit.h"
 
 #include <fstream>
 #include <QMessageBox>
@@ -68,6 +73,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Button parametre
     connect(ui->actionModifier, SIGNAL(triggered(bool)),this,SLOT(param()));
+
+    // Button atome
+    connect(ui->actionAtomes, SIGNAL(triggered(bool)),this,SLOT(atomes()));
 
     // Button quitter
     connect(ui->actionQuitter,SIGNAL(triggered(bool)),this,SLOT(close()));
@@ -208,6 +216,18 @@ void MainWindow::param()
 {
     Param param(this);
     param.exec();
+}
+// Lance la fenetre atome
+void MainWindow::atomes()
+{
+    varEdit edit(this);
+    edit.exec();
+}
+// Lance la fenetre programme
+void MainWindow::programmes()
+{
+    progEdit edit(this);
+    edit.exec();
 }
 // Cache ou affiche le clavier selon la valeur dans le XML
 void MainWindow::showKeyboard()

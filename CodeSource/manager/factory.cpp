@@ -13,6 +13,11 @@ Operande* FactoryOperateur::create(std::string operateur)
 
     if(estOperateur(operateur))
     {
+        if(estUnOperateurZero(operateur))
+        {
+            Zero* monOp = new Zero(operateur);
+            return monOp;
+        }
         if(estUnOperateurUnaire(operateur))
         {
             Unaire* monOp = new Unaire(operateur);
