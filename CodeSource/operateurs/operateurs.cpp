@@ -197,7 +197,7 @@ std::string EVAL(Expression& expr) {
             else //Le caractère suivant n'est pas une parenthèse, c'est donc un nombre
             {
                 int j=i;
-                while ( (exp[j+1]<='9'&&exp[j+1]>='0') || (exp[j+1]<='Z'&&exp[j+1]>='A') )
+                while ( (exp[j+1]<='9'&&exp[j+1]>='0') || (exp[j+1]<='Z'&&exp[j+1]>='A') || (exp[j+1]=='.') )
                     j++;
                 std::string temp=exp.substr(i+1,j-i);
                 finalResult+=" "+temp;
@@ -219,7 +219,7 @@ std::string EVAL(Expression& expr) {
             int j=i;
             if (i+2<exp.length())
             {
-                while ( (exp[j+1]<='9'&&exp[j+1]>='0') || (exp[j+1]<='Z'&&exp[j+1]>='A') )
+                while ( (exp[j+1]<='9'&&exp[j+1]>='0') || (exp[j+1]<='Z'&&exp[j+1]>='A') || (exp[j+1]=='.') )
                     j++;
                 finalResult+=" "+exp.substr(i,j+1-i);
                 i=j;
