@@ -114,6 +114,7 @@ std::string EVAL(Litterale* litt) {
             expi += exp[i];
             if (estOperateur(expi)) //Si c'est un opérateur
             {
+
                 if (exp[i+1]=='-') //ça veut dire que c'est un moins non opérateur, un "NEG" si on peut dire
                 {
                     isNEG=true; //On le retient
@@ -178,17 +179,42 @@ std::string EVAL(Litterale* litt) {
                 //On teste si ça peut être un programme
                 if (exp[i]=='[' || exp[i]==']')
                     return "error"; //On signale une erreur
-                int j=i;
-                if (i+2<exp.length())
+
+                if (exp[i]=='(') //ça veut dire que l'expression commence par une parenthèse
                 {
-                    while ( (exp[j+1]<='9'&&exp[j+1]>='0') || (exp[j+1]<='Z'&&exp[j+1]>='A') || (exp[j+1]=='.') || (exp[j+1]=='$') )
+                    //On cherche la parenthèse fermante, en prenant en compte les parenthèses imbriquées
+                    int j = i+1;
+                    compteurParenthese=0;
+                    while ( (exp[j]!=')') || (compteurParenthese!=0) )
+                    {
+                        if (exp[j]=='(')
+                            compteurParenthese++;
+                        if (exp[j]==')')
+                            compteurParenthese--;
                         j++;
-                    finalResult+=" "+exp.substr(i,j+1-i);
-                    i=j;
+                    }
+                    std:: string temp = exp.substr(i+1,j-(i+1)); //Prend l'exp entre parenthèses
+                    temp= "'"+temp+"'"; //On rajoute les quotes
+                    Expression* newexpr = new Expression(temp); //On crée une expression comportant uniquement la paranthèse
+                    std::string res = EVAL(newexpr); //On évalue la parenthèse
+                    int tailleParenthese=j-i;
+                    finalResult+=res;
+                    i+=tailleParenthese;
                 }
-                else
+                else //traitement normal, ça ne commence pas par une parenthèse
                 {
-                    finalResult+=exp[i];
+                    int j=i;
+                    if (i+2<exp.length())
+                    {
+                        while ( (exp[j+1]<='9'&&exp[j+1]>='0') || (exp[j+1]<='Z'&&exp[j+1]>='A') || (exp[j+1]=='.') || (exp[j+1]=='$') )
+                            j++;
+                        finalResult+=" "+exp.substr(i,j+1-i);
+                        i=j;
+                    }
+                    else
+                    {
+                        finalResult+=exp[i];
+                    }
                 }
             }
 

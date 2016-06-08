@@ -395,8 +395,8 @@ void Controleur::executer()
                 if(operateurBinaire->toString() == "$")
                 {
                     isComp=true;
-                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
-                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l2);
                     if (littNum1&&littNum2)
                     {
                         res=new Complexe(littNum1,littNum2);
@@ -500,8 +500,8 @@ void Controleur::executer()
                 if(operateurBinaire->toString() == "<=")
                 {
                     isInfOrEqual=true;
-                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
-                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l2);
                     if (littNum1&&littNum2)
                     {
                         if (littNum1->getNb()<=littNum2->getNb())
@@ -543,8 +543,8 @@ void Controleur::executer()
                 if(operateurBinaire->toString() == ">=")
                 {
                     isSupOrEqual=true;
-                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
-                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l2);
                     if (littNum1&&littNum2)
                     {
                         if (littNum1->getNb()>=littNum2->getNb())
@@ -586,8 +586,8 @@ void Controleur::executer()
                 if(operateurBinaire->toString() == "<")
                 {
                     isInf=true;
-                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
-                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l2);
                     if (littNum1&&littNum2)
                     {
                         if (littNum1->getNb()<littNum2->getNb())
@@ -629,8 +629,8 @@ void Controleur::executer()
                 if(operateurBinaire->toString() == ">")
                 {
                     isSup=true;
-                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l1);
-                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l2);
+                    LitteraleNumerique* littNum2=dynamic_cast<LitteraleNumerique*>(l1);
+                    LitteraleNumerique* littNum1=dynamic_cast<LitteraleNumerique*>(l2);
                     if (littNum1&&littNum2)
                     {
                         if (littNum1->getNb()>littNum2->getNb())
