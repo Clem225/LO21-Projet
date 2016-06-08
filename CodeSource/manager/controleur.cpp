@@ -4,6 +4,7 @@
 #include "../GUI/mainwindow.h"
 #include <sstream>
 #include <string>
+#include <QMessageBox>
 
 void Controleur::executer()
 {
@@ -733,6 +734,7 @@ void Controleur::commande(std::string cmd)
 
      while(iss)
      {
+
          std::string t = sub.c_str();
          // A ce stade, sub contient la partie du string entre des espaces
          // Si ce string est un opérateur, on l'ajoute à l'aide de la FactoryOperateur

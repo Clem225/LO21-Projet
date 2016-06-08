@@ -8,6 +8,8 @@
 #include <fstream>
 #include <QMessageBox>
 
+bool hasLoaded=false;
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -70,7 +72,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // Button quitter
     connect(ui->actionQuitter,SIGNAL(triggered(bool)),this,SLOT(close()));
 
+if(!hasLoaded)
+{
+    hasLoaded=true;
+    std::ifstream ifsPile("dataPile.dat");
+    if (ifsPile.is_open()) {
+    ifsPile.close();
+    }
 
+    std::ifstream ifsAtom("dataAtome.dat");
+    if (ifsAtom.is_open()) {
+        std::string line;
+        while(getline (ifsAtom,line))
+        {
+              Controleur::getInstance().commande(line);
+        }
+            ifsAtom.close();
+    }
+}
 
 }
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -78,16 +97,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
     std::ofstream ofsPile("dataPile.dat");
      if (ofsPile.good()) {
         ofsPile<<Controleur::getInstance().pileString(99999);
-
+     ofsPile.close();
          //event->accept();
      } else {
          QMessageBox::information(this, "Sauvegarde", "Une erreur est survenue lors de la sauvegarde") ;
          std::cerr << "Impossible de creer le fichier de sauvegarde!\n";
-
+             ofsPile.close();
          //event->accept();
          //event->ignore();
      }
-     ofsPile.close();
+
 
      std::ofstream ofsAtom("dataAtome.dat");
       if (ofsAtom.good()) {
@@ -95,7 +114,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
           //On cherche ce nom d'atome dans AtomeManager grace à un iterator
           for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
           {
-            ofsAtom<<it.current().toString() << " " << it.current().getLink()->toString();
+            ofsAtom<< it.current().getLink()->toString()<< " " <<   it.current().toString()<<" STO\n";
+
           }
           ofsAtom.close();
 
@@ -103,7 +123,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
       } else {
           QMessageBox::information(this, "Sauvegarde", "Une erreur est survenue lors de la sauvegarde") ;
           std::cerr << "Impossible de creer le fichier de sauvegarde!\n";
-
+          ofsAtom.close();
           event->accept();
           //event->ignore();
       }
