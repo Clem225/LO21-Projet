@@ -76,10 +76,21 @@ if(!hasLoaded)
 {
     hasLoaded=true;
     std::ifstream ifsPile("dataPile.dat");
+    std::string line;
+    std::stack<std::string> pileTampon;
+    while(getline (ifsPile,line))
+    {
+          pileTampon.push(line);
+    }
     if (ifsPile.is_open()) {
     ifsPile.close();
     }
 
+    while(!pileTampon.empty())
+    {
+        Controleur::getInstance().commande(pileTampon.top());
+        pileTampon.pop();
+    }
     std::ifstream ifsAtom("dataAtome.dat");
     if (ifsAtom.is_open()) {
         std::string line;
@@ -89,6 +100,7 @@ if(!hasLoaded)
         }
             ifsAtom.close();
     }
+        this->refreshPile();
 }
 
 }
