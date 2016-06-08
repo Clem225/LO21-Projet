@@ -349,6 +349,8 @@ void Controleur::executer()
                     Programme* test2 = dynamic_cast<Programme*>(l2);
                     LitteraleNumerique* test3 = dynamic_cast<LitteraleNumerique*>(l2);
 
+
+
                     if (test1||test2||test3) //Si on cherche bien à stocker une expression, un programme ou une litterale numerique
                     {
 
@@ -356,6 +358,9 @@ void Controleur::executer()
                         //On ajoute cet atome à AtomeManager en le liant à la litterale
                         if (e1)
                         {
+
+
+
                             std::string temp = e1->toString();
                             int temp1 = e1->toString().length()-2; //taille du string sans les quotes
                             temp = temp.substr(1,temp1); //On retire les quotes
