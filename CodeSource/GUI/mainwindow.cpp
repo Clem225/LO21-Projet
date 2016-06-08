@@ -6,6 +6,7 @@
 #include "ui_param.h"
 
 #include <fstream>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -74,15 +75,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 }
 void MainWindow::closeEvent(QCloseEvent *event)
  {
-    /*std::ofstream ofs("../Save/data.dat");
-     if (ofs.good()) {
-        //ofs<<Controleur::getInstance().returnPile();
+    std::ofstream ofsPile("dataPile.dat");
+     if (ofsPile.good()) {
+        ofsPile<<Controleur::getInstance().pileString(99999);
 
-         event->accept();
+         //event->accept();
      } else {
-         std::cerr << "Couldn't open text file!\n";
-         event->ignore();
-     }*/
+         QMessageBox::information(this, "Sauvegarde", "Une erreur est survenue lors de la sauvegarde") ;
+         std::cerr << "Impossible de creer le fichier de sauvegarde!\n";
+
+         //event->accept();
+         //event->ignore();
+     }
+     ofsPile.close();
+
+     std::ofstream ofsAtom("dataAtome.dat");
+      if (ofsAtom.good()) {
+
+          //On cherche ce nom d'atome dans AtomeManager grace à un iterator
+          for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
+          {
+            ofsAtom<<it.current().toString() << " " << it.current().getLink()->toString();
+          }
+          ofsAtom.close();
+
+          event->accept();
+      } else {
+          QMessageBox::information(this, "Sauvegarde", "Une erreur est survenue lors de la sauvegarde") ;
+          std::cerr << "Impossible de creer le fichier de sauvegarde!\n";
+
+          event->accept();
+          //event->ignore();
+      }
+
+
+
  }
 MainWindow::~MainWindow()
 {
