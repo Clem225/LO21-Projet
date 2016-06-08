@@ -170,6 +170,41 @@ void Controleur::executer()
                             MainWindow::getInstance()->setMsg("Erreur : EVAL ne s'applque que sur des expressions !");
                         }
                     }
+                    if(operateurUnaire->getValue() == "FORGET")
+                    {
+                        Expression* expr=dynamic_cast<Expression*>(l1);
+                        if (expr)
+                        {
+                            std::string temp = expr->getExpr();
+                            //On enleve les quotes
+                            temp.erase(0,1);
+                            temp.erase(temp.length(),1);
+                            //On cherche l'atome correspondant
+                            Atome* corres=nullptr;
+                            for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
+                            {
+                                if (it.current().getAtome()==temp) //On a trouvé l'atome dans atomMng
+                                {
+                                    corres=&it.current();
+                                    break;
+                                }
+                            }
+                            if (corres) //La variable existe bien
+                            {
+                                AtomeManager::getInstance().delAtome(corres);
+                                MainWindow::getInstance()->setMsg("Variable supprimée !");
+                            }
+                            else
+                            {
+                                MainWindow::getInstance()->setMsg("Erreur : la variable n'existe pas !");
+                            }
+                        }
+                        else
+                        {
+                            this->pile.push(l1);
+                            MainWindow::getInstance()->setMsg("Erreur : FORGET ne s'applque que sur des expressions (qui représentent des noms de variable !");
+                        }
+                    }
 
                 }
                 else

@@ -164,6 +164,7 @@ private:
 public:
     AtomeManager(): atoms(nullptr), nb(0), nbMax(0) {}
     Atome* addAtome(Atome* a);
+    void delAtome(Atome* a);
     void agrandissementCapacite();
     static AtomeManager& getInstance();
     static void libererInstance();

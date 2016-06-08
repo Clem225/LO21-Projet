@@ -40,7 +40,8 @@ bool estUnOperateurUnaire(const std::string& c)
             c=="RE"  ||
             c=="IM"  ||
             c=="NOT" ||
-            c=="EVAL";
+            c=="EVAL" ||
+            c=="FORGET";
 
     if(listOperateurUnaire)
         return true;

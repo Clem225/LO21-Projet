@@ -24,6 +24,16 @@ Atome* AtomeManager::addAtome(Atome* a) {
     return atoms[nb-1];
 }
 
+void AtomeManager::delAtome(Atome* a) {
+    unsigned int i=0;
+    while(i<nb && atoms[i]!=a) i++;
+    if (i==nb) throw LitteraleException("elimination d'une Expression inexistante");
+    delete atoms[i];
+    i++;
+    while(i<nb) { atoms[i-1]=atoms[i]; i++; }
+    nb--;
+}
+
 void AtomeManager::agrandissementCapacite() {
     nbMax=(nbMax+1)*2;
     Atome** newtab=new Atome*[nbMax];
