@@ -163,7 +163,7 @@ void Controleur::executer()
                         Expression* expr=dynamic_cast<Expression*>(l1);
                         if (expr)
                         {
-                            std::string temp = EVAL(*expr);
+                            std::string temp = EVAL(expr);
                             this->commande(temp);
                         }
                         else

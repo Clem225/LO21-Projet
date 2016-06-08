@@ -68,7 +68,6 @@ class Programme : public Litterale
     std::string str;
 public :
     Programme(std::string s): str(s) {}
-    std::string getProg() const {return str;}
     std::string toString() const {return str;}
 
     // Constructeur de recopie à faire

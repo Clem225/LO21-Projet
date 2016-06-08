@@ -24,7 +24,7 @@ Entier* DIV(Entier* e1, Entier* e2);
 /*! \brief La fonction MOD renvoie le reste de la division entre deux entiers */
 Entier* MOD(Entier* e1, Entier* e2);
 /*! \brief La fonction MOD renvoie le reste de la division entre deux entiers */
-std::string EVAL(Expression& expr);
+std::string EVAL(Litterale* litt);
 
 
 /*!

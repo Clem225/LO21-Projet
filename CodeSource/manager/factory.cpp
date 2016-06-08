@@ -174,14 +174,18 @@ Operande *FactoryLitterale::create(std::string litterale)
                     Expression* expr = dynamic_cast<Expression*>(corres->getLink());
                     if (expr) //C'est une expression
                     {
-                        std::string temp = EVAL(*expr);
+                        std::string temp = EVAL(expr);
                         Controleur::getInstance().commande(temp);
 
                         return NULL;
                     }
-                    else
+                    else //C'est un programme
                     {
-                        //C'est un programme, l'évaluer
+                        Programme* prog = dynamic_cast<Programme*>(corres->getLink());
+                        std::string temp = EVAL(prog);
+                        Controleur::getInstance().commande(temp);
+
+                        return NULL;
                     }
                 }
             }
