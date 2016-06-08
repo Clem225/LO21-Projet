@@ -2,8 +2,6 @@
 #include "ui_mainwindow.h"
 #include "../manager/controleur.h"
 
-
-
 #include "param.h"
 #include "ui_param.h"
 
@@ -13,13 +11,14 @@
 #include <fstream>
 #include <QMessageBox>
 
+#include <limits.h>
+
 bool hasLoaded=false;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     setMsg("Bienvenue");
-
 
     showKeyboard();
 
@@ -112,49 +111,48 @@ if(!hasLoaded)
 }
 
 }
+// Surcharge de closeEvent pour sauvegarder la pile et les atomes à la sortie
 void MainWindow::closeEvent(QCloseEvent *event)
  {
     std::ofstream ofsPile("dataPile.dat");
-     if (ofsPile.good()) {
-        ofsPile<<Controleur::getInstance().pileString(99999);
-     ofsPile.close();
-         //event->accept();
-     } else {
+     if (ofsPile.good())
+     {
+        ofsPile<<Controleur::getInstance().pileString(INT_MAX);
+        ofsPile.close();
+     }
+     else
+     {
          QMessageBox::information(this, "Sauvegarde", "Une erreur est survenue lors de la sauvegarde") ;
-         std::cerr << "Impossible de creer le fichier de sauvegarde!\n";
-             ofsPile.close();
-         //event->accept();
-         //event->ignore();
+         ofsPile.close();
+         event->accept();
+
      }
 
-
      std::ofstream ofsAtom("dataAtome.dat");
-      if (ofsAtom.good()) {
-
+     if (ofsAtom.good())
+     {
           //On cherche ce nom d'atome dans AtomeManager grace à un iterator
           for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
           {
             ofsAtom<< it.current().getLink()->toString()<< " " <<   it.current().toString()<<" STO\n";
-
           }
           ofsAtom.close();
 
           event->accept();
-      } else {
+      }
+     else
+     {
           QMessageBox::information(this, "Sauvegarde", "Une erreur est survenue lors de la sauvegarde") ;
-          std::cerr << "Impossible de creer le fichier de sauvegarde!\n";
           ofsAtom.close();
           event->accept();
-          //event->ignore();
       }
-
-
-
  }
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 // Rafraichit l'affichage de la pile
 void MainWindow::refreshPile()
 {
@@ -164,6 +162,7 @@ void MainWindow::refreshPile()
     ui->pileMsg->setText(pile);
 
 }
+
 // Execute la commande indiqué dans la barre de commande
 void MainWindow::doBip()
 {
@@ -172,6 +171,7 @@ void MainWindow::doBip()
         QApplication::beep();
 
 }
+
 // Execute la commande indiqué dans la barre de commande
 void MainWindow::sendCMD()
 {
@@ -183,6 +183,7 @@ void MainWindow::sendCMD()
     this->refreshPile();
 
 }
+
 // Change le texte utilisateur
 void MainWindow::setMsg(QString msg)
 {
@@ -217,18 +218,21 @@ void MainWindow::param()
     Param param(this);
     param.exec();
 }
+
 // Lance la fenetre atome
 void MainWindow::atomes()
 {
     varEdit edit(this);
     edit.exec();
 }
+
 // Lance la fenetre programme
 void MainWindow::programmes()
 {
     progEdit edit(this);
     edit.exec();
 }
+
 // Cache ou affiche le clavier selon la valeur dans le XML
 void MainWindow::showKeyboard()
 {
