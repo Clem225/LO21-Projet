@@ -744,6 +744,64 @@ std::string Controleur::pileString(int size)
 // Permet de separer une commande en différentes opérandes : "3 3 +" empilera 3 puis empilera 3 avant d'empiler + et d'executer la pile
 void Controleur::commande(std::string cmd)
 {
+
+    unsigned int premier=0;
+    unsigned int dernier=0;
+
+    // Si la commande est un programme ou une expression, on sauvegarde la premiere et derniere position
+    for(unsigned int i=0;i<cmd.size();i++)
+    {
+        if(cmd[i]=='\'')
+        {
+
+            premier=i;
+
+            for(unsigned int j=cmd.size();j>premier;j--)
+            {
+                if(cmd[j]=='\'')
+                {
+                    dernier=j;
+                    break;
+                }
+            }
+
+
+
+for(unsigned int k=premier;k<dernier;k++)
+{
+if(cmd[k]==' ')
+    cmd=cmd.erase(k,1);
+}
+
+
+            break;}
+        if(cmd[i]=='['){
+            premier=i;
+
+            for(unsigned int j=cmd.size();j>premier;j--)
+            {
+                if(cmd[j]==']')
+                {
+                    dernier=j;
+                    break;
+                }
+            }
+
+
+            for(unsigned int k=premier;k<dernier;k++)
+            {
+            if(cmd[k]==' ')
+                cmd=cmd.erase(k,1);
+            }
+
+
+            break;}
+
+
+    }
+
+    qDebug()<<QString::fromStdString(cmd);
+
     std::istringstream iss(cmd);
     std::string sub;
     iss >> sub;
