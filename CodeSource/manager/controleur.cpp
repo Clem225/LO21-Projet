@@ -38,6 +38,11 @@ void Controleur::executer()
                 {
                     pile.pop();
                 }
+                if(operateurZero->toString() == "CLEAR")
+                {
+                    while(!pile.empty())
+                        pile.pop();
+                }
                 if(operateurZero->toString() == "SWAP")
                 {
                     // On recupere la premiere opérande
