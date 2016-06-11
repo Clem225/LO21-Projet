@@ -973,8 +973,8 @@ void Controleur::commande(std::string cmd)
     iss >> sub;
 
     // Necessaire pour permettre de coller un operateur a une litterale : 1+
-    std::string op="";
-    bool opColle=false;
+    //std::string op="";
+    //bool opColle=false;
 
      while(iss)
      {
@@ -995,7 +995,7 @@ void Controleur::commande(std::string cmd)
          else
          {
              // On verifie si un operateur n'est pas colle a une litterale (EX : 1+)
-             for(int i=0;i<sub.size();i++)
+             /*for(int i=0;i<sub.size();i++)
              {
                  if(opColle)
                      break;
@@ -1011,7 +1011,7 @@ void Controleur::commande(std::string cmd)
 
 
                  }
-             }
+             }*/
 
              // Dans ce cas on se souvient du dernier arg pour la fonction lastArgs
              this->lastArgs=t;
@@ -1021,8 +1021,8 @@ void Controleur::commande(std::string cmd)
              this->empiler(FactoryLitterale::getInstance(),sub);
 
              // Si on avait un operateur colle, on l'execute
-             if(opColle)
-                 this->commande(op);
+             //if(opColle)
+             //    this->commande(op);
          }
 
          iss >> sub;
