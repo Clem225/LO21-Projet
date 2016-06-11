@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <string>
 
+#include <QDebug>
+
 void Controleur::save()
 {
     // Memento
@@ -970,9 +972,12 @@ void Controleur::commande(std::string cmd)
     std::string sub;
     iss >> sub;
 
+    // Necessaire pour permettre de coller un operateur a une litterale : 1+
+    std::string op="";
+    bool opColle=false;
+
      while(iss)
      {
-
          std::string t = sub.c_str();
          // A ce stade, sub contient la partie du string entre des espaces
          // Si ce string est un opérateur, on l'ajoute à l'aide de la FactoryOperateur
@@ -989,12 +994,35 @@ void Controleur::commande(std::string cmd)
          // Sinon, on considere que c'est une litterale
          else
          {
+             // On verifie si un operateur n'est pas colle a une litterale (EX : 1+)
+             for(int i=0;i<sub.size();i++)
+             {
+                 if(opColle)
+                     break;
+                 // Si on rencontre qqchose qui n'est pas un chiffre, il y'a un operateur de collé !
+                 if(!(sub[i]>=48 && sub[i]<=57))
+                 {
+                     // La partie avant i est la littérale
+                     t = sub.substr(0,i);
+                     // La partie apres est l'opérateur
+                     op=sub.substr(i,sub.size());
+                     opColle=true;
+                     break;
+
+
+                 }
+             }
+
              // Dans ce cas on se souvient du dernier arg pour la fonction lastArgs
              this->lastArgs=t;
              // On sauvegarde l'etat pour pouvoir utiliser UNDO REDO
              this->save();
              // On empile
              this->empiler(FactoryLitterale::getInstance(),sub);
+
+             // Si on avait un operateur colle, on l'execute
+             if(opColle)
+                 this->commande(op);
          }
 
          iss >> sub;

@@ -3,6 +3,13 @@
 
 #include <QDialog>
 
+/*!
+ * \file progedit.h
+ * \brief Fenetre de modifications des programmes
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
 namespace Ui {
 class progEdit;
 }
