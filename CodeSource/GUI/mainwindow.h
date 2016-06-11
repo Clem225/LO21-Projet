@@ -71,6 +71,10 @@ public slots:
     // Fait un bip si active
     void doBip();
     void closeEvent(QCloseEvent *event);
+
+    // Memento
+    void undo();
+    void redo();
 };
 
 #endif // MAINWINDOW_H

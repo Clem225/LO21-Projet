@@ -5,19 +5,104 @@
 
 #include "../GUI/mainwindow.h"
 
+#include <QDebug>
+
+
+void Controleur::save()
+{
+
+    // Memento
+    CareTaker& careTaker = CareTaker::getInstance();
+    // Sauvegarde
+    Controleur::getInstance().setState(Controleur::getInstance().getState());
+    careTaker.add(Controleur::getInstance().saveStateToMemento());
+    // Number est le nombre d'elemernt (commence à 1) alors que current est l'indice (commence à 0)
+    careTaker.current=careTaker.number();
+
+    qDebug() << "SAVE";
+    qDebug() << careTaker.number();
+    qDebug() << "CURRENT";
+    qDebug() << careTaker.current;
+
+}
+
+void Controleur::redo()
+{
+
+    // Memento
+    CareTaker& careTaker = CareTaker::getInstance();
+    qDebug() << "CURRENT est a ";
+    qDebug() << careTaker.current;
+
+    qDebug() << "CURRENT passe a ";
+        careTaker.current++;
+    if(careTaker.current>careTaker.number())
+        careTaker.current=careTaker.number()-1;
+
+    qDebug() << careTaker.current;
+
+
+    this->getStateFromMemento(careTaker.get(careTaker.current));
+    MainWindow::getInstance()->refreshPile();
+
+}
+void Controleur::undo()
+{
+
+    //Operande* test = careTaker.get(careTaker.number()-1).getState().top();
+
+        CareTaker& careTaker = CareTaker::getInstance();
+
+
+if(careTaker.number()==careTaker.current){
+        this->save();
+        careTaker.current--;
+}
+
+    qDebug() << "CURRENT est a ";
+    qDebug() << careTaker.current;
+    careTaker.current--;
+    qDebug() << "CURRENT passe a ";
+    qDebug() << careTaker.current;
+    if(careTaker.current<0)
+        careTaker.current=0;
+
+    // Memento
+
+    this->getStateFromMemento(careTaker.get(careTaker.current));
+    MainWindow::getInstance()->refreshPile();
+
+
+}
+
 void Controleur::executer()
 {
 
-        // On recupere le haut de la pile
-        Operande* topOperande = pile.top();
 
-        // Si c'est un opérateur
-        Operateur* monOperateur = dynamic_cast<Operateur*>(topOperande);
-        if(monOperateur)
-        {
+
+    // On recupere le haut de la pile
+    Operande* topOperande = pile.top();
+    Operateur* monOperateur = dynamic_cast<Operateur*>(topOperande);
+
+
+
+   if(monOperateur->toString() != "UNDO" && monOperateur->toString() != "REDO")
+    {
+    this->save();
+    }
+
+
+
+
+        //Operateur* monOperateur = dynamic_cast<Operateur*>(topOperande);
+        // Si c'est un opérateur -> Pas besoin de tester, si c'est une litterale deja empiler avec commande
+        //
+        //if(monOperateur)
+        //{
             // On l'enleve de la pile
             pile.pop();
             // On verifie son arite
+
             Zero* operateurZero = dynamic_cast<Zero*>(monOperateur);
             Unaire* operateurUnaire = dynamic_cast<Unaire*>(monOperateur);
             Binaire* operateurBinaire = dynamic_cast<Binaire*>(monOperateur);
@@ -53,6 +138,17 @@ void Controleur::executer()
                     this->empiler(v1);
                     this->empiler(v2);
                 }
+                if(operateurZero->toString() == "UNDO")
+                {
+
+                    this->undo();
+                }
+                if(operateurZero->toString() == "REDO")
+                {
+                    this->redo();
+
+                }
+
             }
             if(operateurUnaire)
             {
@@ -770,16 +866,16 @@ void Controleur::executer()
             }
 
 
-        }
+       // }
         // Si ce n'est pas un opérateur
-        else
-        {
-            // Alors c'est une littérale
-            Litterale* l1 = dynamic_cast<Litterale*>(topOperande);
+        //else
+        //{
+         //   // Alors c'est une littérale
+          //  Litterale* l1 = dynamic_cast<Litterale*>(topOperande);
             // On l'ajoute à la pile
-            this->empiler(l1);
+         //   this->empiler(l1);
 
-        }
+        //}
 
 }
 
@@ -820,6 +916,7 @@ std::string Controleur::pileString(int size)
 // Permet de separer une commande en différentes opérandes : "3 3 +" empilera 3 puis empilera 3 avant d'empiler + et d'executer la pile
 void Controleur::commande(std::string cmd)
 {
+
 
     unsigned int premier=0;
     unsigned int dernier=0;
@@ -903,8 +1000,8 @@ if(cmd[k]==' ')
          // Sinon, on considere que c'est une litterale
          else
          {
-             this->empiler(FactoryLitterale::getInstance(),sub);
-
+            this->save();
+            this->empiler(FactoryLitterale::getInstance(),sub);
          }
 
          iss >> sub;
@@ -937,4 +1034,31 @@ void Controleur::empiler(Factory& facto, std::string value){
     Operande* temp = facto.create(value);
     if(temp!=NULL)
     pile.push(temp);
+}
+
+
+
+
+
+
+// SINGLETON
+
+// Initialisation de l'attribut statique
+CareTaker::Handler CareTaker::handler = CareTaker::Handler();
+
+// Singleton
+CareTaker& CareTaker::getInstance()
+{
+    if(handler.instance==nullptr) {
+    handler.instance=new CareTaker;
+}
+return *handler.instance;
+}
+
+
+void CareTaker::libererInstance()
+{
+  delete handler.instance;
+  handler.instance=nullptr;
+
 }

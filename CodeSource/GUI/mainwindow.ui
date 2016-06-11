@@ -279,6 +279,9 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Edition</string>
     </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
     <addaction name="actionAtomes"/>
     <addaction name="actionProgrammes"/>
    </widget>
@@ -305,6 +308,16 @@ p, li { white-space: pre-wrap; }
   <action name="actionProgrammes">
    <property name="text">
     <string>Programmes</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>Redo</string>
    </property>
   </action>
  </widget>

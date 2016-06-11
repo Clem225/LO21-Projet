@@ -12,6 +12,8 @@
 #include <QMessageBox>
 #include <limits.h>
 
+#include <QShortcut>
+
 bool hasLoaded=false;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -76,8 +78,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionAtomes, SIGNAL(triggered(bool)),this,SLOT(atomes()));
     connect(ui->actionProgrammes, SIGNAL(triggered(bool)),this,SLOT(programmes()));
 
+
+    // Button undo/redo
+    connect(ui->actionUndo, SIGNAL(triggered(bool)),this,SLOT(undo()));
+    connect(ui->actionRedo, SIGNAL(triggered(bool)),this,SLOT(redo()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this, SLOT(undo()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y), this, SLOT(redo()));
+
     // Button quitter
     connect(ui->actionQuitter,SIGNAL(triggered(bool)),this,SLOT(close()));
+
+
 
 if(!hasLoaded)
 {
@@ -278,4 +289,13 @@ void MainWindow::showKeyboard()
         ui->eightButton->hide();
         ui->nineButton->hide();
     }
+}
+
+void MainWindow::undo()
+{
+    Controleur::getInstance().undo();
+}
+void MainWindow::redo()
+{
+    Controleur::getInstance().redo();
 }
