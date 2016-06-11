@@ -88,8 +88,7 @@ Operande *FactoryLitterale::create(std::string litterale)
         std::string denominateur;
 
         int positionDollar;
-        int positionPoint1;
-        //int positionPoint2;
+
         int positionSlash;
 
         ///////////////////////////////////////////////////////
@@ -123,8 +122,7 @@ Operande *FactoryLitterale::create(std::string litterale)
             if(litterale[i]=='.')
             {
                 isReel=true;
-                // On enregistre la position du point
-                positionPoint1=i;
+
             }
             // Si on trouve un slash, la littérale est rationnelle
             if(litterale[i]=='/')
@@ -179,7 +177,7 @@ Operande *FactoryLitterale::create(std::string litterale)
                     if (expr) //C'est une expression
                     {
                         std::string temp = EVAL(expr);
-                        if (temp.find("error")!=-1)
+                        if (temp.find("error")!=std::string::npos)
                             MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans l'expression que vous avez tentée d'évaluer en entrant l'identifiant!");
                         else
                             Controleur::getInstance().commande(temp);
@@ -189,7 +187,7 @@ Operande *FactoryLitterale::create(std::string litterale)
                     {
                         Programme* prog = dynamic_cast<Programme*>(corres->getLink());
                         std::string temp = EVAL(prog);
-                        if (temp.find("error")!=-1)
+                        if (temp.find("error")!=std::string::npos)
                             MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé était dans le programme que vous avez tenté d'évaluer en entrant l'identifiant!");
                         else
                             Controleur::getInstance().commande(temp);

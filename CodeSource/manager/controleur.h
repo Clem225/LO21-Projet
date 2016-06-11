@@ -44,9 +44,9 @@ private :
     // DOIT FONCTIONNER POUR MEMENTO
     Controleur(const Controleur& m){pile = m.returnPile();}
     /*! \brief Recopie (SINGLETON) */
-    Controleur& operator=(const Controleur& m){}
+    Controleur& operator=(const Controleur& m);
     /*! \brief Destructeur (SINGLETON) */
-    ~Controleur(){}
+    virtual ~Controleur(){}
 
 
     std::string lastOP="";
@@ -118,11 +118,11 @@ class CareTaker{
     CareTaker(){}
     /*! \brief Constructeur (SINGLETON) */
     // DOIT FONCTIONNER POUR MEMENTO
-    CareTaker(const CareTaker& m){}
+    CareTaker(const CareTaker& m);
     /*! \brief Recopie (SINGLETON) */
-    CareTaker& operator=(const CareTaker& m){}
+    CareTaker& operator=(const CareTaker& m);
     /*! \brief Destructeur (SINGLETON) */
-    ~CareTaker(){}
+    virtual ~CareTaker(){}
 
 
     /*!

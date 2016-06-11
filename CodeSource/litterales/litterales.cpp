@@ -31,7 +31,7 @@ Atome* AtomeManager::addAtome(Atome* a) {
     return atoms[nb-1];
 }
 
-Atome* AtomeManager::addAtome(std::string name, Litterale* val) {
+void AtomeManager::addAtome(std::string name, Litterale* val) {
     Atome* a = new Atome(name,val);
     this->addAtome(a);
 }
@@ -137,6 +137,9 @@ Entier Rationnel::simplification() {
         setNum(0);
         setDenom(0);
     }
+
+    // En cas d'erreur
+    return Entier(0);
 }
 
 // Constructeur rationnel

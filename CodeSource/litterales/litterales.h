@@ -73,7 +73,7 @@ public :
     Programme(const Programme& p):str(p.str){}
     std::string toString() const {return str;}
 
-    double getNb() const {}
+    double getNb() const {return 0;}
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
@@ -141,6 +141,8 @@ public:
     void setName (std::string name) {str=name;}
     void setLink (Litterale* litt) {link=litt;}
 
+    virtual ~Atome(){}
+
         Operande* clone() const {return new Atome(*this);}
     std::string toString() const {return str;}
 
@@ -172,7 +174,7 @@ private:
 public:
     AtomeManager(): atoms(nullptr), nb(0), nbMax(0) {}
     Atome* addAtome(Atome* a);
-    Atome* addAtome(std::string name, Litterale* val);
+    void addAtome(std::string name, Litterale* val);
     void delAtome(Atome* a);
     void delAtome(std::string name);
     Litterale* getValeur(std::string name) const; //Renvoie la valeur de l'atome de nom name
@@ -180,6 +182,7 @@ public:
     void agrandissementCapacite();
     static AtomeManager& getInstance();
     static void libererInstance();
+
 
     //ITERATOR
     class Iterator {

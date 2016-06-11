@@ -26,11 +26,11 @@ class FactoryLitterale : public Factory
         /*! \brief Constructeur (SINGLETON) */
         FactoryLitterale(){}
         /*! \brief Constructeur (SINGLETON) */
-        FactoryLitterale(const FactoryLitterale& m){}
+        FactoryLitterale(const FactoryLitterale& m);
         /*! \brief Recopie (SINGLETON) */
-        FactoryLitterale& operator=(const FactoryLitterale& m){}
+        FactoryLitterale& operator=(const FactoryLitterale& m);
         /*! \brief Destructeur (SINGLETON) */
-        ~FactoryLitterale(){}
+        virtual ~FactoryLitterale(){}
 
 
         /*!
@@ -69,11 +69,11 @@ class FactoryOperateur : public Factory
         /*! \brief Constructeur (SINGLETON) */
         FactoryOperateur(){}
         /*! \brief Constructeur (SINGLETON) */
-        FactoryOperateur(const FactoryOperateur& m){}
+        FactoryOperateur(const FactoryOperateur& m);
         /*! \brief Recopie (SINGLETON) */
-        FactoryOperateur& operator=(const FactoryOperateur& m){}
+        FactoryOperateur& operator=(const FactoryOperateur& m);
         /*! \brief Destructeur (SINGLETON) */
-        ~FactoryOperateur(){}
+        virtual ~FactoryOperateur(){}
 
 
         /*!

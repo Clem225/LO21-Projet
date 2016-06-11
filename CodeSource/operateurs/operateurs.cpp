@@ -76,7 +76,7 @@ bool estOperateur(const std::string& str)
     if(listOperateur)
         return true;
 
-        return false;
+    return false;
 
 }
 

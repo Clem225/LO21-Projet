@@ -1,24 +1,25 @@
 #include "operateurs.h"
 
-Litterale* Expression::operator+(Litterale& e)
+
+Litterale* Expression::operator+(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
 
-Litterale* Expression::operator-(Litterale& e)
+Litterale* Expression::operator-(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
 
-Litterale* Expression::operator*(Litterale& e)
+Litterale* Expression::operator*(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
 
-Litterale* Expression::operator/(Litterale& e)
+Litterale* Expression::operator/(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
@@ -33,5 +34,6 @@ Litterale* Expression::NEG()
 double Expression::getNb() const
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
-    return NULL;
+    return 0;
 }
+

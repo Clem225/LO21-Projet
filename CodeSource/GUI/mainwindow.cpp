@@ -149,7 +149,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
           }
           ofsAtom.close();
 
-          event->accept();
+
       }
      else
      {
@@ -157,6 +157,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
           ofsAtom.close();
           event->accept();
       }
+
+
+
+     // On ferme les factorys
+     FactoryLitterale::libererInstance();
+     FactoryOperateur::libererInstance();
+     Controleur::libererInstance();
+
+               event->accept();
+
  }
 
 MainWindow::~MainWindow()

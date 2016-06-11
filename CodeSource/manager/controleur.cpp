@@ -5,10 +5,10 @@
 
 #include "../GUI/mainwindow.h"
 
-#include <QDebug>
+
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string>
 
 void Controleur::save()
 {
@@ -21,10 +21,6 @@ void Controleur::save()
     // Number est le nombre d'elemernt (commence à 1) alors que current est l'indice (commence à 0)
     careTaker.current=careTaker.number();
 
-    qDebug() << "SAVE";
-    qDebug() << careTaker.number();
-    qDebug() << "CURRENT";
-    qDebug() << careTaker.current;
 
 }
 
@@ -33,15 +29,11 @@ void Controleur::redo()
 
     // Memento
     CareTaker& careTaker = CareTaker::getInstance();
-    qDebug() << "CURRENT est a ";
-    qDebug() << careTaker.current;
 
-    qDebug() << "CURRENT passe a ";
         careTaker.current++;
     if(careTaker.current>careTaker.number())
         careTaker.current=careTaker.number()-1;
 
-    qDebug() << careTaker.current;
 
 
     this->getStateFromMemento(careTaker.get(careTaker.current));
@@ -61,11 +53,9 @@ if(careTaker.number()==careTaker.current){
         careTaker.current--;
 }
 
-    qDebug() << "CURRENT est a ";
-    qDebug() << careTaker.current;
+
     careTaker.current--;
-    qDebug() << "CURRENT passe a ";
-    qDebug() << careTaker.current;
+
     if(careTaker.current<0)
         careTaker.current=0;
 
@@ -95,12 +85,6 @@ void Controleur::executer()
 
 
 
-
-        //Operateur* monOperateur = dynamic_cast<Operateur*>(topOperande);
-        // Si c'est un opérateur -> Pas besoin de tester, si c'est une litterale deja empiler avec commande
-        //
-        //if(monOperateur)
-        //{
             // On l'enleve de la pile
             pile.pop();
             // On verifie son arite
@@ -310,7 +294,8 @@ void Controleur::executer()
                                 temp = EVAL(expr);
                             if (progr)
                                 temp = EVAL(progr);
-                            if (temp.find("error")!=-1)
+                            // Si find ne trouve pas, il renvoie npos (= -1)
+                            if (temp.find("error")!=std::string::npos)
                             {
                                 this->pile.push(l1);
                                 MainWindow::getInstance()->setMsg("Erreur : un caractère non autorisé pour l'évaluation était dans l'expression/programme !");
@@ -878,17 +863,6 @@ void Controleur::executer()
                 }
             }
 
-
-       // }
-        // Si ce n'est pas un opérateur
-        //else
-        //{
-         //   // Alors c'est une littérale
-          //  Litterale* l1 = dynamic_cast<Litterale*>(topOperande);
-            // On l'ajoute à la pile
-         //   this->empiler(l1);
-
-        //}
 
 }
 

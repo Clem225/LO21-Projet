@@ -33,9 +33,9 @@ private:
     /*! \brief Constructeur (SINGLETON) */
     explicit MainWindow(QWidget *parent = 0);
     /*! \brief Constructeur (SINGLETON) */
-    MainWindow(const MainWindow& m){}
+    MainWindow(const MainWindow& m);
     /*! \brief Recopie (SINGLETON) */
-    MainWindow& operator=(const MainWindow& m){}
+    MainWindow& operator=(const MainWindow& m);
     /*! \brief Destructeur (SINGLETON) */
     ~MainWindow();
 

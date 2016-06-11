@@ -1,24 +1,25 @@
 #include "operateurs.h"
 
-Litterale* Atome::operator+(Litterale& e)
+
+Litterale* Atome::operator+(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
 
-Litterale* Atome::operator-(Litterale& e)
+Litterale* Atome::operator-(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
 
-Litterale* Atome::operator*(Litterale& e)
+Litterale* Atome::operator*(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
 
-Litterale* Atome::operator/(Litterale& e)
+Litterale* Atome::operator/(Litterale&)
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
@@ -33,5 +34,5 @@ Litterale* Atome::NEG()
 double Atome::getNb() const
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
-    return NULL;
+    return 0;
 }
