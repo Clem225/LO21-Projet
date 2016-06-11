@@ -6,6 +6,8 @@
 #include "../GUI/mainwindow.h"
 
 #include <QDebug>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 void Controleur::save()
@@ -146,6 +148,17 @@ void Controleur::executer()
                 if(operateurZero->toString() == "REDO")
                 {
                     this->redo();
+
+                }
+                if(operateurZero->toString() == "LASTOP")
+                {
+                    this->empiler(FactoryOperateur::getInstance(), this->lastOP);
+                    this->executer();
+
+                }
+                if(operateurZero->toString() == "LASTARGS")
+                {
+                    this->empiler(FactoryLitterale::getInstance(), this->lastArgs);
 
                 }
 
@@ -993,6 +1006,8 @@ if(cmd[k]==' ')
          // Si ce string est un opérateur, on l'ajoute à l'aide de la FactoryOperateur
          if(estOperateur(t))
          {
+             if(t!="UNDO" && t!="REDO" && t!="LASTOP")
+                this->lastOP=t;
              this->empiler(FactoryOperateur::getInstance(),sub);
              // SI c'est un opérateur, on execute !
              this->executer();
@@ -1000,6 +1015,7 @@ if(cmd[k]==' ')
          // Sinon, on considere que c'est une litterale
          else
          {
+            this->lastArgs=t;
             this->save();
             this->empiler(FactoryLitterale::getInstance(),sub);
          }

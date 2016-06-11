@@ -49,8 +49,8 @@ private :
     ~Controleur(){}
 
 
-    Operande* lastOP=nullptr;
-    Operande* lastArgs=nullptr;
+    std::string lastOP="";
+    std::string lastArgs="";
 
     /*!
      * \class Handler
