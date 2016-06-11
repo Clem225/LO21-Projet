@@ -36,6 +36,7 @@ public:
     /*! \brief Permet d'afficher une opérande*/
     void afficher(std::ostream& f=std::cout){f<<toString();}
     virtual std::string toString() const =0;
+    virtual Operande* clone() const = 0;
 };
 
 /*!
@@ -69,14 +70,16 @@ private:
     std::string str;
 public :
     Programme(std::string s): str(s) {}
+    Programme(const Programme& p):str(p.str){}
     std::string toString() const {return str;}
-    // Constructeur de recopie à faire
-    double getNb() const {};
+
+    double getNb() const {}
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
+    Operande* clone() const {return new Programme(*this);}
 };
 
 /*!
@@ -94,15 +97,15 @@ class Expression : public Litterale
 {
     std::string str;
 public :
-    Expression(std::string s): str(s) {};
-    //void afficher(std::ostream& f=std::cout) const {f<<str;}
+    Expression(std::string s): str(s) {}
+    Expression(const Expression& e):str(e.str){}
     std::string toString() const {return str;}
     Litterale* operator+(Litterale& e);
     Litterale* operator-(Litterale& e);
     Litterale* operator*(Litterale& e);
     Litterale* operator/(Litterale& e);
     Litterale* NEG();
-    //std::string getExpr() const {return str;}
+    Operande* clone() const {return new Expression(*this);}
 
 
     double getNb() const;
@@ -130,7 +133,7 @@ public:
     /*! \brief Constructeur Atome */
     Atome(std::string text, Litterale* p=nullptr): str(text), link(p) {}
     /*! \brief Constructeur de recopie */
-    Atome(const Atome& atom):str(atom.getAtome()){}
+    Atome(const Atome& atom):str(atom.str){}
     /*! \brief Renvoie  l'atome*/
     std::string getAtome() const {return str;}
     /*! \brief Renvoie  la variable ou le programme auquel est lie l'atome*/
@@ -138,7 +141,7 @@ public:
     void setName (std::string name) {str=name;}
     void setLink (Litterale* litt) {link=litt;}
 
-    //void afficher(std::ostream& f=std::cout) const {f<<str;}
+        Operande* clone() const {return new Atome(*this);}
     std::string toString() const {return str;}
 
     /*INUTILE, JUSTE POUR EVITER ABSTRAIT*/
@@ -229,6 +232,8 @@ public:
 
     Entier* NEG() {nb=-nb; return this;}
 
+            Operande* clone() const {return new Entier(*this);}
+
     double getNb() const {return nb;}
     /*! \brief Accesseurs en écriture */
     Entier* setValue(int i) {nb=i;return this;}
@@ -259,6 +264,8 @@ public:
     Rationnel(int e1, int e2);
     /*! \brief Constructeur de recopie */
     Rationnel(const Rationnel& rat):numerateur(rat.getNum()),denominateur(rat.getDenom()){}
+
+     Operande* clone() const {return new Rationnel(*this);}
 
     Rationnel* NEG() {numerateur.setValue(-numerateur.getNb());return this;}
 
@@ -300,6 +307,8 @@ public:
     /*! \brief Constructeur de recopie */
     Reel(const Reel& rel):nb(rel.getNb()){}
 
+    Operande* clone() const {return new Reel(*this);}
+
     Reel* NEG() {nb=-nb; return this;}
     /*! \brief Accesseurs en lecture */
     int getEntiere() const;
@@ -338,6 +347,8 @@ public:
     Complexe(LitteraleNumerique* real, LitteraleNumerique* imag): realPart(real), imagPart(imag) {}
     /*! \brief Constructeur de recopie */
     Complexe(const Complexe& comp):realPart(comp.getReal()),imagPart(comp.getImag()){}
+
+        Operande* clone() const {return new Complexe(*this);}
 
     Complexe* NEG();
     /*! \brief Accesseurs en lecture */

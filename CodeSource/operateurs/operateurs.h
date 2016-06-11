@@ -39,8 +39,9 @@ private :
 public :
     /*! \brief Constructeur */
     Operateur(std::string val):value(val){}
+    Operateur(const Operateur& o):value(o.value){}
     std::string toString()const {return value;}
-
+Operande* clone() const {return new Operateur(*this);}
 };
 /*!
  * \class Zero
@@ -50,7 +51,8 @@ class Zero : public Operateur
 public :
     /*! \brief Constructeur */
     Zero(std::string value):Operateur(value){}
-    //void afficher(std::ostream& f=std::cout) const {f<<getValue();}
+        Zero(const Zero& o):Operateur(o){}
+    Operande* clone() const {return new Zero(*this);}
 };
 
 /*!
@@ -61,7 +63,8 @@ class Unaire : public Operateur
 public :
     /*! \brief Constructeur */
     Unaire(std::string value):Operateur(value){}
-    //void afficher(std::ostream& f=std::cout) const {f<<getValue();}
+        Unaire(const Unaire& o):Operateur(o){}
+    Operande* clone() const {return new Unaire(*this);}
 };
 
 /*!
@@ -72,7 +75,8 @@ class Binaire : public Operateur
 public :
     /*! \brief Constructeur */
     Binaire(std::string value):Operateur(value){}
-    //void afficher(std::ostream& f=std::cout) const {f<<getValue();}
+        Binaire(const Binaire& o):Operateur(o){}
+    Operande* clone() const {return new Binaire(*this);}
 };
 
 

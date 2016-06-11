@@ -49,6 +49,9 @@ private :
     ~Controleur(){}
 
 
+    Operande* lastOP=nullptr;
+    Operande* lastArgs=nullptr;
+
     /*!
      * \class Handler
      * \brief Gestion du singleton (attribut publique, évite l'amitié)
