@@ -20,9 +20,12 @@ private:
     QString nomSelected;
 
 public slots:
+    /*! \brief Met a jour la liste des programmes */
     void afficheProgrammes();
+    /*! \brief Met a jour le nom et la valeur par rapport au champ selectionné */
     void selected(const QString &nom);
-        void valid();
+    /*! \brief Enregistre les informations lorsque valider est pressé */
+    void valid();
 };
 
 #endif // PROGEDIT_H

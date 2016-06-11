@@ -3,32 +3,29 @@
 #include "../GUI/mainwindow.h"
 
 
-
-
-
-
-
 /*------Classes AtomeManager------*/
-
 
 
 AtomeManager::Handler AtomeManager::handler=AtomeManager::Handler();
 
-AtomeManager& AtomeManager::getInstance(){
+AtomeManager& AtomeManager::getInstance()
+{
     if (handler.instance==nullptr) handler.instance=new AtomeManager;
     return *handler.instance;
 }
 
-void AtomeManager::libererInstance(){
+void AtomeManager::libererInstance()
+{
     delete handler.instance;
     handler.instance=nullptr;
 }
 
-Atome* AtomeManager::addAtome(Atome* a) {
+void AtomeManager::addAtome(Atome* a)
+{
     if (nb==nbMax)
         agrandissementCapacite();
     atoms[nb++]=a;
-    return atoms[nb-1];
+    //return atoms[nb-1];
 }
 
 void AtomeManager::addAtome(std::string name, Litterale* val) {
@@ -37,7 +34,8 @@ void AtomeManager::addAtome(std::string name, Litterale* val) {
 }
 
 
-void AtomeManager::delAtome(Atome* a) {
+void AtomeManager::delAtome(Atome* a)
+{
     unsigned int i=0;
     while(i<nb && atoms[i]!=a) i++;
     if (i==nb) throw LitteraleException("elimination d'une Expression inexistante");
@@ -48,7 +46,8 @@ void AtomeManager::delAtome(Atome* a) {
 }
 
 
-void AtomeManager::delAtome(std::string name) {
+void AtomeManager::delAtome(std::string name)
+{
     Atome* corres=nullptr;
     for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
     {
@@ -62,7 +61,8 @@ void AtomeManager::delAtome(std::string name) {
         AtomeManager::getInstance().delAtome(corres);
 }
 
-Litterale* AtomeManager::getValeur(std::string name) const {
+Litterale* AtomeManager::getValeur(std::string name) const
+{
 
     for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
     {
@@ -74,7 +74,8 @@ Litterale* AtomeManager::getValeur(std::string name) const {
             break;
         }
     }
-        return NULL;
+
+    return NULL;
 }
 
 void AtomeManager::modifAtome(const std::string oldname, const std::string newname, Litterale* newval)
@@ -95,7 +96,8 @@ void AtomeManager::modifAtome(const std::string oldname, const std::string newna
     }
 }
 
-void AtomeManager::agrandissementCapacite() {
+void AtomeManager::agrandissementCapacite()
+{
     nbMax=(nbMax+1)*2;
     Atome** newtab=new Atome*[nbMax];
     for(unsigned int i=0; i<nb; i++) newtab[i]=atoms[i];

@@ -7,12 +7,18 @@
 #include <QtXml>
 #include "../XML/xml_dom.h"
 
+/*!
+ * \file mainwindow.h
+ * \brief Fenetre principale
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
 namespace Ui
 {
     class MainWindow;
 }
 
-// MainWindow est singleton. Permet également de simplifier l'envoi de signal
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -46,7 +52,7 @@ private:
     struct Handler {
     MainWindow* instance;
     Handler():instance(nullptr){}
-    ~Handler(){delete instance;} // Le destructeur libere la memoire de li'nstance unique
+    ~Handler(){delete instance;}
     };
 
     static Handler handler;
@@ -54,26 +60,30 @@ private:
     Xml_Dom paramXML;
 
 public slots:
-    // Raffraichit l'affichage de la pile
+    /*! \brief Raffraichit l'affichage de la pile */
     void refreshPile();
-    // Envoi la commande de la ligne de commande en execution
+    /*! \brief Envoi au controlleur la commande ecrite sur le GUI */
     void sendCMD();
-    // Clavier cliquable
+    /*! \brief Ajoute un QString a la liste de commande (utilisé pour le clavier cliquable) */
     void addCMD(QString cmd);
-    // Message utilisateur
+    /*! \brief Affiche un message a l'utilisateur*/
     void setMsg(QString msg);
-    // Affiche la fenetre de parametre
+    /*! \brief Affiche la fenetre Parametre */
     void param();
+    /*! \brief Affiche la fenetre atomes */
     void atomes();
+    /*! \brief Affiche la fenetre programme */
     void programmes();
-    // Affiche ou non le clavier
+    /*! \brief Affiche le clavier selon la valeur du XML */
     void showKeyboard();
-    // Fait un bip si active
+    /*! \brief Fait un BIP si c'est activé */
     void doBip();
+    /*! \brief Routine de fermeture */
     void closeEvent(QCloseEvent *event);
 
-    // Memento
+    /*! \brief Envoi UNDO au controlleur */
     void undo();
+    /*! \brief Envoi REDO au controlleur */
     void redo();
 };
 

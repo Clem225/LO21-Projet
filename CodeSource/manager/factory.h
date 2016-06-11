@@ -4,8 +4,15 @@
 #include "../litterales/litterales.h"
 
 /*!
+ * \file factory.h
+ * \brief Factorys de creations des litterales et des opérateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+/*!
  * \class Factory
- * \brief Création de operateurs ou de litterale (pere des deux factorys)
+ * \brief (Abstrait) Création de operateurs ou de litterale (pere des deux factorys)
 */
 class Factory
 {

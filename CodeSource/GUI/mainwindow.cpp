@@ -89,42 +89,44 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionQuitter,SIGNAL(triggered(bool)),this,SLOT(close()));
 
 
-
-if(!hasLoaded)
-{
-    hasLoaded=true;
-    std::ifstream ifsPile("dataPile.dat");
-    std::string line;
-    std::stack<std::string> pileTampon;
-    while(getline (ifsPile,line))
+    if(!hasLoaded)
     {
-          pileTampon.push(line);
-    }
-    if (ifsPile.is_open()) {
-    ifsPile.close();
-    }
-
-    while(!pileTampon.empty())
-    {
-        Controleur::getInstance().commande(pileTampon.top());
-        pileTampon.pop();
-    }
-    std::ifstream ifsAtom("dataAtome.dat");
-    if (ifsAtom.is_open()) {
+        hasLoaded=true;
+        std::ifstream ifsPile("dataPile.dat");
         std::string line;
-        while(getline (ifsAtom,line))
+        std::stack<std::string> pileTampon;
+        while(getline (ifsPile,line))
         {
-              Controleur::getInstance().commande(line);
+              pileTampon.push(line);
         }
-            ifsAtom.close();
+        if (ifsPile.is_open())
+        {
+        ifsPile.close();
+        }
+
+        while(!pileTampon.empty())
+        {
+            Controleur::getInstance().commande(pileTampon.top());
+            pileTampon.pop();
+        }
+        std::ifstream ifsAtom("dataAtome.dat");
+        if (ifsAtom.is_open())
+        {
+            std::string line;
+            while(getline (ifsAtom,line))
+            {
+                  Controleur::getInstance().commande(line);
+            }
+                ifsAtom.close();
+        }
+            this->refreshPile();
     }
-        this->refreshPile();
-}
 
 }
-// Surcharge de closeEvent pour sauvegarder la pile et les atomes à la sortie
+// Surcharge de closeEvent pour sauvegarder la pile et les atomes à la sortie + pour supprimer les singletons
 void MainWindow::closeEvent(QCloseEvent *event)
  {
+    // On sauvergarde la pile
     std::ofstream ofsPile("dataPile.dat");
      if (ofsPile.good())
      {
@@ -139,6 +141,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
      }
 
+     // On sauvegarde les atomes
      std::ofstream ofsAtom("dataAtome.dat");
      if (ofsAtom.good())
      {
@@ -160,12 +163,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 
 
-     // On ferme les factorys
+     // On ferme les factorys et autres singletons
      FactoryLitterale::libererInstance();
      FactoryOperateur::libererInstance();
      Controleur::libererInstance();
+     AtomeManager::libererInstance();
 
-               event->accept();
+     // On ferme la fenetre
+     event->accept();
 
  }
 

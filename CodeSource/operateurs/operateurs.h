@@ -13,6 +13,7 @@
  * \author Blanquet - Martinache
  * \version 0.1
  */
+
 /*! \brief Verifie si str est un opérateur zero */
 bool estUnOperateurZero(const std::string& c);
 /*! \brief Verifie si str est un opérateur unaire */
@@ -39,9 +40,11 @@ private :
 public :
     /*! \brief Constructeur */
     Operateur(std::string val):value(val){}
+    /*! \brief Constructeur par recopie */
     Operateur(const Operateur& o):value(o.value){}
+    /*! \brief Renvoi un string decrivant l'operateur */
     std::string toString()const {return value;}
-Operande* clone() const {return new Operateur(*this);}
+    Operande* clone() const {return new Operateur(*this);}
 };
 /*!
  * \class Zero
@@ -51,7 +54,8 @@ class Zero : public Operateur
 public :
     /*! \brief Constructeur */
     Zero(std::string value):Operateur(value){}
-        Zero(const Zero& o):Operateur(o){}
+    /*! \brief Constructeur par recopie */
+    Zero(const Zero& o):Operateur(o){}
     Operande* clone() const {return new Zero(*this);}
 };
 
@@ -63,7 +67,8 @@ class Unaire : public Operateur
 public :
     /*! \brief Constructeur */
     Unaire(std::string value):Operateur(value){}
-        Unaire(const Unaire& o):Operateur(o){}
+    /*! \brief Constructeur par recopie */
+    Unaire(const Unaire& o):Operateur(o){}
     Operande* clone() const {return new Unaire(*this);}
 };
 
@@ -75,7 +80,8 @@ class Binaire : public Operateur
 public :
     /*! \brief Constructeur */
     Binaire(std::string value):Operateur(value){}
-        Binaire(const Binaire& o):Operateur(o){}
+    /*! \brief Constructeur par recopie */
+    Binaire(const Binaire& o):Operateur(o){}
     Operande* clone() const {return new Binaire(*this);}
 };
 

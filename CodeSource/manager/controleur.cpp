@@ -12,29 +12,22 @@
 
 void Controleur::save()
 {
-
     // Memento
     CareTaker& careTaker = CareTaker::getInstance();
     // Sauvegarde
     Controleur::getInstance().setState(Controleur::getInstance().getState());
     careTaker.add(Controleur::getInstance().saveStateToMemento());
-    // Number est le nombre d'elemernt (commence à 1) alors que current est l'indice (commence à 0)
     careTaker.current=careTaker.number();
-
-
 }
 
 void Controleur::redo()
 {
-
     // Memento
     CareTaker& careTaker = CareTaker::getInstance();
 
-        careTaker.current++;
+    careTaker.current++;
     if(careTaker.current>careTaker.number())
         careTaker.current=careTaker.number()-1;
-
-
 
     this->getStateFromMemento(careTaker.get(careTaker.current));
     MainWindow::getInstance()->refreshPile();
@@ -43,15 +36,14 @@ void Controleur::redo()
 void Controleur::undo()
 {
 
-    //Operande* test = careTaker.get(careTaker.number()-1).getState().top();
-
-        CareTaker& careTaker = CareTaker::getInstance();
+    CareTaker& careTaker = CareTaker::getInstance();
 
 
-if(careTaker.number()==careTaker.current){
-        this->save();
-        careTaker.current--;
-}
+    if(careTaker.number()==careTaker.current)
+    {
+            this->save();
+            careTaker.current--;
+    }
 
 
     careTaker.current--;
@@ -60,11 +52,8 @@ if(careTaker.number()==careTaker.current){
         careTaker.current=0;
 
     // Memento
-
     this->getStateFromMemento(careTaker.get(careTaker.current));
     MainWindow::getInstance()->refreshPile();
-
-
 }
 
 void Controleur::executer()
@@ -904,18 +893,20 @@ std::string Controleur::pileString(int size)
 void Controleur::commande(std::string cmd)
 {
 
-
+    // D'abord, si l'entrée est une expression ou un programme, il faut enlever les espaces
     unsigned int premier=0;
     unsigned int dernier=0;
 
-    // Si la commande est un programme ou une expression, on sauvegarde la premiere et derniere position
+    // Si la commande est un programme ou une expression, on sauvegarde la premiere et derniere position du ' ou du [
     for(unsigned int i=0;i<cmd.size();i++)
     {
+        // Si on trouve un ', c'est un expression
         if(cmd[i]=='\'')
         {
 
             premier=i;
 
+            // On cherche donc le dernier '
             for(unsigned int j=cmd.size();j>premier;j--)
             {
                 if(cmd[j]=='\'')
@@ -925,20 +916,22 @@ void Controleur::commande(std::string cmd)
                 }
             }
 
+            // Une fois qu'on a localise le premier et le dernier ', on supprime tous les espaces entre les deux
+            for(unsigned int k=premier;k<dernier;k++)
+            {
+            if(cmd[k]==' ')
+                cmd=cmd.erase(k,1);
+            }
 
+            break;
+        }
 
-for(unsigned int k=premier;k<dernier;k++)
-{
-if(cmd[k]==' ')
-    cmd=cmd.erase(k,1);
-}
-
-
-            break;}
-
-        if(cmd[i]=='['){
+        // Si on trouve un [, c'est un programme
+        if(cmd[i]=='[')
+        {
             premier=i;
 
+            // On cherche donc le ]
             for(unsigned int j=cmd.size();j>premier;j--)
             {
                 if(cmd[j]==']')
@@ -948,26 +941,31 @@ if(cmd[k]==' ')
                 }
             }
 
+            // Une fois les espaces enlevées,
+            // On recupere tout ce qui était avant et on l'envoi à la commande
+
             std::string avant=cmd.substr(0,premier);
-
             this->commande(avant);
-            std::string programme=cmd.substr(premier,dernier-premier+1);
 
+            // Ensuite on recupere le programme en lui meme
+            std::string programme=cmd.substr(premier,dernier-premier+1);
+            // Et on l'empile
             this->empiler(FactoryLitterale::getInstance(),programme);
 
+            // Et enfin, on prends ce qui etait apres le programme et on l'envoi à la commande
             std::string suite=cmd.substr(dernier+1,cmd.size()-dernier);
-
             this->commande(suite);
 
+            // On sort de commande
             return;
-
-            break;}
+        }
 
 
     }
 
 
-
+    // Le but de cette partie est d'envoyé la ligne de commande en plusieurs fois, en la separant par les espaces
+    // Par exemple 3 3 + empilera 3, empilera 3 pour executera +
     std::istringstream iss(cmd);
     std::string sub;
     iss >> sub;
@@ -980,24 +978,42 @@ if(cmd[k]==' ')
          // Si ce string est un opérateur, on l'ajoute à l'aide de la FactoryOperateur
          if(estOperateur(t))
          {
+             // On se souvient du dernier operateur utiliser pour la fonction lastOP
              if(t!="UNDO" && t!="REDO" && t!="LASTOP")
                 this->lastOP=t;
+             // On empile l'opérateur
              this->empiler(FactoryOperateur::getInstance(),sub);
-             // SI c'est un opérateur, on execute !
+             // Et on execute la pile
              this->executer();
          }
          // Sinon, on considere que c'est une litterale
          else
          {
-            this->lastArgs=t;
-            this->save();
-            this->empiler(FactoryLitterale::getInstance(),sub);
+             // Dans ce cas on se souvient du dernier arg pour la fonction lastArgs
+             this->lastArgs=t;
+             // On sauvegarde l'etat pour pouvoir utiliser UNDO REDO
+             this->save();
+             // On empile
+             this->empiler(FactoryLitterale::getInstance(),sub);
          }
 
          iss >> sub;
      }
 
 }
+
+
+// Fonction d'empilage
+void Controleur::empiler(Operande* value ){pile.push(value);}
+void Controleur::empiler(Factory& facto, std::string value)
+{
+    Operande* temp = facto.create(value);
+    if(temp!=NULL)
+    pile.push(temp);
+}
+
+
+//  SINGLETON CONTROLEUR
 
 // Initialisation de l'attribut statique
 Controleur::Handler Controleur::handler = Controleur::Handler();
@@ -1019,19 +1035,14 @@ void Controleur::libererInstance()
 
 }
 
-void Controleur::empiler(Operande* value ){pile.push(value);}
-void Controleur::empiler(Factory& facto, std::string value){
-    Operande* temp = facto.create(value);
-    if(temp!=NULL)
-    pile.push(temp);
-}
 
 
 
 
 
 
-// SINGLETON
+
+// SINGLETON CARETAKER
 
 // Initialisation de l'attribut statique
 CareTaker::Handler CareTaker::handler = CareTaker::Handler();

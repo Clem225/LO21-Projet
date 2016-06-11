@@ -30,12 +30,12 @@ public:
 */
 class Operande
 {
-private :
-
 public:
     /*! \brief Permet d'afficher une opérande*/
     void afficher(std::ostream& f=std::cout){f<<toString();}
+    /*! \brief Renvoi l'opérande sous forme de string */
     virtual std::string toString() const =0;
+    /*! \brief Clone une operande dont on ne connait pas forcement le type */
     virtual Operande* clone() const = 0;
 };
 
@@ -45,7 +45,7 @@ public:
 class Litterale : public Operande
 {
 public:
-    /*! \brief Renvoi l'opposé d'une littérale*/
+    /*! \brief Renvoi l'opposé d'une littérale */
     virtual Litterale* NEG() =0;
         /*! \brief Operateur entre littérale */
     virtual Litterale* operator+(Litterale& e) =0;
@@ -69,7 +69,9 @@ class Programme : public Litterale
 private:
     std::string str;
 public :
+    /*! \brief Constructeur */
     Programme(std::string s): str(s) {}
+    /*! \brief Constructeur par recopie */
     Programme(const Programme& p):str(p.str){}
     std::string toString() const {return str;}
 
@@ -97,7 +99,9 @@ class Expression : public Litterale
 {
     std::string str;
 public :
+    /*! \brief Constructeur */
     Expression(std::string s): str(s) {}
+    /*! \brief Constructeur par recopie */
     Expression(const Expression& e):str(e.str){}
     std::string toString() const {return str;}
     Litterale* operator+(Litterale& e);
@@ -143,7 +147,7 @@ public:
 
     virtual ~Atome(){}
 
-        Operande* clone() const {return new Atome(*this);}
+    Operande* clone() const {return new Atome(*this);}
     std::string toString() const {return str;}
 
     /*INUTILE, JUSTE POUR EVITER ABSTRAIT*/
@@ -172,15 +176,25 @@ private:
     };
     static Handler handler;
 public:
+    /*! \brief Constructeur  */
     AtomeManager(): atoms(nullptr), nb(0), nbMax(0) {}
-    Atome* addAtome(Atome* a);
+    /*! \brief Ajout d'un atome via pointeur  */
+    void addAtome(Atome* a);
+    /*! \brief Creation et ajout d'un atome a partir de son nom et de sa valeur  */
     void addAtome(std::string name, Litterale* val);
+    /*! \brief Supprime un atome a partir de son pointeur  */
     void delAtome(Atome* a);
+    /*! \brief Supprime un atome a partir de son nom  */
     void delAtome(std::string name);
-    Litterale* getValeur(std::string name) const; //Renvoie la valeur de l'atome de nom name
+    /*! \brief Renvoi la valeur d'un atome a partir de son nom  */
+    Litterale* getValeur(std::string name) const;
+    /*! \brief Modifie la valeur et/ou le nom d'un atome  */
     void modifAtome(const std::string oldname, const std::string newname, Litterale* newval);
+    /*! \brief Augmente la capacite du tableau d'atomes  */
     void agrandissementCapacite();
+    /*! \brief Singleton : Renvoi l'instance  */
     static AtomeManager& getInstance();
+    /*! \brief Singleton : Libere l'instance  */
     static void libererInstance();
 
 
@@ -189,22 +203,30 @@ public:
         friend class AtomeManager;
         Atome** currentExp;
         unsigned int nbRemain;
+        /*! \brief Constructeur iterator  */
         Iterator(Atome** u, unsigned nb):currentExp(u),nbRemain(nb){}
     public:
+        /*! \brief Iterator   */
         Iterator():currentExp(nullptr),nbRemain(0){}
+        /*! \brief Verifie si l'itérator est a la fin  */
         bool isDone() const { return nbRemain==0; }
-        void next() {
+        /*! \brief Renvoi le suivant de l'iterator donné  */
+        void next()
+        {
             if (isDone())
                 throw LitteraleException("error, next on an iterator which is done");
             nbRemain--;
             currentExp++;
         }
-        Atome& current() const {
+        /*! \brief Renvoi l'atome courant  */
+        Atome& current() const
+        {
             if (isDone())
                 throw LitteraleException("error, indirection on an iterator which is done");
             return **currentExp;
         }
     };
+    /*! \brief Renvoi l'iterateur  */
    Iterator getIterator() { return Iterator(atoms,nb); }
 };
 
@@ -220,7 +242,6 @@ class Entier : public LitteraleNumerique
 private:
     int nb;
 public:
-    //void afficher(std::ostream& f=std::cout) const {f<<nb;}
     std::string toString() const {return std::to_string(nb);}
 
     /*! \brief Constructeur par defaut - Initialise l'entier à 0 */
@@ -235,7 +256,7 @@ public:
 
     Entier* NEG() {nb=-nb; return this;}
 
-            Operande* clone() const {return new Entier(*this);}
+    Operande* clone() const {return new Entier(*this);}
 
     double getNb() const {return nb;}
     /*! \brief Accesseurs en écriture */
@@ -268,7 +289,7 @@ public:
     /*! \brief Constructeur de recopie */
     Rationnel(const Rationnel& rat):numerateur(rat.getNum()),denominateur(rat.getDenom()){}
 
-     Operande* clone() const {return new Rationnel(*this);}
+    Operande* clone() const {return new Rationnel(*this);}
 
     Rationnel* NEG() {numerateur.setValue(-numerateur.getNb());return this;}
 
@@ -286,7 +307,6 @@ public:
     void setDenom(const int e) {denominateur=e;}
 
     double getNb() const {double d1 = numerateur.getNb();double d2=denominateur.getNb();return d1/d2;}
-    //void afficher(std::ostream& f=std::cout) const {f<<getNum()<<"/"<<getDenom();}
     std::string toString() const {return std::to_string(numerateur.getNb())+"/"+std::to_string(denominateur.getNb());}
 
     /*----------Opérateurs-------------*/
@@ -325,7 +345,6 @@ public:
     void setEntiere(const Entier& e);
     /*! \brief Accesseurs en ecriture */
     void setMantisse(const double& e);
-    //void afficher(std::ostream& f=std::cout) const {f<<getNb();}
     std::string toString() const {return std::to_string(nb);}
 
     /*----------Opérateurs-------------*/
@@ -351,7 +370,7 @@ public:
     /*! \brief Constructeur de recopie */
     Complexe(const Complexe& comp):realPart(comp.getReal()),imagPart(comp.getImag()){}
 
-        Operande* clone() const {return new Complexe(*this);}
+    Operande* clone() const {return new Complexe(*this);}
 
     Complexe* NEG();
     /*! \brief Accesseurs en lecture */
@@ -362,7 +381,6 @@ public:
     void setReal(LitteraleNumerique& lit) {realPart=&lit;}
     /*! \brief Accesseurs en ecriture */
     void setImag(LitteraleNumerique& lit) {imagPart=&lit;}
-    //void afficher(std::ostream& f=std::cout) const {getReal()->afficher(f); f<<"$"; getImag()->afficher(f);}
     std::string toString() const {return std::to_string(realPart->getNb())+"$"+std::to_string(imagPart->getNb());}
     double getNb() const {return 0;} //juste pour empeche l'abstrait
 

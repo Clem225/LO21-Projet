@@ -21,17 +21,13 @@ progEdit::~progEdit()
 // Affiche la liste des programmes
 void progEdit::afficheProgrammes()
 {
-
-
     for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
     {
         QString value = QString::fromStdString(it.current().toString());
         std::string premiereLettre = it.current().getLink()->toString();
         if(premiereLettre[0]=='[')
             ui->listeProgrammes->addItem(value);
-
     }
-
 }
 
 void progEdit::selected(const QString& nom)
@@ -53,5 +49,4 @@ void progEdit::valid()
     AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
 
     ui->listeProgrammes->currentItem()->setText(QString::fromStdString(nouveauNom));
-
 }
