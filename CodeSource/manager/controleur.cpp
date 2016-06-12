@@ -159,8 +159,8 @@ void Controleur::executer()
                     if(operateurUnaire->toString() == "NEG")
                     {
                         res=l1->NEG();
-                        this->empiler(res);
-
+                        if (res)
+                            this->empiler(res);
                     }
 
                     if(operateurUnaire->toString() == "NUM")
@@ -178,8 +178,21 @@ void Controleur::executer()
                         }
                         else
                         {
-                            this->empiler(l1);
-                            MainWindow::getInstance()->setMsg("Erreur : l'operateur NUM ne s'applique que sur des rationnels ou des entiers !");
+                            Expression* exp1 = dynamic_cast<Expression*>(l1);
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp = exp1->toString();
+                                temp=temp.substr(1,temp.length()-2);
+                                std::string result = "'NUM("+temp+")'";
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                this->empiler(l1);
+                                MainWindow::getInstance()->setMsg("Erreur : l'operateur NUM ne s'applique que sur des rationnels des entiers ou des expressions !");
+                            }
                         }
                     }
 
@@ -198,8 +211,21 @@ void Controleur::executer()
                         }
                         else
                         {
-                            this->empiler(l1);
-                            MainWindow::getInstance()->setMsg("Erreur : l'operateur DEN ne s'applique que sur des rationnels ou des entiers !");
+                            Expression* exp1 = dynamic_cast<Expression*>(l1);
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp = exp1->toString();
+                                temp=temp.substr(1,temp.length()-2);
+                                std::string result = "'DEN("+temp+")'";
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                this->empiler(l1);
+                                MainWindow::getInstance()->setMsg("Erreur : l'operateur DEN ne s'applique que sur des rationnels ou des entiers !");
+                            }
                         }
                     }
                     if(operateurUnaire->toString() == "RE")
@@ -222,8 +248,21 @@ void Controleur::executer()
                         }
                         else
                         {
-                            this->empiler(l1);
-                            MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
+                            Expression* exp1 = dynamic_cast<Expression*>(l1);
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp = exp1->toString();
+                                temp=temp.substr(1,temp.length()-2);
+                                std::string result = "'RE("+temp+")'";
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                this->empiler(l1);
+                                MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'applique que sur des complexes ou expressions contenant un complexe !");
+                            }
                         }
                     }
                     if(operateurUnaire->toString() == "IM")
@@ -247,8 +286,21 @@ void Controleur::executer()
                         }
                         else
                         {
-                            this->empiler(l1);
-                            MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
+                            Expression* exp1 = dynamic_cast<Expression*>(l1);
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp = exp1->toString();
+                                temp=temp.substr(1,temp.length()-2);
+                                std::string result = "'IM("+temp+")'";
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                this->empiler(l1);
+                                MainWindow::getInstance()->setMsg("Erreur : l'operateur RE ne s'app");
+                            }
                         }
                     }
 
@@ -270,8 +322,21 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res = new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l1);
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp = exp1->toString();
+                                temp=temp.substr(1,temp.length()-2);
+                                std::string result = "'NOT("+temp+")'";
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res = new Entier(0);
+                                this->empiler(res);
+                            }
                         }
                     }
                     if(operateurUnaire->toString() == "EVAL")
@@ -409,10 +474,50 @@ void Controleur::executer()
                     }
                     else
                     {
-                        MainWindow::getInstance()->setMsg("Erreur : DIV ne peut s'appliquer que sur deux entiers !");
-                        //On re-empile
-                        this->empiler(l2);
-                        this->empiler(l1);
+                        Expression* exp1 = dynamic_cast<Expression*>(l2);
+                        Expression* exp2 = dynamic_cast<Expression*>(l1);
+                        if (exp1||exp2)
+                        {
+                            std::string result;
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp1 = exp1->toString();
+                                temp1=temp1.substr(1,temp1.length()-2);
+                                if (exp2)
+                                {
+                                    std::string temp2 = exp2->toString();
+                                    temp2=temp2.substr(1,temp2.length()-2);
+                                    result = "'DIV("+temp1+","+temp2+")'";
+                                }
+                                else
+                                {
+                                    result = "'DIV("+temp1+","+l1->toString()+")'";
+                                }
+                            }
+                            else
+                            {
+                                if (exp2)
+                                {
+                                    std::string temp2 = exp2->toString();
+                                    temp2=temp2.substr(1,temp2.length()-2);
+                                    result = "'DIV("+l2->toString()+","+temp2+")'";
+                                }
+                                else
+                                {
+                                    result = "'DIV("+l2->toString()+","+l1->toString()+")'";
+                                }
+                            }
+                            this->commande(result);
+                            MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                        }
+                        else
+                        {
+                            MainWindow::getInstance()->setMsg("Erreur : DIV ne peut s'appliquer que sur deux entiers !");
+                            //On re-empile
+                            this->empiler(l2);
+                            this->empiler(l1);
+                        }
                     }
                 }
 
@@ -430,10 +535,50 @@ void Controleur::executer()
                     }
                     else
                     {
-                        MainWindow::getInstance()->setMsg("Erreur : MOD ne peut s'appliquer que sur deux entiers !");
-                        //On re-empile
-                        this->empiler(l2);
-                        this->empiler(l1);
+                        Expression* exp1 = dynamic_cast<Expression*>(l2);
+                        Expression* exp2 = dynamic_cast<Expression*>(l1);
+                        if (exp1||exp2)
+                        {
+                            std::string result;
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp1 = exp1->toString();
+                                temp1=temp1.substr(1,temp1.length()-2);
+                                if (exp2)
+                                {
+                                    std::string temp2 = exp2->toString();
+                                    temp2=temp2.substr(1,temp2.length()-2);
+                                    result = "'MOD("+temp1+","+temp2+")'";
+                                }
+                                else
+                                {
+                                    result = "'MOD("+temp1+","+l1->toString()+")'";
+                                }
+                            }
+                            else
+                            {
+                                if (exp2)
+                                {
+                                    std::string temp2 = exp2->toString();
+                                    temp2=temp2.substr(1,temp2.length()-2);
+                                    result = "'MOD("+l2->toString()+","+temp2+")'";
+                                }
+                                else
+                                {
+                                    result = "'MOD("+l2->toString()+","+l1->toString()+")'";
+                                }
+                            }
+                            this->commande(result);
+                            MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                        }
+                        else
+                        {
+                            MainWindow::getInstance()->setMsg("Erreur : MOD ne peut s'appliquer que sur deux entiers !");
+                            //On re-empile
+                            this->empiler(l2);
+                            this->empiler(l1);
+                        }
                     }
                 }
 
@@ -446,39 +591,44 @@ void Controleur::executer()
                     Programme* test2 = dynamic_cast<Programme*>(l2);
                     LitteraleNumerique* test3 = dynamic_cast<LitteraleNumerique*>(l2);
 
-
-
-                    if (test1||test2||test3) //Si on cherche bien à stocker une expression, un programme ou une litterale numerique
+                    if (e1->toString()=="'DIV'"||e1->toString()=="'NEG'"||e1->toString()=="'NUM'"||e1->toString()=="'DEN'"||e1->toString()=="'$'"||e1->toString()=="'RE'"||e1->toString()=="'IM'"||e1->toString()=="'AND'"||e1->toString()=="'OR'"||e1->toString()=="'NOT'"||e1->toString()=="'EVAL'"||e1->toString()=="'STO'"||e1->toString()=="'DUP'"||e1->toString()=="'DROP'"||e1->toString()=="'SWAP'"||e1->toString()=="'LASTOP'"||e1->toString()=="'LASTARGS'"||e1->toString()=="'UNDO'"||e1->toString()=="'REDO'"||e1->toString()=="'CLEAR'")
                     {
-
-                        //Si le premier argument est bien une expression ne comportant qu'un atome,
-                        //On ajoute cet atome à AtomeManager en le liant à la litterale
-                        if (e1)
+                        MainWindow::getInstance()->setMsg("Erreur : attention à ne pas donner le nom d'un opérateur comme nom de variable !");
+                        //On re-empile
+                        this->empiler(l2);
+                        this->empiler(l1);
+                    }
+                    else
+                    {
+                        if (test1||test2||test3) //Si on cherche bien à stocker une expression, un programme ou une litterale numerique
                         {
 
-
-
-                            std::string temp = e1->toString();
-                            int temp1 = e1->toString().length()-2; //taille du string sans les quotes
-                            temp = temp.substr(1,temp1); //On retire les quotes
-                            Atome* a = new Atome(temp,l2); //On ajoute l'identificateur lié à la variable l1
-                            AtomeManager::getInstance().addAtome(a);
-                            MainWindow::getInstance()->setMsg("Variable initialisee !");
+                            //Si le premier argument est bien une expression ne comportant qu'un atome,
+                            //On ajoute cet atome à AtomeManager en le liant à la litterale
+                            if (e1)
+                            {
+                                std::string temp = e1->toString();
+                                int temp1 = e1->toString().length()-2; //taille du string sans les quotes
+                                temp = temp.substr(1,temp1); //On retire les quotes
+                                Atome* a = new Atome(temp,l2); //On ajoute l'identificateur lié à la variable l1
+                                AtomeManager::getInstance().addAtome(a);
+                                MainWindow::getInstance()->setMsg("Variable initialisee !");
+                            }
+                            else
+                            {
+                                MainWindow::getInstance()->setMsg("Erreur : une variable/expression/programme doit etre liee a une expression contenant un atome !");
+                                //On re-empile
+                                this->empiler(l2);
+                                this->empiler(l1);
+                            }
                         }
-                        else
+                        else //Sinon on cherche à stocker autre chose, ce qui est impossible
                         {
-                            MainWindow::getInstance()->setMsg("Erreur : une variable/expression/programme doit etre liee a une expression contenant un atome !");
+                            MainWindow::getInstance()->setMsg("Erreur : l'opérateur STO n'est applicable qu'à une expression, un programme ou une littérale numérique !");
                             //On re-empile
                             this->empiler(l2);
                             this->empiler(l1);
                         }
-                    }
-                    else //Sinon on cherche à stocker autre chose, ce qui est impossible
-                    {
-                        MainWindow::getInstance()->setMsg("Erreur : l'opérateur STO n'est applicable qu'à une expression, un programme ou une littérale numérique !");
-                        //On re-empile
-                        this->empiler(l2);
-                        this->empiler(l1);
                     }
                 }
 
@@ -495,10 +645,47 @@ void Controleur::executer()
                     }
                     else
                     {
-                        MainWindow::getInstance()->setMsg("Erreur : un complexe ne peut être constitué que de variables numeriques (entier, reel ou rationnel)");
-                        //On re-empile
-                        this->empiler(l2);
-                        this->empiler(l1);
+                        Expression* exp1 = dynamic_cast<Expression*>(l2);
+                        Expression* exp2 = dynamic_cast<Expression*>(l1);
+                        if (exp1||exp2)
+                        {
+                            std::string result;
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp1 = EVAL(exp1);
+                                if (exp2)
+                                {
+                                    std::string temp2 = EVAL(exp2);
+                                    result = temp1+" "+temp2+" $";
+                                }
+                                else
+                                {
+                                    result = temp1+" "+l1->toString()+" $";
+                                }
+                            }
+                            else
+                            {
+                                if (exp2)
+                                {
+                                    std::string temp2 = EVAL(exp2);
+                                    result = l2->toString()+" "+temp2 + " $";
+                                }
+                                else
+                                {
+                                    result = l2->toString()+" "+l1->toString()+" $";
+                                }
+                            }
+                            this->commande(result);
+                            MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                        }
+                        else
+                        {
+                            MainWindow::getInstance()->setMsg("Erreur : un complexe ne peut être constitué que de variables numeriques (entier, reel ou rationnel)");
+                            //On re-empile
+                            this->empiler(l2);
+                            this->empiler(l1);
+                        }
                     }
                 }
                 if(operateurBinaire->toString() == "=")
@@ -538,8 +725,45 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res=new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l2);
+                            Expression* exp2 = dynamic_cast<Expression*>(l1);
+                            if (exp1||exp2)
+                            {
+                                std::string result;
+                                if (exp1)
+                                {
+                                    res=NULL;
+                                    std::string temp1 = EVAL(exp1);
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = temp1+" "+temp2+"=";
+                                    }
+                                    else
+                                    {
+                                        result = temp1+" "+l1->toString()+" =";
+                                    }
+                                }
+                                else
+                                {
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = l2->toString()+" "+temp2 + " =";
+                                    }
+                                    else
+                                    {
+                                        result = l2->toString()+" "+l1->toString()+" =";
+                                    }
+                                }
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->empiler(res);
+                            }
                         }
                     }
                 }
@@ -581,8 +805,45 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res=new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l2);
+                            Expression* exp2 = dynamic_cast<Expression*>(l1);
+                            if (exp1||exp2)
+                            {
+                                std::string result;
+                                if (exp1)
+                                {
+                                    res=NULL;
+                                    std::string temp1 = EVAL(exp1);
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = temp1+" "+temp2+" !=";
+                                    }
+                                    else
+                                    {
+                                        result = temp1+" "+l1->toString()+" !=";
+                                    }
+                                }
+                                else
+                                {
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = l2->toString()+" "+temp2 + " !=";
+                                    }
+                                    else
+                                    {
+                                        result = l2->toString()+" "+l1->toString()+" !=";
+                                    }
+                                }
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->empiler(res);;
+                            }
                         }
                     }
                 }
@@ -624,8 +885,45 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res=new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l2);
+                            Expression* exp2 = dynamic_cast<Expression*>(l1);
+                            if (exp1||exp2)
+                            {
+                                std::string result;
+                                if (exp1)
+                                {
+                                    res=NULL;
+                                    std::string temp1 = EVAL(exp1);
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = temp1+" "+temp2+" <=";
+                                    }
+                                    else
+                                    {
+                                        result = temp1+" "+l1->toString()+" <=";
+                                    }
+                                }
+                                else
+                                {
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = l2->toString()+" "+temp2 + " <=";
+                                    }
+                                    else
+                                    {
+                                        result = l2->toString()+" "+l1->toString()+" <=";
+                                    }
+                                }
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->empiler(res);;
+                            }
                         }
                     }
                 }
@@ -667,8 +965,45 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res=new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l2);
+                            Expression* exp2 = dynamic_cast<Expression*>(l1);
+                            if (exp1||exp2)
+                            {
+                                std::string result;
+                                if (exp1)
+                                {
+                                    res=NULL;
+                                    std::string temp1 = EVAL(exp1);
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = temp1+" "+temp2+" >=";
+                                    }
+                                    else
+                                    {
+                                        result = temp1+" "+l1->toString()+" >=";
+                                    }
+                                }
+                                else
+                                {
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = l2->toString()+" "+temp2 + " >=";
+                                    }
+                                    else
+                                    {
+                                        result = l2->toString()+" "+l1->toString()+" >=";
+                                    }
+                                }
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->empiler(res);;
+                            }
                         }
                     }
                 }
@@ -710,8 +1045,45 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res=new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l2);
+                            Expression* exp2 = dynamic_cast<Expression*>(l1);
+                            if (exp1||exp2)
+                            {
+                                std::string result;
+                                if (exp1)
+                                {
+                                    res=NULL;
+                                    std::string temp1 = EVAL(exp1);
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = temp1+" "+temp2+" <";
+                                    }
+                                    else
+                                    {
+                                        result = temp1+" "+l1->toString()+" <";
+                                    }
+                                }
+                                else
+                                {
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = l2->toString()+" "+temp2 + " <";
+                                    }
+                                    else
+                                    {
+                                        result = l2->toString()+" "+l1->toString()+" <";
+                                    }
+                                }
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->empiler(res);;
+                            }
                         }
                     }
                 }
@@ -753,8 +1125,45 @@ void Controleur::executer()
                         }
                         else
                         {
-                            res=new Entier(0);
-                            this->empiler(res);;
+                            Expression* exp1 = dynamic_cast<Expression*>(l2);
+                            Expression* exp2 = dynamic_cast<Expression*>(l1);
+                            if (exp1||exp2)
+                            {
+                                std::string result;
+                                if (exp1)
+                                {
+                                    res=NULL;
+                                    std::string temp1 = EVAL(exp1);
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = temp1+" "+temp2+" >";
+                                    }
+                                    else
+                                    {
+                                        result = temp1+" "+l1->toString()+" >";
+                                    }
+                                }
+                                else
+                                {
+                                    if (exp2)
+                                    {
+                                        std::string temp2 = EVAL(exp2);
+                                        result = l2->toString()+" "+temp2 + " >";
+                                    }
+                                    else
+                                    {
+                                        result = l2->toString()+" "+l1->toString()+" >";
+                                    }
+                                }
+                                this->commande(result);
+                                MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                            }
+                            else
+                            {
+                                res=new Entier(0);
+                                this->empiler(res);;
+                            }
                         }
                     }
                 }
@@ -779,8 +1188,45 @@ void Controleur::executer()
                     }
                     else
                     {
-                        res=new Entier(1);
-                        this->empiler(res);;
+                        Expression* exp1 = dynamic_cast<Expression*>(l2);
+                        Expression* exp2 = dynamic_cast<Expression*>(l1);
+                        if (exp1||exp2)
+                        {
+                            std::string result;
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp1 = EVAL(exp1);
+                                if (exp2)
+                                {
+                                    std::string temp2 = EVAL(exp2);
+                                    result = temp1+" "+temp2+" AND";
+                                }
+                                else
+                                {
+                                    result = temp1+" "+l1->toString()+" AND";
+                                }
+                            }
+                            else
+                            {
+                                if (exp2)
+                                {
+                                    std::string temp2 = EVAL(exp2);
+                                    result = l2->toString()+" "+temp2 + " AND";
+                                }
+                                else
+                                {
+                                    result = l2->toString()+" "+l1->toString()+" AND";
+                                }
+                            }
+                            this->commande(result);
+                            MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                        }
+                        else
+                        {
+                            res=new Entier(1);
+                            this->empiler(res);;
+                        }
                     }
                 }
 
@@ -804,8 +1250,45 @@ void Controleur::executer()
                     }
                     else
                     {
-                        res=new Entier(1);
-                        this->empiler(res);;
+                        Expression* exp1 = dynamic_cast<Expression*>(l2);
+                        Expression* exp2 = dynamic_cast<Expression*>(l1);
+                        if (exp1||exp2)
+                        {
+                            std::string result;
+                            if (exp1)
+                            {
+                                res=NULL;
+                                std::string temp1 = EVAL(exp1);
+                                if (exp2)
+                                {
+                                    std::string temp2 = EVAL(exp2);
+                                    result = temp1+" "+temp2+" OR";
+                                }
+                                else
+                                {
+                                    result = temp1+" "+l1->toString()+" OR";
+                                }
+                            }
+                            else
+                            {
+                                if (exp2)
+                                {
+                                    std::string temp2 = EVAL(exp2);
+                                    result = l2->toString()+" "+temp2 + " OR";
+                                }
+                                else
+                                {
+                                    result = l2->toString()+" "+l1->toString()+" OR";
+                                }
+                            }
+                            this->commande(result);
+                            MainWindow::getInstance()->setMsg("OK, opération effectuée !");
+                        }
+                        else
+                        {
+                            res=new Entier(1);
+                            this->empiler(res);;
+                        }
                     }
                 }
                 if(operateurBinaire->toString() == "IFT")
