@@ -1,7 +1,13 @@
 #include "operateurs.h"
 #include "../manager/controleur.h"
 
-
+/*!
+ * \file operateursreel.cpp
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+/*! \brief Operateur entre littérale */
 Litterale* Reel::operator+(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -43,7 +49,7 @@ Litterale* Reel::operator+(Litterale& e){
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Reel::operator-(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -90,7 +96,7 @@ Litterale* Reel::operator-(Litterale& e){
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Reel::operator*(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -152,7 +158,7 @@ Litterale* Reel::operator*(Litterale& e){
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Reel::operator/(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);

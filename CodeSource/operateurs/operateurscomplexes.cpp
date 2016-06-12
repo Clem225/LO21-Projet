@@ -1,14 +1,19 @@
 #include "operateurs.h"
 #include "../manager/controleur.h"
 
-
-
+/*!
+ * \file operateurscomplexes.cpp
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+/*! \brief Operateur entre littérale */
 Complexe* Complexe::NEG()
 {
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Complexe::operator+(Litterale& e)
 {
     Entier* ent=dynamic_cast<Entier*>(&e);
@@ -50,7 +55,7 @@ Litterale* Complexe::operator+(Litterale& e)
 
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Complexe::operator-(Litterale& e)
 {
     Entier* ent=dynamic_cast<Entier*>(&e);
@@ -101,7 +106,7 @@ Litterale* Complexe::operator-(Litterale& e)
 
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Complexe::operator*(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -162,7 +167,7 @@ Litterale* Complexe::operator*(Litterale& e){
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Complexe::operator/(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);

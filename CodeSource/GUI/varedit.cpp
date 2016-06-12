@@ -4,7 +4,14 @@
 #include "../litterales/litterales.h"
 #include "../manager/factory.h"
 
-// Constructeur
+/*!
+ * \file varedit.cpp
+ * \brief Fenetre de modifications des atomes
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+/*! \brief Constructeur */
 varEdit::varEdit(QWidget *parent) : QDialog(parent), ui(new Ui::varEdit)
 {
     ui->setupUi(this);
@@ -16,12 +23,13 @@ varEdit::varEdit(QWidget *parent) : QDialog(parent), ui(new Ui::varEdit)
     connect(ui->supprimer,SIGNAL(clicked(bool)),this,SLOT(suppr()));
 }
 
+/*! \brief Destructeur */
 varEdit::~varEdit()
 {
     delete ui;
 }
 
-// Affiche la liste des atomes
+/*! \brief Met a jour la liste des atomes */
 void varEdit::afficheAtomes()
 {
 
@@ -35,6 +43,7 @@ void varEdit::afficheAtomes()
 
 }
 
+/*! \brief Met a jour le nom et la valeur par rapport au champ selectionné */
 void varEdit::selected(const QString& nom)
 {
     ui->nom->setText(nom);
@@ -43,6 +52,8 @@ void varEdit::selected(const QString& nom)
     ui->valeur->setText(valeur);
     nomSelected=nom;
 }
+
+/*! \brief Enregistre les informations lorsque valider est pressé */
 void varEdit::valid()
 {
     std::string ancienNom = nomSelected.toStdString();
@@ -66,6 +77,8 @@ void varEdit::valid()
         ui->listeAtome->currentItem()->setText(QString::fromStdString(nouveauNom));
     }
 }
+
+/*! \brief Supprime le programme choisi */
 void varEdit::suppr()
 {
     std::string nom = nomSelected.toStdString();

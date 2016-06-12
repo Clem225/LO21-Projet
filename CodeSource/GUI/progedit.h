@@ -19,7 +19,9 @@ class progEdit : public QDialog
     Q_OBJECT
 
 public:
+    /*! \brief Constructeur */
     explicit progEdit(QWidget *parent = 0);
+    /*! \brief Destructeur */
     ~progEdit();
 
 private:

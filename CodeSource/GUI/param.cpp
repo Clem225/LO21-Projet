@@ -5,7 +5,14 @@
 
 #include "mainwindow.h"
 
+/*!
+ * \file param.cpp
+ * \brief Fenetre de parametres
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
 
+/*! \brief Constructeur */
 Param::Param(QWidget *parent) : QDialog(parent), ui(new Ui::Param)
 {
     ui->setupUi(this);
@@ -20,13 +27,13 @@ Param::Param(QWidget *parent) : QDialog(parent), ui(new Ui::Param)
     connect(ui->bip,SIGNAL(toggled(bool)),this,SLOT(bipChecked(bool)));
     connect(ui->sizePile,SIGNAL(valueChanged(int)),this,SLOT(pileChanged(int)));
 }
-
+/*! \brief Destructeur */
 Param::~Param()
 {
     delete ui;
 }
 
-// Si b = true, change le XML en vrai, sinon en faux. Ensuite on raffraichit l'affichage du clavier
+/*! \brief Slot qui modifie le XML en fonction de la case Clavier */
 void Param::keyboardChecked(bool b)
 {
 
@@ -41,12 +48,12 @@ void Param::keyboardChecked(bool b)
 
     MainWindow::getInstance()->showKeyboard();
 }
-
+/*! \brief Recupere le XML */
 Xml_Dom& Param::getXML()
 {
     return paramXML;
 }
-// Coche le widget en fonction du contenu du XML
+/*! \brief Affiche ou non le clavier selon la valeur du XML*/
 void Param::keyboardUpdate()
 {
     QString v = this->getXML().getKeyboard();
@@ -62,14 +69,14 @@ void Param::keyboardUpdate()
     }
 }
 
-// Change la valeur en fonction de ce qui est contenu dans le XML
+/*! \brief Affiche la pile selon la valeur contenue dans le XML */
 void Param::pileUpdate()
 {
     QString v = this->getXML().getPile();
     ui->sizePile->setValue(v.toInt());
 
 }
-// Change la valeur en fonction de ce qui est contenu dans le XML
+/*! \brief Active ou non le BIP selon la valeur du XML */
 void Param::bipUpdate()
 {
     QString v = this->getXML().getBip();
@@ -85,7 +92,7 @@ void Param::bipUpdate()
     }
 
 }
-// Change la valeur du BIP dans le XML
+/*! \brief Slot qui modifie le XML en fonction de la case bip */
 void Param::bipChecked(bool b)
 {
     if(b)
@@ -97,7 +104,7 @@ void Param::bipChecked(bool b)
         this->getXML().setBip(0);
     }
 }
-// Change la valeur de taille de pile dans le XML puis actualise l'affichage
+/*! \brief Modifie le XML en fonction de la selection de hauteur de la pile */
 void Param::pileChanged(int v)
 {
     this->getXML().setPile(v);

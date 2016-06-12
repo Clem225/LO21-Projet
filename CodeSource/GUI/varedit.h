@@ -19,7 +19,9 @@ class varEdit : public QDialog
     Q_OBJECT
 
 public:
+    /*! \brief Constructeur */
     explicit varEdit(QWidget *parent = 0);
+    /*! \brief Destructeur */
     ~varEdit();
 
 private:

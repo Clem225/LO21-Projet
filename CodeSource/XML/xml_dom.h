@@ -20,7 +20,9 @@ private :
     QFile xml_doc;
 
 public:
+    /*! \brief Constructeur */
     Xml_Dom();
+    /*! \brief Destructeur */
     ~Xml_Dom();
     /*! \brief Recupere la valeur clavier contenue dans le XML */
     QString getKeyboard();

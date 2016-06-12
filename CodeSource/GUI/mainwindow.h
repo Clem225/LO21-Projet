@@ -81,9 +81,9 @@ public slots:
     /*! \brief Routine de fermeture */
     void closeEvent(QCloseEvent *event);
 
-    /*! \brief Envoi UNDO au controlleur */
+    /*! \brief Envoi UNDO au controleur */
     void undo();
-    /*! \brief Envoi REDO au controlleur */
+    /*! \brief Envoi REDO au controleur */
     void redo();
 };
 

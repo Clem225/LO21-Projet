@@ -3,23 +3,32 @@
 #include "../GUI/mainwindow.h"
 
 
+/*!
+ * \file litterales.cpp
+ * \brief Implementation des litterales
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
 /*------Classes AtomeManager------*/
 
 
 AtomeManager::Handler AtomeManager::handler=AtomeManager::Handler();
 
+/*! \brief Singleton : Renvoi l'instance  */
 AtomeManager& AtomeManager::getInstance()
 {
     if (handler.instance==nullptr) handler.instance=new AtomeManager;
     return *handler.instance;
 }
 
+/*! \brief Singleton : Libere l'instance  */
 void AtomeManager::libererInstance()
 {
     delete handler.instance;
     handler.instance=nullptr;
 }
-
+/*! \brief Ajout d'un atome via pointeur  */
 void AtomeManager::addAtome(Atome* a)
 {
     if (nb==nbMax)
@@ -28,12 +37,13 @@ void AtomeManager::addAtome(Atome* a)
     //return atoms[nb-1];
 }
 
+/*! \brief Creation et ajout d'un atome a partir de son nom et de sa valeur  */
 void AtomeManager::addAtome(std::string name, Litterale* val) {
     Atome* a = new Atome(name,val);
     this->addAtome(a);
 }
 
-
+/*! \brief Supprime un atome a partir de son pointeur  */
 void AtomeManager::delAtome(Atome* a)
 {
     unsigned int i=0;
@@ -45,7 +55,7 @@ void AtomeManager::delAtome(Atome* a)
     nb--;
 }
 
-
+/*! \brief Supprime un atome a partir de son nom  */
 void AtomeManager::delAtome(std::string name)
 {
     Atome* corres=nullptr;
@@ -61,6 +71,7 @@ void AtomeManager::delAtome(std::string name)
         AtomeManager::getInstance().delAtome(corres);
 }
 
+/*! \brief Renvoi la valeur d'un atome a partir de son nom  */
 Litterale* AtomeManager::getValeur(std::string name) const
 {
 
@@ -78,6 +89,7 @@ Litterale* AtomeManager::getValeur(std::string name) const
     return NULL;
 }
 
+/*! \brief Modifie la valeur et/ou le nom d'un atome  */
 void AtomeManager::modifAtome(const std::string oldname, const std::string newname, Litterale* newval)
 {
     Atome* corres=nullptr;
@@ -96,6 +108,7 @@ void AtomeManager::modifAtome(const std::string oldname, const std::string newna
     }
 }
 
+/*! \brief Augmente la capacite du tableau d'atomes  */
 void AtomeManager::agrandissementCapacite()
 {
     nbMax=(nbMax+1)*2;
@@ -112,7 +125,7 @@ void AtomeManager::agrandissementCapacite()
 
 
 /*------Classe rationnel------*/
-
+/*! \brief Simplification d'un rationnel */
 Entier Rationnel::simplification() {
     if (getNum()!=0) {
         /* utilisation de l’algorithme d’Euclide pour trouver le Plus Grand Commun
@@ -144,7 +157,7 @@ Entier Rationnel::simplification() {
     return Entier(0);
 }
 
-// Constructeur rationnel
+/*! \brief Constructeur : e1 = numérateur, e2 = denominateur */
 Rationnel::Rationnel(int e1, int e2) {
     if (e2==0)
     {
@@ -160,21 +173,21 @@ Rationnel::Rationnel(int e1, int e2) {
 
 /*------Classe Reel------*/
 
-// Renvoie la partie entiere du reel
+/*! \brief Accesseurs en lecture */
 int Reel::getEntiere() const {
     long double ent;
     modfl(nb,&ent);
     return ent;
 }
 
-// Renvoie la partie decimal du reel
+/*! \brief Accesseurs en lecture */
 double Reel::getMantisse() const {
     long double ent,v;
     v=modfl(nb,&ent);
     return v;
 }
 
-// Change la partie entiere du reel
+/*! \brief Accesseurs en ecriture */
 void Reel::setEntiere(const Entier& e) {
     long double ent,v;
     v=modfl(nb,&ent);
@@ -183,7 +196,7 @@ void Reel::setEntiere(const Entier& e) {
     nb=ent;
 }
 
-// Renvoie la partie decimal du reel
+/*! \brief Accesseurs en ecriture */
 void Reel::setMantisse(const double &e)
 {
     long double ent,v;

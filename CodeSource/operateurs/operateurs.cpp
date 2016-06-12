@@ -1,7 +1,15 @@
 #include "operateurs.h"
 
-// Liste des opérateurs reconnus
 
+/*!
+ * \file operateurs.cpp
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+// Liste des opérateurs reconnus
+/*! \brief Verifie si str est un opérateur binaire */
 bool estUnOperateurBinaire(const std::string& c)
 {
     bool listOperateurBinaire =
@@ -28,6 +36,7 @@ bool estUnOperateurBinaire(const std::string& c)
 
     return false;
 }
+/*! \brief Verifie si str est un opérateur unaire */
 bool estUnOperateurUnaire(const std::string& c)
 {
     bool listOperateurUnaire =
@@ -45,6 +54,7 @@ bool estUnOperateurUnaire(const std::string& c)
 
     return false;
 }
+/*! \brief Verifie si str est un opérateur zero */
 bool estUnOperateurZero(const std::string& c)
 {
 
@@ -64,7 +74,7 @@ bool estUnOperateurZero(const std::string& c)
 
     return false;
 }
-
+/*! \brief Verifie si str est un opérateur */
 bool estOperateur(const std::string& str)
 {
     bool listOperateur =
@@ -82,15 +92,15 @@ bool estOperateur(const std::string& str)
 
 
 /*Opérateurs additionnels*/
-
+/*! \brief La fonction DIV effectue la division entiere entre deux entiers */
 Entier* DIV(Entier* e1, Entier* e2) {
         return e1->setValue(e1->getNb()/e2->getNb());
 }
-
+/*! \brief La fonction MOD renvoie le reste de la division entre deux entiers */
 Entier* MOD(Entier* e1, Entier* e2) {
         return e1->setValue(static_cast<int>(e1->getNb())%(static_cast<int>(e2->getNb())));
 }
-
+/*! \brief Evalue une litterale */
 std::string EVAL(Litterale* litt) {
     Expression* expr = dynamic_cast<Expression*>(litt);
     Programme* progr = dynamic_cast<Programme*>(litt);

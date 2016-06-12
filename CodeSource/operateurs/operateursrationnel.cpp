@@ -1,7 +1,13 @@
 #include "operateurs.h"
 #include "../manager/controleur.h"
 
-
+/*!
+ * \file operateursrationnel.cpp
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+/*! \brief Operateur entre littérale */
 Litterale* Rationnel::operator+(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -58,7 +64,7 @@ Litterale* Rationnel::operator+(Litterale& e){
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Rationnel::operator-(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -116,7 +122,7 @@ Litterale* Rationnel::operator-(Litterale& e){
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Rationnel::operator*(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -183,7 +189,7 @@ Litterale* Rationnel::operator*(Litterale& e){
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Rationnel::operator/(Litterale& e){
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);

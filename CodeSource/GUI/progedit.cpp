@@ -4,6 +4,14 @@
 #include "../litterales/litterales.h"
 #include "../manager/factory.h"
 
+/*!
+ * \file progedit.cpp
+ * \brief Fenetre de modifications des programmes
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+/*! \brief Constructeur */
 progEdit::progEdit(QWidget *parent) : QDialog(parent), ui(new Ui::progEdit)
 {
     ui->setupUi(this);
@@ -13,13 +21,13 @@ progEdit::progEdit(QWidget *parent) : QDialog(parent), ui(new Ui::progEdit)
     connect(ui->valid,SIGNAL(clicked(bool)),this,SLOT(valid()));
     connect(ui->supprimer,SIGNAL(clicked(bool)),this,SLOT(suppr()));
 }
-
+/*! \brief Constructeur */
 progEdit::~progEdit()
 {
     delete ui;
 }
 
-// Affiche la liste des programmes
+/*! \brief Met a jour la liste des programmes */
 void progEdit::afficheProgrammes()
 {
     for (AtomeManager::Iterator it = AtomeManager::getInstance().getIterator(); !it.isDone();it.next())
@@ -30,7 +38,7 @@ void progEdit::afficheProgrammes()
             ui->listeProgrammes->addItem(value);
     }
 }
-
+/*! \brief Met a jour le nom et la valeur par rapport au champ selectionné */
 void progEdit::selected(const QString& nom)
 {
     ui->nom->setText(nom);
@@ -39,7 +47,7 @@ void progEdit::selected(const QString& nom)
     ui->valeur->setText(valeur);
     nomSelected=nom;
 }
-
+/*! \brief Enregistre les informations lorsque valider est pressé */
 void progEdit::valid()
 {
 
@@ -65,6 +73,7 @@ void progEdit::valid()
     }
 
 }
+/*! \brief Supprime le programme choisi */
 void progEdit::suppr()
 {
     std::string nom = nomSelected.toStdString();

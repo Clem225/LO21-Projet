@@ -20,7 +20,9 @@ class Param : public QDialog
     Q_OBJECT
 
 public:
+    /*! \brief Constructeur */
     explicit Param(QWidget *parent = 0);
+    /*! \brief Destructeur */
     ~Param();
 
 private:

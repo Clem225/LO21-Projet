@@ -1,7 +1,14 @@
 #include "operateurs.h"
 #include "../manager/controleur.h"
 
-// Operateur d'affectation
+/*!
+ * \file operateursentier.cpp
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+/*! \brief Operateur entre littérale */
 Entier* Entier::operator=(Entier a)
 {
     // On verifie que ce n'est pas un cas a=a;
@@ -13,14 +20,14 @@ Entier* Entier::operator=(Entier a)
     return this;
 }
 
-// Operateur de comparaison
+/*! \brief Operateur entre littérale */
 bool operator==(const Entier& a, const Entier& b)
 {
     return a.getNb()==b.getNb();
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Entier::operator+(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -62,7 +69,7 @@ Litterale* Entier::operator+(Litterale& e) {
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Entier::operator-(Litterale& e)
 {
     Entier* ent=dynamic_cast<Entier*>(&e);
@@ -106,7 +113,7 @@ Litterale* Entier::operator-(Litterale& e)
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Entier::operator*(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
@@ -175,7 +182,7 @@ Litterale* Entier::operator*(Litterale& e) {
 }
 
 
-
+/*! \brief Operateur entre littérale */
 Litterale* Entier::operator/(Litterale& e) {
     Entier* ent=dynamic_cast<Entier*>(&e);
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);

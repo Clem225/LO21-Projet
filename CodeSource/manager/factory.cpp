@@ -6,7 +6,14 @@
 #include "../GUI/mainwindow.h"
 
 
-// Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
+/*!
+ * \file factory.cpp
+ * \brief Factorys de creations des litterales et des opérateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+/*! \brief Renvoie un *operande qui pointe vers le bon opérateur */
 Operande* FactoryOperateur::create(std::string operateur)
 {
 
@@ -41,7 +48,7 @@ Operande* FactoryOperateur::create(std::string operateur)
 // Initialisation de l'attribut statique
 FactoryOperateur::Handler FactoryOperateur::handler = FactoryOperateur::Handler();
 
-// Singleton
+/*! \brief (SINGLETON) */
 FactoryOperateur& FactoryOperateur::getInstance()
 {
     if(handler.instance==nullptr) {
@@ -50,7 +57,7 @@ FactoryOperateur& FactoryOperateur::getInstance()
 return *handler.instance;
 }
 
-
+/*! \brief (SINGLETON) */
 void FactoryOperateur::libererInstance()
 {
   delete handler.instance;
@@ -58,7 +65,7 @@ void FactoryOperateur::libererInstance()
 
 }
 
-// Prends un string en entrée et renvoie un pointeur vers une littérale contenant la valeur attendu
+/*! \brief Renvoie un *operande qui pointe vers la bonne littérale */
 Operande *FactoryLitterale::create(std::string litterale)
 {
     // Si le string est vide, on lance une exception
@@ -267,7 +274,7 @@ Operande *FactoryLitterale::create(std::string litterale)
 // Initialisation de l'attribut statique
 FactoryLitterale::Handler FactoryLitterale::handler = FactoryLitterale::Handler();
 
-// Singleton
+/*! \brief (SINGLETON) */
 FactoryLitterale& FactoryLitterale::getInstance()
 {
     if(handler.instance==nullptr) {
@@ -276,7 +283,7 @@ FactoryLitterale& FactoryLitterale::getInstance()
 return *handler.instance;
 }
 
-
+/*! \brief (SINGLETON) */
 void FactoryLitterale::libererInstance()
 {
   delete handler.instance;

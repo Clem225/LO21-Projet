@@ -77,7 +77,7 @@ public :
     void empiler(Factory& facto, std::string value);
     /*! \brief Execute le contenu de la pile */
     void executer();
-    /*! \brief Renvoie le contenu de la pile dans un string */
+    /*! \brief Renvoie le contenu de la pile dans un string (les size premiers resultats) */
     std::string pileString(int size);
     /*! \brief Permet la gestion d'un string composé de différentes opérandes separées d'un espace */
     void commande(std::string cmd);

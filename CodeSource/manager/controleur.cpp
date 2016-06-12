@@ -12,6 +12,15 @@
 
 #include <QDebug>
 
+/*!
+ * \file controleur.cpp
+ * \brief Controleur avec Memento
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+
+
+/*! \brief Sauvegarde l'état du controleur */
 void Controleur::save()
 {
     // Memento
@@ -22,6 +31,7 @@ void Controleur::save()
     careTaker.current=careTaker.number();
 }
 
+/*! \brief Redo */
 void Controleur::redo()
 {
     // Memento
@@ -35,6 +45,8 @@ void Controleur::redo()
     MainWindow::getInstance()->refreshPile();
 
 }
+
+/*! \brief Undo */
 void Controleur::undo()
 {
 
@@ -58,6 +70,7 @@ void Controleur::undo()
     MainWindow::getInstance()->refreshPile();
 }
 
+/*! \brief Execute le contenu de la pile */
 void Controleur::executer()
 {
 
@@ -1340,7 +1353,7 @@ void Controleur::executer()
 
 }
 
-// Renvoi la pile sous la forme d'un string (uniquement les size premiers resultats)
+/*! \brief Renvoie le contenu de la pile dans un string (les size premiers resultats) */
 std::string Controleur::pileString(int size)
 {
     // On copie la pile dans une pile tampon
@@ -1374,7 +1387,7 @@ std::string Controleur::pileString(int size)
     return result.str();
 }
 
-// Permet de separer une commande en différentes opérandes : "3 3 +" empilera 3 puis empilera 3 avant d'empiler + et d'executer la pile
+/*! \brief Permet la gestion d'un string composé de différentes opérandes separées d'un espace */
 void Controleur::commande(std::string cmd)
 {
 
@@ -1514,8 +1527,9 @@ void Controleur::commande(std::string cmd)
 }
 
 
-// Fonction d'empilage
+/*! \brief Empile une opérande */
 void Controleur::empiler(Operande* value ){pile.push(value);}
+/*! \brief Empile une valeur donnée gérée par une factory donnéee */
 void Controleur::empiler(Factory& facto, std::string value)
 {
     Operande* temp = facto.create(value);
@@ -1529,7 +1543,7 @@ void Controleur::empiler(Factory& facto, std::string value)
 // Initialisation de l'attribut statique
 Controleur::Handler Controleur::handler = Controleur::Handler();
 
-// Singleton
+/*! \brief (SINGLETON) */
 Controleur& Controleur::getInstance()
 {
     if(handler.instance==nullptr) {
@@ -1538,7 +1552,7 @@ Controleur& Controleur::getInstance()
 return *handler.instance;
 }
 
-
+/*! \brief (SINGLETON) */
 void Controleur::libererInstance()
 {
   delete handler.instance;

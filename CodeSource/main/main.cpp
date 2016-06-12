@@ -2,7 +2,12 @@
 #include <QApplication>
 
 
-
+/*!
+ * \file main.cpp
+ * \brief MAIN
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
 
 int main(int argc, char *argv[])
 {

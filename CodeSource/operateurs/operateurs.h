@@ -26,7 +26,7 @@ bool estOperateur(const std::string& str);
 Entier* DIV(Entier* e1, Entier* e2);
 /*! \brief La fonction MOD renvoie le reste de la division entre deux entiers */
 Entier* MOD(Entier* e1, Entier* e2);
-/*! \brief La fonction MOD renvoie le reste de la division entre deux entiers */
+/*! \brief Evalue une litterale */
 std::string EVAL(Litterale* litt);
 
 

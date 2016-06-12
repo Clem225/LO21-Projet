@@ -1,7 +1,13 @@
 #include "operateurs.h"
 #include "../manager/controleur.h"
 
-
+/*!
+ * \file operateursexpression.cpp
+ * \brief Implementation des operateurs
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
+/*! \brief Operateur entre littérale */
 Litterale* Expression::operator+(Litterale& litt)
 {
     //On teste le type de l'argument
@@ -36,7 +42,7 @@ Litterale* Expression::operator+(Litterale& litt)
 
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Expression::operator-(Litterale& litt)
 {
     //On teste le type de l'argument
@@ -71,7 +77,7 @@ Litterale* Expression::operator-(Litterale& litt)
 
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Expression::operator*(Litterale& litt)
 {
     //On teste le type de l'argument
@@ -106,7 +112,7 @@ Litterale* Expression::operator*(Litterale& litt)
 
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Expression::operator/(Litterale& litt)
 {
     //On teste le type de l'argument
@@ -141,7 +147,7 @@ Litterale* Expression::operator/(Litterale& litt)
 
     return NULL;
 }
-
+/*! \brief Operateur entre littérale */
 Litterale* Expression::NEG()
 {
     std::string temp = this->toString();

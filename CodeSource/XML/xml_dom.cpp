@@ -2,9 +2,16 @@
 
 #include <QMessageBox>
 
+/*!
+ * \file xml_dom.h
+ * \brief Gestion du fichier XML
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
 
 using namespace std;
 
+/*! \brief Constructeur */
 Xml_Dom::Xml_Dom() : QWidget()
 
 {
@@ -76,11 +83,12 @@ xml_doc.close();
 
 
 }
-
+/*! \brief Destructeur */
 Xml_Dom::~Xml_Dom()
 {
 
 }
+/*! \brief Recupere la valeur clavier contenue dans le XML */
 QString Xml_Dom::getKeyboard()
 {
 
@@ -99,6 +107,7 @@ QString Xml_Dom::getKeyboard()
 
 
 }
+/*! \brief Modifie le fichier XML pour mettre clavier à la valeur donnée (1 activé, 0 desactivé) */
 void Xml_Dom::setKeyboard(int value)
 {
 
@@ -118,7 +127,7 @@ void Xml_Dom::setKeyboard(int value)
     xml_doc.close();
 
 }
-
+/*! \brief Recupere la valeur longueur de pile contenue dans le XML */
 QString Xml_Dom::getPile()
 {
 
@@ -138,6 +147,7 @@ QString Xml_Dom::getPile()
 
 
 }
+/*! \brief Modifie le fichier XML pour mettre la longueur de pile à la valeur donnée */
 void Xml_Dom::setPile(int value)
 {
 
@@ -156,6 +166,7 @@ void Xml_Dom::setPile(int value)
 
     xml_doc.close();
 }
+/*! \brief Recupere la valeur bip contenue dans le XML */
 QString Xml_Dom::getBip()
 {
 
@@ -174,6 +185,7 @@ QString Xml_Dom::getBip()
 
 
 }
+/*! \brief Modifie le fichier XML pour mettre bip à la valeur donnée (1 activé, 0 desactivé) */
 void Xml_Dom::setBip(int value)
 {
 

@@ -14,8 +14,15 @@
 
 #include <QShortcut>
 
-bool hasLoaded=false;
+/*!
+ * \file mainwindow.cpp
+ * \brief Fenetre principale
+ * \author Blanquet - Martinache
+ * \version 0.1
+ */
 
+bool hasLoaded=false;
+/*! \brief Constructeur (SINGLETON) */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -124,6 +131,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 }
 // Surcharge de closeEvent pour sauvegarder la pile et les atomes à la sortie + pour supprimer les singletons
+/*! \brief Routine de fermeture */
 void MainWindow::closeEvent(QCloseEvent *event)
  {
     // On sauvergarde la pile
@@ -173,13 +181,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
      event->accept();
 
  }
-
+/*! \brief Destructeur (SINGLETON) */
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-// Rafraichit l'affichage de la pile
+/*! \brief Raffraichit l'affichage de la pile */
 void MainWindow::refreshPile()
 {
     ui->pileMsg->clear();
@@ -189,7 +197,7 @@ void MainWindow::refreshPile()
 
 }
 
-// Execute la commande indiqué dans la barre de commande
+/*! \brief Fait un BIP si c'est activé */
 void MainWindow::doBip()
 {
     int value = paramXML.getBip().toInt();
@@ -198,7 +206,7 @@ void MainWindow::doBip()
 
 }
 
-// Execute la commande indiqué dans la barre de commande
+/*! \brief Envoi au controlleur la commande ecrite sur le GUI */
 void MainWindow::sendCMD()
 {
     QString cmd = ui->cmdLine->text();
@@ -210,7 +218,7 @@ void MainWindow::sendCMD()
 
 }
 
-// Change le texte utilisateur
+/*! \brief Affiche un message a l'utilisateur*/
 void MainWindow::setMsg(QString msg)
 {
    ui->msgLine->setText(msg);
@@ -218,7 +226,7 @@ void MainWindow::setMsg(QString msg)
 
 }
 
-// Ajoute cmd à la barre de commande
+/*! \brief Ajoute un QString a la liste de commande (utilisé pour le clavier cliquable) */
 void MainWindow::addCMD(QString cmd)
 {
 
@@ -229,7 +237,7 @@ void MainWindow::addCMD(QString cmd)
 // Initialisation de l'attribut statique
 MainWindow::Handler MainWindow::handler = MainWindow::Handler();
 
-// Singleton
+/*! \brief (SINGLETON) */
 MainWindow* MainWindow::getInstance()
 {
     if(handler.instance==nullptr) {
@@ -238,28 +246,28 @@ MainWindow* MainWindow::getInstance()
 return handler.instance;
 }
 
-// Lance la fenetre param
+/*! \brief Affiche la fenetre Parametre */
 void MainWindow::param()
 {
     Param param(this);
     param.exec();
 }
 
-// Lance la fenetre atome
+/*! \brief Affiche la fenetre atomes */
 void MainWindow::atomes()
 {
     varEdit edit(this);
     edit.exec();
 }
 
-// Lance la fenetre programme
+/*! \brief Affiche la fenetre programme */
 void MainWindow::programmes()
 {
     progEdit edit(this);
     edit.exec();
 }
 
-// Cache ou affiche le clavier selon la valeur dans le XML
+/*! \brief Affiche le clavier selon la valeur du XML */
 void MainWindow::showKeyboard()
 {
     int value = paramXML.getKeyboard().toInt();
@@ -305,11 +313,12 @@ void MainWindow::showKeyboard()
         ui->nineButton->hide();
     }
 }
-
+/*! \brief Envoi UNDO au controleur */
 void MainWindow::undo()
 {
     Controleur::getInstance().undo();
 }
+/*! \brief Envoi REDO au controleur */
 void MainWindow::redo()
 {
     Controleur::getInstance().redo();
