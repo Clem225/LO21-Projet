@@ -838,7 +838,7 @@ void Controleur::executer()
 
 
 
-                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup&&!isAND&&!isOR&&!isIFT)
+                if (!isDiv&&!isMod&&!isSto&&!isComp&&!isEqual&&!isNotEqual&&!isInfOrEqual&&!isSupOrEqual&&!isInf&&!isSup&&!isAND&&!isOR&&!isIFT&&res)
                 {
                 // On met le resultat en haut de pile
                 this->empiler(res);;
