@@ -144,7 +144,10 @@ Litterale* Expression::operator/(Litterale& litt)
 
 Litterale* Expression::NEG()
 {
-    // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
+    std::string temp = this->toString();
+    temp= temp.substr(1,temp.length()-2);
+    std::string result = "'NEG(" + temp + ")'";
+    Controleur::getInstance().commande(result);
     return NULL;
 }
 
