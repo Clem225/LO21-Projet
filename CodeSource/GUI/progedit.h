@@ -33,6 +33,8 @@ public slots:
     void selected(const QString &nom);
     /*! \brief Enregistre les informations lorsque valider est pressé */
     void valid();
+    /*! \brief Supprime le programme choisi */
+    void suppr();
 };
 
 #endif // PROGEDIT_H

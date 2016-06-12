@@ -11,6 +11,7 @@ progEdit::progEdit(QWidget *parent) : QDialog(parent), ui(new Ui::progEdit)
     this->afficheProgrammes();
     connect(ui->listeProgrammes,SIGNAL(currentTextChanged(QString)),this,SLOT(selected(QString)));
     connect(ui->valid,SIGNAL(clicked(bool)),this,SLOT(valid()));
+    connect(ui->supprimer,SIGNAL(clicked(bool)),this,SLOT(suppr()));
 }
 
 progEdit::~progEdit()
@@ -36,6 +37,7 @@ void progEdit::selected(const QString& nom)
     std::string nomString = nom.toStdString();
     QString valeur = QString::fromStdString(AtomeManager::getInstance().getValeur(nomString)->toString());
     ui->valeur->setText(valeur);
+    nomSelected=nom;
 }
 
 void progEdit::valid()
@@ -49,4 +51,15 @@ void progEdit::valid()
     AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
 
     ui->listeProgrammes->currentItem()->setText(QString::fromStdString(nouveauNom));
+}
+void progEdit::suppr()
+{
+    std::string nom = nomSelected.toStdString();
+
+
+    AtomeManager::getInstance().delAtome(nom);
+
+    ui->listeProgrammes->currentItem()->setHidden(true);
+    ui->valeur->document()->clear();
+    ui->nom->clear();
 }

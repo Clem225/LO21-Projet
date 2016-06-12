@@ -59,7 +59,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Stocker dans l'atome :</string>
+    <string>Atome :</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="nom">
@@ -93,6 +93,19 @@
      <width>221</width>
      <height>281</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="supprimer">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>380</y>
+     <width>141</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Supprimer</string>
    </property>
   </widget>
  </widget>

@@ -13,6 +13,7 @@ varEdit::varEdit(QWidget *parent) : QDialog(parent), ui(new Ui::varEdit)
     this->afficheAtomes();
     connect(ui->listeAtome,SIGNAL(currentTextChanged(QString)),this,SLOT(selected(QString)));
     connect(ui->valid,SIGNAL(clicked(bool)),this,SLOT(valid()));
+    connect(ui->supprimer,SIGNAL(clicked(bool)),this,SLOT(suppr()));
 }
 
 varEdit::~varEdit()
@@ -53,4 +54,14 @@ void varEdit::valid()
     AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
 
     ui->listeAtome->currentItem()->setText(QString::fromStdString(nouveauNom));
+}
+void varEdit::suppr()
+{
+    std::string nom = nomSelected.toStdString();
+
+    AtomeManager::getInstance().delAtome(nom);
+
+    ui->listeAtome->currentItem()->setHidden(true);
+    ui->valeur->clear();
+    ui->nom->clear();
 }
