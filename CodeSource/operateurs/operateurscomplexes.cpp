@@ -1,4 +1,5 @@
 #include "operateurs.h"
+#include "../manager/controleur.h"
 
 
 
@@ -14,8 +15,9 @@ Litterale* Complexe::operator+(Litterale& e)
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
 
-    if ((!ent)&&(!rat)&&(!real)&&(!comp))
+    if ((!ent)&&(!rat)&&(!real)&&(!comp)&&!exp)
         throw "Erreur : operation impossible : l'un des operateurs n'est pas une litterale";
 
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
@@ -37,6 +39,10 @@ Litterale* Complexe::operator+(Litterale& e)
         comp->setImag(dynamic_cast<LitteraleNumerique&>(*(ctemp->getImag()->operator +(*comp->getImag()))));
         return this;
     }
+    if (exp) //c'est une expression
+    {
+        return exp->operator +(*this);
+    }
 
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
@@ -51,24 +57,28 @@ Litterale* Complexe::operator-(Litterale& e)
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
 
-    if ((!ent)&&(!rat)&&(!real)&&(!comp))
+    if ((!ent)&&(!rat)&&(!real)&&(!comp)&&!exp)
         throw "Erreur : operation impossible : l'un des operateurs n'est pas une litterale";
 
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         ent->operator -(*this);
-        return this->getReal()->NEG();
+        this->getReal()->NEG();
+        return this;
     }
     if (rat) //c'est un rationnel
     {
         rat->operator -(*this);
-        return this->getReal()->NEG();
+        this->getReal()->NEG();
+        return this;
     }
     if (real) //c'est un reel
     {
         real->operator -(*this);
-        return this->getReal()->NEG();
+        this->getReal()->NEG();
+        return this;
     }
     if(comp)
     {
@@ -76,6 +86,13 @@ Litterale* Complexe::operator-(Litterale& e)
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(   this->getReal()->operator -(*comp->getReal())  )));
         comp->setImag(dynamic_cast<LitteraleNumerique&>(*(   ctemp->getImag()->operator -(*comp->getImag())  )));
         return comp;
+    }
+    if (exp) //c'est une expression
+    {
+        std::string temp= this->toString() + "  ";
+        temp += EVAL(exp) + " -";
+        Controleur::getInstance().commande(temp);
+        return NULL;
     }
 
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
@@ -90,6 +107,7 @@ Litterale* Complexe::operator*(Litterale& e){
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         return ent->operator*(*this);
@@ -130,6 +148,13 @@ Litterale* Complexe::operator*(Litterale& e){
         return comp;
 
     }
+    if (exp) //c'est une expression
+    {
+        std::string temp= this->toString() + "  ";
+        temp += EVAL(exp) + " *";
+        Controleur::getInstance().commande(temp);
+        return NULL;
+    }
 
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
@@ -143,6 +168,7 @@ Litterale* Complexe::operator/(Litterale& e){
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
 
     double a = this->getReal()->getNb();
     double b = this->getImag()->getNb();
@@ -236,6 +262,13 @@ Litterale* Complexe::operator/(Litterale& e){
 
         return comp;
 
+    }
+    if (exp) //c'est une expression
+    {
+        std::string temp= this->toString() + "  ";
+        temp += EVAL(exp) + " /";
+        Controleur::getInstance().commande(temp);
+        return NULL;
     }
 
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning

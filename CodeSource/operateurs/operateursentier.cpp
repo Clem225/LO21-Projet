@@ -1,4 +1,5 @@
 #include "operateurs.h"
+#include "../manager/controleur.h"
 
 // Operateur d'affectation
 Entier* Entier::operator=(Entier a)
@@ -25,8 +26,9 @@ Litterale* Entier::operator+(Litterale& e) {
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
 
-    if ((!ent)&&(!rat)&&(!real)&&(!comp))
+    if ((!ent)&&(!rat)&&(!real)&&(!comp)&&(!exp))
         throw "Erreur : operation impossible : l'un des operateurs n'est pas une litterale";
 
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
@@ -50,6 +52,11 @@ Litterale* Entier::operator+(Litterale& e) {
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->operator +(*comp->getReal()))));
         return comp;
     }
+    if (exp) //c'est une expression
+    {
+        return exp->operator +(*this);
+    }
+
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
@@ -62,6 +69,7 @@ Litterale* Entier::operator-(Litterale& e)
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         nb-=ent->getNb();
@@ -86,6 +94,13 @@ Litterale* Entier::operator-(Litterale& e)
         comp->setReal(dynamic_cast<LitteraleNumerique&>(*(this->operator -(*comp->getReal())   )));
         return comp;
     }
+    if (exp) //c'est une expression
+    {
+        std::string temp= this->toString() + "  ";
+        temp += EVAL(exp) + " -";
+        Controleur::getInstance().commande(temp);
+        return NULL;
+    }
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
@@ -97,6 +112,7 @@ Litterale* Entier::operator*(Litterale& e) {
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         nb*=ent->getNb();
@@ -147,6 +163,13 @@ Litterale* Entier::operator*(Litterale& e) {
 
         return comp;
     }
+    if (exp) //c'est une expression
+    {
+        std::string temp= this->toString() + "  ";
+        temp += EVAL(exp) + " *";
+        Controleur::getInstance().commande(temp);
+        return NULL;
+    }
     // Si aucun if n'est respecte (Normalement, ne peux pas arriver) -> Evite un warning
     return NULL;
 }
@@ -158,6 +181,7 @@ Litterale* Entier::operator/(Litterale& e) {
     Rationnel* rat=dynamic_cast<Rationnel*>(&e);
     Reel* real=dynamic_cast<Reel*>(&e);
     Complexe* comp=dynamic_cast<Complexe*>(&e);
+    Expression* exp = dynamic_cast<Expression*>(&e);
     if (ent) //si le cast a réussi, c'est à dire si e est bien un entier
     {
         if (ent->getNb()==0)
@@ -214,6 +238,13 @@ Litterale* Entier::operator/(Litterale& e) {
 
         return comp;
 
+    }
+    if (exp) //c'est une expression
+    {
+        std::string temp= this->toString() + "  ";
+        temp += EVAL(exp) + " /";
+        Controleur::getInstance().commande(temp);
+        return NULL;
     }
 
     return NULL;
