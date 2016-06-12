@@ -49,11 +49,22 @@ void varEdit::valid()
     std::string nouveauNom = ui->nom->text().toStdString();
     std::string nouvelleValeur = ui->valeur->text().toStdString();
 
-    Litterale* newValue = dynamic_cast<Litterale*>(FactoryLitterale::getInstance().create(nouvelleValeur));
 
-    AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
-
-    ui->listeAtome->currentItem()->setText(QString::fromStdString(nouveauNom));
+    // On verifie si l'atome existe deja (modification) ou si il faut le creer
+    if(AtomeManager::getInstance().getValeur(nouveauNom)==NULL)
+    {
+        // CREATION
+        Litterale* newValue = dynamic_cast<Litterale*>(FactoryLitterale::getInstance().create(nouvelleValeur));
+        AtomeManager::getInstance().addAtome(nouveauNom,newValue);
+        ui->listeAtome->addItem(QString::fromStdString(nouveauNom));
+    }
+    else
+    {
+        // MOdification
+        Litterale* newValue = dynamic_cast<Litterale*>(FactoryLitterale::getInstance().create(nouvelleValeur));
+        AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
+        ui->listeAtome->currentItem()->setText(QString::fromStdString(nouveauNom));
+    }
 }
 void varEdit::suppr()
 {

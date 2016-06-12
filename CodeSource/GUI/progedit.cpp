@@ -42,15 +42,28 @@ void progEdit::selected(const QString& nom)
 
 void progEdit::valid()
 {
+
+
     std::string ancienNom = nomSelected.toStdString();
     std::string nouveauNom = ui->nom->text().toStdString();
     std::string nouvelleValeur = ui->valeur->toPlainText().toStdString();
 
-    Litterale* newValue = dynamic_cast<Litterale*>(FactoryLitterale::getInstance().create(nouvelleValeur));
+    // On verifie si l'atome existe deja (modification) ou si il faut le creer
+    if(AtomeManager::getInstance().getValeur(nouveauNom)==NULL)
+    {
+        // CREATION
+        Litterale* newValue = dynamic_cast<Litterale*>(FactoryLitterale::getInstance().create(nouvelleValeur));
+        AtomeManager::getInstance().addAtome(nouveauNom,newValue);
+        ui->listeProgrammes->addItem(QString::fromStdString(nouveauNom));
+    }
+    else
+    {
+        // Modification
+        Litterale* newValue = dynamic_cast<Litterale*>(FactoryLitterale::getInstance().create(nouvelleValeur));
+        AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
+        ui->listeProgrammes->currentItem()->setText(QString::fromStdString(nouveauNom));
+    }
 
-    AtomeManager::getInstance().modifAtome(ancienNom,nouveauNom,newValue);
-
-    ui->listeProgrammes->currentItem()->setText(QString::fromStdString(nouveauNom));
 }
 void progEdit::suppr()
 {
