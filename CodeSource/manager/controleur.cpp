@@ -591,36 +591,44 @@ void Controleur::executer()
                     Programme* test2 = dynamic_cast<Programme*>(l2);
                     LitteraleNumerique* test3 = dynamic_cast<LitteraleNumerique*>(l2);
 
-
-
-                    if (test1||test2||test3) //Si on cherche bien à stocker une expression, un programme ou une litterale numerique
+                    if (e1->toString()=="'DIV'"||e1->toString()=="'NEG'"||e1->toString()=="'NUM'"||e1->toString()=="'DEN'"||e1->toString()=="'$'"||e1->toString()=="'RE'"||e1->toString()=="'IM'"||e1->toString()=="'AND'"||e1->toString()=="'OR'"||e1->toString()=="'NOT'"||e1->toString()=="'EVAL'"||e1->toString()=="'STO'"||e1->toString()=="'DUP'"||e1->toString()=="'DROP'"||e1->toString()=="'SWAP'"||e1->toString()=="'LASTOP'"||e1->toString()=="'LASTARGS'"||e1->toString()=="'UNDO'"||e1->toString()=="'REDO'"||e1->toString()=="'CLEAR'")
                     {
+                        MainWindow::getInstance()->setMsg("Erreur : attention à ne pas donner le nom d'un opérateur comme nom de variable !");
+                        //On re-empile
+                        this->empiler(l2);
+                        this->empiler(l1);
+                    }
+                    else
+                    {
+                        if (test1||test2||test3) //Si on cherche bien à stocker une expression, un programme ou une litterale numerique
+                        {
 
-                        //Si le premier argument est bien une expression ne comportant qu'un atome,
-                        //On ajoute cet atome à AtomeManager en le liant à la litterale
-                        if (e1)
-                        {
-                            std::string temp = e1->toString();
-                            int temp1 = e1->toString().length()-2; //taille du string sans les quotes
-                            temp = temp.substr(1,temp1); //On retire les quotes
-                            Atome* a = new Atome(temp,l2); //On ajoute l'identificateur lié à la variable l1
-                            AtomeManager::getInstance().addAtome(a);
-                            MainWindow::getInstance()->setMsg("Variable initialisee !");
+                            //Si le premier argument est bien une expression ne comportant qu'un atome,
+                            //On ajoute cet atome à AtomeManager en le liant à la litterale
+                            if (e1)
+                            {
+                                std::string temp = e1->toString();
+                                int temp1 = e1->toString().length()-2; //taille du string sans les quotes
+                                temp = temp.substr(1,temp1); //On retire les quotes
+                                Atome* a = new Atome(temp,l2); //On ajoute l'identificateur lié à la variable l1
+                                AtomeManager::getInstance().addAtome(a);
+                                MainWindow::getInstance()->setMsg("Variable initialisee !");
+                            }
+                            else
+                            {
+                                MainWindow::getInstance()->setMsg("Erreur : une variable/expression/programme doit etre liee a une expression contenant un atome !");
+                                //On re-empile
+                                this->empiler(l2);
+                                this->empiler(l1);
+                            }
                         }
-                        else
+                        else //Sinon on cherche à stocker autre chose, ce qui est impossible
                         {
-                            MainWindow::getInstance()->setMsg("Erreur : une variable/expression/programme doit etre liee a une expression contenant un atome !");
+                            MainWindow::getInstance()->setMsg("Erreur : l'opérateur STO n'est applicable qu'à une expression, un programme ou une littérale numérique !");
                             //On re-empile
                             this->empiler(l2);
                             this->empiler(l1);
                         }
-                    }
-                    else //Sinon on cherche à stocker autre chose, ce qui est impossible
-                    {
-                        MainWindow::getInstance()->setMsg("Erreur : l'opérateur STO n'est applicable qu'à une expression, un programme ou une littérale numérique !");
-                        //On re-empile
-                        this->empiler(l2);
-                        this->empiler(l1);
                     }
                 }
 
