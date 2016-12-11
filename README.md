@@ -7,6 +7,8 @@ Vous trouverez dans le Git :
 - Le sujet du projet
 - Le code source du projet
 - Un rapport explicatif
-- Une vidéo d'explication sur le fonctionnement de la calculatrice
-- Une documentation complète
+- Le doxyfile pour la génération de la documentation
 - L'architecture en UML
+
+Vous pouvez également regarder le rapport vidéo :
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/T6ouavfr1LY/0.jpg)](http://www.youtube.com/watch?v=T6ouavfr1LY "Rapport vidéo")
